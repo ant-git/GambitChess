@@ -2,19 +2,21 @@ package pieces;
 
 import game.ChessSquare;
 
+import javax.swing.*;
+
 /**
  * Created by antant on 21/01/16.
  */
-public class Piece {
+public abstract class Piece {
     private ChessSquare chessSquare;
     private String color;
 
-    public Piece() {
-
+    public Piece(String color) {
+        this.color = color;
     }
 
     public String toString() {
-        return "R";
+        return "P";
     }
 
     public ChessSquare getSquare(){

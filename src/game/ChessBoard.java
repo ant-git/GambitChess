@@ -1,8 +1,11 @@
 package game;
 
 
+import pieces.Pawn;
 import pieces.Piece;
+import pieces.Rook;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +25,22 @@ public class ChessBoard {
         System.out.println();
         testRemovePieces();
         drawBoard();
+        Pawn pawn = new Pawn("black");
+        board[0][4].setPiece(pawn);
+        System.out.println();
+        drawBoard();
+        System.out.println("Pawn x and y: " + pawn.getX() + " " + pawn.getY());
+        System.out.println("Pawn color: " + pawn.getColor());
+
+        Rook rook1 = new Rook("white");
+        board[0][7].setPiece(rook1);
+        Rook rook2 = new Rook("white");
+        board[7][7].setPiece(rook2);
+        System.out.println();
+        drawBoard();
+        System.out.println("rook x and y: " + rook1.getX() + " " + rook1.getY());
+        System.out.println("rook color: " + rook1.getColor());
+
     }
 
     public void drawBoard(){
@@ -40,10 +59,10 @@ public class ChessBoard {
         for(int i = 0; i < 8; i++){
             for (int j = 0; j < 8; j++){
                 if(white) {
-                    board[i][j] = new ChessSquare(j, i, "w");
+                    board[j][i] = new ChessSquare(j, i, "0");
                     white = false;
                 }else{
-                    board[i][j] = new ChessSquare(j, i, "b");
+                    board[j][i] = new ChessSquare(j, i, "*");
                     white = true;
                 }
                 if(j== 7){
@@ -55,7 +74,7 @@ public class ChessBoard {
 
     public  void setPieces(){
         for(int i = 0; i < 8; i++){
-            board[i][6].setPiece(new Piece());
+            board[i][6].setPiece(new Pawn("white"));
         }
     }
 
