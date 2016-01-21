@@ -17,13 +17,16 @@ public class ChessSquare extends Pane{
         this.x = x;
         this.y = y;
         this.white = white;
+        setColor();
+        empty = true;
+    }
+
+    private void setColor(){
         if(white)
             this.setStyle("-fx-background-color: wheat");
         else
             this.setStyle("-fx-background-color: saddlebrown");
-        empty = true;
     }
-
 
     public int getX() {
         return x;
@@ -57,6 +60,10 @@ public class ChessSquare extends Pane{
 
     public boolean isWhite() {
         return white;
+    }
+
+    public void setBlack(){
+        white = false;
     }
 
 }

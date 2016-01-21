@@ -5,8 +5,9 @@ package pieces;
  */
 public class Rook extends Piece {
 
-    public Rook(String color) {
-        super(color);
+
+    public Rook(boolean white) {
+        super(white);
     }
 
     public String toString(){
