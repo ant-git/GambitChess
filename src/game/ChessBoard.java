@@ -1,68 +1,48 @@
 package game;
 
 
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.layout.*;
 import pieces.Pawn;
 import pieces.Piece;
 import pieces.Rook;
 
 import java.awt.*;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
+
+import static java.awt.Color.WHITE;
 
 /**
  * Created by antant on 21/01/16.
  */
-public class ChessBoard {
-
+public class ChessBoard  implements Initializable{
 
     ChessSquare[][] board = new ChessSquare[8][8];
+    @FXML
+    GridPane chessBoard;
+
+
     public ChessBoard() {
-        populateBoard();
-        drawBoard();
-        System.out.println();
-        setPieces();
-        drawBoard();
-        System.out.println();
-        testRemovePieces();
-        drawBoard();
-        Pawn pawn = new Pawn("black");
-        board[0][4].setPiece(pawn);
-        System.out.println();
-        drawBoard();
-        System.out.println("Pawn x and y: " + pawn.getX() + " " + pawn.getY());
-        System.out.println("Pawn color: " + pawn.getColor());
 
-        Rook rook1 = new Rook("white");
-        board[0][7].setPiece(rook1);
-        Rook rook2 = new Rook("white");
-        board[7][7].setPiece(rook2);
-        System.out.println();
-        drawBoard();
-        System.out.println("rook x and y: " + rook1.getX() + " " + rook1.getY());
-        System.out.println("rook color: " + rook1.getColor());
 
     }
 
-    public void drawBoard(){
-        for(int i = 0; i < 8; i++){
-            for (int j = 0; j < 8; j++){
-                System.out.print(board[j][i].getColor());
-                if(j == 7){
-                    System.out.println();
-                }
-            }
-        }
-    }
+    public void paintBoard(){
 
-    public void populateBoard(){
         boolean white = true;
         for(int i = 0; i < 8; i++){
             for (int j = 0; j < 8; j++){
                 if(white) {
-                    board[j][i] = new ChessSquare(j, i, "0");
+                    chessBoard.add(new ChessSquare(j,i,true) ,j,i);
                     white = false;
                 }else{
-                    board[j][i] = new ChessSquare(j, i, "*");
+                    chessBoard.add(new ChessSquare(j,i,false) ,j,i);
                     white = true;
                 }
                 if(j== 7){
@@ -70,7 +50,14 @@ public class ChessBoard {
                 }
             }
         }
+
     }
+
+    public void drawBoard(){
+
+    }
+
+
 
     public  void setPieces(){
         for(int i = 0; i < 8; i++){
@@ -84,4 +71,21 @@ public class ChessBoard {
         }
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        paintBoard();
+    }
+
+
+    public Node getNodeByRowColumnIndex(final int row,final int column,GridPane gridPane) {
+        Node result = null;
+        ObservableList<Node> childrens = gridPane.getChildren();
+        for(Node node : childrens) {
+            if(gridPane.getRowIndex(node) == row && gridPane.getColumnIndex(node) == column) {
+                result = node;
+                break;
+            }
+        }
+        return result;
+    }
 }
