@@ -1,5 +1,10 @@
 package pieces;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.scene.image.ImageView;
+
+import java.util.Collection;
+
 /**
  * Created by antant on 21/01/16.
  */
@@ -15,15 +20,19 @@ public class Pawn extends Piece{
 
     @Override
     public void setIcon() {
-        if(isWhite()){
-            System.out.println(isWhite());
-            this.setStyle("-fx-background-color: blue");
-        }
+        if (isWhite())
+            setStyle("-fx-background-image: url('/images/wpawn');" +
+                    "-fx-background-position: center center;" +
+                    "-fx-background-repeat: no-repeat");  // ** thats how to add image
+        else
+            setStyle("-fx-background-image: url('/images/bpawn');" +
+                    "-fx-background-position: center center;" +
+                    "-fx-background-repeat: no-repeat");
+
     }
 
-    public void remove(){
-        this.getChildren().remove(Pawn.this);
-    }
+
+
 
 
 }

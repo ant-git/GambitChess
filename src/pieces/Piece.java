@@ -11,7 +11,6 @@ import javax.swing.*;
  */
 public abstract class Piece extends Pane{
     private ChessSquare chessSquare;
-    private String color;
     private boolean white;
     private int x;
     private int y;
@@ -52,14 +51,9 @@ public abstract class Piece extends Pane{
     public boolean isWhite(){
         return white;
     }
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
 
     public void setIcon(){
     }
+
+
 }

@@ -19,6 +19,7 @@ public class ChessSquare extends Pane{
         this.white = white;
         setColor();
         empty = true;
+
     }
 
     private void setColor(){
