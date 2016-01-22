@@ -3,6 +3,7 @@ package pieces;
 import game.ChessSquare;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 
 import javax.swing.*;
 
@@ -11,13 +12,15 @@ import javax.swing.*;
  */
 public abstract class Piece extends Pane{
     private ChessSquare chessSquare;
-    private boolean white;
+    private Color color = Color.WHITE;
     private int x;
     private int y;
 
 
-    public Piece(boolean white) {
-        this.white = white;
+    public Piece(int x, int y, Color color) {
+        this.color = color;
+        this.x = x;
+        this.y = y;
     }
 
     public String toString() {
@@ -48,8 +51,8 @@ public abstract class Piece extends Pane{
         this.y = y;
     }
 
-    public boolean isWhite(){
-        return white;
+    public Color getColor() {
+        return color;
     }
 
     public void setIcon(){

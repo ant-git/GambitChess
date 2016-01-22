@@ -1,12 +1,14 @@
 package pieces;
 
+import javafx.scene.paint.Color;
+
 /**
  * Created by antant on 21/01/16.
  */
 public class Queen extends Piece {
 
-    public Queen(boolean white) {
-        super(white);
+    public Queen(int x, int y, Color color) {
+        super(x, y, color);
         setIcon();
     }
 
@@ -15,11 +17,11 @@ public class Queen extends Piece {
     }
     @Override
     public void setIcon() {
-        if(isWhite())
+        if(getColor().equals(Color.WHITE))
             setStyle("-fx-background-image: url('/images/wqueen');" +
                     "-fx-background-position: center center;" +
                     "-fx-background-repeat: no-repeat");  // ** thats how to add image
-        else
+        if(getColor().equals(Color.BLACK))
             setStyle("-fx-background-image: url('/images/bqueen');" +
                     "-fx-background-position: center center;" +
                     "-fx-background-repeat: no-repeat");

@@ -1,6 +1,7 @@
 package game;
 
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import pieces.Piece;
 
 /**
@@ -11,21 +12,21 @@ public class ChessSquare extends Pane{
     int y;
     Piece piece;
     boolean empty;
-    boolean white;
+    Color color;
 
-    public ChessSquare(int x, int y, boolean white) {
+    public ChessSquare(int x, int y, Color color) {
         this.x = x;
         this.y = y;
-        this.white = white;
+        this.color = color;
         setColor();
         empty = true;
 
     }
 
     private void setColor(){
-        if(white)
+        if(color.equals(Color.WHITE))
             this.setStyle("-fx-background-color: wheat");
-        else
+        if(color.equals(Color.BLACK))
             this.setStyle("-fx-background-color: saddlebrown");
     }
 
@@ -59,12 +60,16 @@ public class ChessSquare extends Pane{
         empty = true;
     }
 
-    public boolean isWhite() {
-        return white;
+    public boolean isEmpty(){
+        return empty;
     }
 
-    public void setBlack(){
-        white = false;
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color){
+        this.color = color;
     }
 
 }

@@ -1,13 +1,15 @@
 package pieces;
 
+import javafx.scene.paint.Color;
+
 /**
  * Created by antant on 21/01/16.
  */
 public class King extends Piece {
 
 
-    public King(boolean white) {
-        super(white);
+    public King(int x, int y, Color color) {
+        super(x, y, color);
         setIcon();
     }
 
@@ -17,11 +19,11 @@ public class King extends Piece {
 
     @Override
     public void setIcon() {
-        if(isWhite())
+        if(getColor().equals(Color.WHITE))
             setStyle("-fx-background-image: url('/images/wking');" +
                     "-fx-background-position: center center;" +
                     "-fx-background-repeat: no-repeat");  // ** thats how to add image
-        else
+        if(getColor().equals(Color.BLACK))
             setStyle("-fx-background-image: url('/images/bking');" +
                     "-fx-background-position: center center;" +
                     "-fx-background-repeat: no-repeat");
@@ -29,7 +31,7 @@ public class King extends Piece {
     }
 
     public void highlight(){
-        if(isWhite())
+        if(getColor().equals(Color.WHITE))
             setStyle("-fx-background-image: url('/images/wking');" +
                     "-fx-background-position: center center;" +
                     "-fx-background-repeat: no-repeat;" +
