@@ -148,6 +148,148 @@ public abstract class Piece extends Pane{
         board.setHighlightOnlyListeners(this);
     }
 
+    public ArrayList<Move> getDiagonalMoves(){
+        ArrayList<Move> moves = new ArrayList<>();
+        boolean white = pieceIsWhiteAtIndex(x,y);
+
+        int i = 1;
+        while(x-i >=0 && y-i >= 0){
+            if(getBoard().getSquare(x-i,y-i).isEmpty()){
+                moves.add(new Move(x, y, x - i, y - i));
+            }else{
+                if(pieceIsWhiteAtIndex(x-i, y-i) != white){
+                    moves.add(new Move(x, y, x - i, y - i));
+                    break;
+                }
+                else {
+                    break;
+                }
+            }
+            i++;
+        }
+
+        i = 1;
+        while(x+i <= 7 && y-i >= 0){
+            if(getBoard().getSquare(x+i,y-i).isEmpty()){
+                moves.add(new Move(x, y, x + i, y - i));
+            }else{
+                if(pieceIsWhiteAtIndex(x+i, y-i) != white){
+                    moves.add(new Move(x, y, x + i, y - i));
+                    break;
+                }
+                else {
+                    break;
+                }
+            }
+            i++;
+        }
+
+        i = 1;
+        while(x-i >= 0 && y+i <= 7){
+            if(getBoard().getSquare(x-i,y+i).isEmpty()){
+                moves.add(new Move(x, y, x - i, y + i));
+            }else{
+                if(pieceIsWhiteAtIndex(x-i, y+i) != white){
+                    moves.add(new Move(x, y, x - i, y + i));
+                    break;
+                }
+                else {
+                    break;
+                }
+            }
+            i++;
+        }
+
+        i = 1;
+        while(x+i <= 7 && y+i <= 7){
+            if(getBoard().getSquare(x+i,y+i).isEmpty()){
+                moves.add(new Move(x, y, x + i, y + i));
+            }else{
+                if(pieceIsWhiteAtIndex(x+i, y+i) != white){
+                    moves.add(new Move(x, y, x + i, y + i));
+                    break;
+                }
+                else {
+                    break;
+                }
+            }
+            i++;
+        }
+
+
+        return moves;
+    }
+
+    public ArrayList<Move> getAxisMoves(){
+        ArrayList<Move> moves = new ArrayList<>();
+        boolean white = pieceIsWhiteAtIndex(x,y);
+
+        int i = 1;
+        while(y-i >= 0){
+            if(getBoard().getSquare(x,y-i).isEmpty()){
+                moves.add(new Move(x, y, x, y - i));
+            }else{
+                if(pieceIsWhiteAtIndex(x, y-i) != white){
+                    moves.add(new Move(x, y, x, y - i));
+                    break;
+                }
+                else {
+                    break;
+                }
+            }
+            i++;
+        }
+
+        i = 1;
+        while(x-i >= 0){
+            if(getBoard().getSquare(x-i,y).isEmpty()){
+                moves.add(new Move(x, y, x-i, y));
+            }else{
+                if(pieceIsWhiteAtIndex(x-i, y) != white){
+                    moves.add(new Move(x, y, x - i, y));
+                    break;
+                }
+                else {
+                    break;
+                }
+            }
+            i++;
+        }
+
+        i = 1;
+        while(x+i <= 7){
+            if(getBoard().getSquare(x+i,y).isEmpty()){
+                moves.add(new Move(x, y, x+i, y));
+            }else{
+                if(pieceIsWhiteAtIndex(x+i, y) != white){
+                    moves.add(new Move(x, y, x+i, y));
+                    break;
+                }
+                else {
+                    break;
+                }
+            }
+            i++;
+        }
+
+        i = 1;
+        while(y+i <= 7){
+            if(getBoard().getSquare(x,y+i).isEmpty()){
+                moves.add(new Move(x, y, x, y + i));
+            }else{
+                if(pieceIsWhiteAtIndex(x, y+i) != white){
+                    moves.add(new Move(x, y, x, y + i));
+                    break;
+                }
+                else {
+                    break;
+                }
+            }
+            i++;
+        }
+
+        return moves;
+    }
 
     public String generateIcon(String url){
         return "-fx-background-image: url('" + url + "');" +

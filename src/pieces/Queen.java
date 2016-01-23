@@ -46,7 +46,12 @@ public class Queen extends Piece {
 
     @Override
     public ArrayList<Move> getAvailableMoves() {
-        return null;
+        ArrayList<Move> moves = new ArrayList<>();
+        moves.addAll(getDiagonalMoves());
+        moves.addAll(getAxisMoves());
+
+        return moves;
+
     }
 
 

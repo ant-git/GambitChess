@@ -48,6 +48,6 @@ public class Rook extends Piece {
 
     @Override
     public ArrayList<Move> getAvailableMoves() {
-        return null;
+        return getAxisMoves();
     }
 }
