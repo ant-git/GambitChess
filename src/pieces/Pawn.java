@@ -79,11 +79,9 @@ public class Pawn extends Piece implements Highlightable{
                 moves.add(new Move(x, y, x, y - 2));
             }
             if((y-1 >= 0 && x-1 >= 0) && !board.getSquare(x-1,y-1).isEmpty() && board.getSquare(x-1,y-1).getPiece().getColor().equals(Color.BLACK)){
-                System.out.println("OMFG ITS WORKING");
                 moves.add(new Move(x, y, x - 1, y - 1));
             }
             if((y-1 >= 0 && x+1 <= 7) && !board.getSquare(x+1,y-1).isEmpty() && board.getSquare(x+1,y-1).getPiece().getColor().equals(Color.BLACK)) {
-                System.out.println("OMFG ITS WORKING");
                 moves.add(new Move(x, y, x + 1, y - 1));
             }
         }
@@ -97,11 +95,9 @@ public class Pawn extends Piece implements Highlightable{
             }
 
             if((y+1 <= 7 && x-1 >= 0) && !board.getSquare(x-1,y+1).isEmpty() && board.getSquare(x-1,y+1).getPiece().getColor().equals(Color.WHITE)){
-                System.out.println("OMFG ITS WORKING");
                 moves.add(new Move(x, y, x - 1, y + 1));
             }
             if((y+1 <= 7 && x+1 <= 7) && !board.getSquare(x+1,y+1).isEmpty() && board.getSquare(x+1,y+1).getPiece().getColor().equals(Color.WHITE)) {
-                System.out.println("OMFG ITS WORKING");
                 moves.add(new Move(x, y, x + 1, y + 1));
             }
         }

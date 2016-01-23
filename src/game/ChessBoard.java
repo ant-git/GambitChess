@@ -223,10 +223,13 @@ public class ChessBoard  implements Initializable{
                 }
             }
             if(node instanceof Piece){
-
                 if(node.equals(pickedPiece)) {
                     ((Piece) node).setDeselectListener();
                    }
+                if(!node.equals(pickedPiece) && !((Piece) node).isHighlighted()){
+                    ((Piece) node).removeListeners();
+                }
+
                 if(((Piece) node).isHighlighted()){
                     ((Piece) node).setUnderTreatListener(pickedPiece);
                 }
