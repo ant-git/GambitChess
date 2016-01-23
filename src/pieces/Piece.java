@@ -123,7 +123,6 @@ public abstract class Piece extends Pane{
     public void setDefaultListener(){
         setOnMouseClicked(event -> {
             pick();
-            System.out.println("Color: " + getColor().toString());
         });
     }
 

@@ -47,7 +47,76 @@ public class Bishop extends Piece {
 
     @Override
     public ArrayList<Move> getAvailableMoves() {
-        return null;
+        ArrayList<Move> moves = new ArrayList<>();
+        int x = getX();
+        int y = getY();
+        boolean white = pieceIsWhiteAtIndex(x,y);
+
+        int i = 1;
+        while(x-i >=0 && y-i >= 0){
+            if(getBoard().getSquare(x-i,y-i).isEmpty()){
+                moves.add(new Move(x, y, x - i, y - i));
+            }else{
+                if(pieceIsWhiteAtIndex(x-i, y-i) != white){
+                    moves.add(new Move(x, y, x - i, y - i));
+                    break;
+                }
+                else {
+                    break;
+                }
+            }
+            i++;
+        }
+
+        i = 1;
+        while(x+i <= 7 && y-i >= 0){
+            if(getBoard().getSquare(x+i,y-i).isEmpty()){
+                moves.add(new Move(x, y, x + i, y - i));
+            }else{
+                if(pieceIsWhiteAtIndex(x+i, y-i) != white){
+                    moves.add(new Move(x, y, x + i, y - i));
+                    break;
+                }
+                else {
+                    break;
+                }
+            }
+            i++;
+        }
+
+        i = 1;
+        while(x-i >= 0 && y+i <= 7){
+            if(getBoard().getSquare(x-i,y+i).isEmpty()){
+                moves.add(new Move(x, y, x - i, y + i));
+            }else{
+                if(pieceIsWhiteAtIndex(x-i, y+i) != white){
+                    moves.add(new Move(x, y, x - i, y + i));
+                    break;
+                }
+                else {
+                    break;
+                }
+            }
+            i++;
+        }
+
+        i = 1;
+        while(x+i <= 7 && y+i <= 7){
+            if(getBoard().getSquare(x+i,y+i).isEmpty()){
+                moves.add(new Move(x, y, x + i, y + i));
+            }else{
+                if(pieceIsWhiteAtIndex(x+i, y+i) != white){
+                    moves.add(new Move(x, y, x + i, y + i));
+                    break;
+                }
+                else {
+                    break;
+                }
+            }
+            i++;
+        }
+
+        return moves;
     }
 
 
