@@ -12,36 +12,16 @@ import java.util.ArrayList;
  * Created by antant on 21/01/16.
  */
 public class Pawn extends Piece implements Highlightable{
-    private ChessSquare square;
 
-    private String blackPawnStyle = "-fx-background-image: url('/images/bpawn');" +
-                                    "-fx-background-position: center center;" +
-                                    "-fx-background-repeat: no-repeat;";
-
-    private String whitePawnStyle = "-fx-background-image: url('/images/wpawn');" +
-                                    "-fx-background-position: center center;" +
-                                    "-fx-background-repeat: no-repeat";
-
-    private String blackPawnHStyle = "-fx-background-image: url('/images/bpawnh');" +
-            "-fx-background-position: center center;" +
-            "-fx-background-repeat: no-repeat;";
-
-    private String whitePawnHStyle = "-fx-background-image: url('/images/wpawnh');" +
-            "-fx-background-position: center center;" +
-            "-fx-background-repeat: no-repeat";
-
-    private String blackPawnPStyle = "-fx-background-image: url('/images/bpawnp');" +
-            "-fx-background-position: center center;" +
-            "-fx-background-repeat: no-repeat;";
-
-    private String whitePawnPStyle = "-fx-background-image: url('/images/wpawnp');" +
-            "-fx-background-position: center center;" +
-            "-fx-background-repeat: no-repeat";
+    private String blackPawnStyle =  generateIcon("/images/bpawn");
+    private String whitePawnStyle =  generateIcon("/images/wpawn");
+    private String blackPawnHStyle = generateIcon("/images/bpawnh");
+    private String whitePawnHStyle = generateIcon("/images/wpawnh");
+    private String blackPawnPStyle = generateIcon("/images/bpawnp");
+    private String whitePawnPStyle = generateIcon("/images/wpawnp");
 
     public Pawn(int x, int y, Color color, ChessBoard chessBoard) {
         super(x, y, color, chessBoard);
-        square = getBoard().getSquare(this);
-        square.setPiece(this);
     }
 
     public String toString(){

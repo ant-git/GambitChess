@@ -150,4 +150,9 @@ public abstract class Piece extends Pane{
     }
 
 
+    public String generateIcon(String url){
+        return "-fx-background-image: url('" + url + "');" +
+                "-fx-background-position: center center;" +
+                "-fx-background-repeat: no-repeat";
+    }
 }

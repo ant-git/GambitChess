@@ -12,9 +12,15 @@ import java.util.ArrayList;
 public class Knight extends Piece {
 
 
+    private String blackKnightStyle =  generateIcon("/images/bknight");
+    private String whiteKnightStyle =  generateIcon("/images/wknight");
+    private String blackKnightHStyle = generateIcon("/images/bknighth");
+    private String whiteKnightHStyle = generateIcon("/images/wknighth");
+    private String blackKnightPStyle = generateIcon("/images/bknightp");
+    private String whiteKnightPStyle = generateIcon("/images/wknightp");
+
     public Knight(int x, int y, Color color, ChessBoard chessBoard) {
         super(x, y, color, chessBoard);
-        setDefaultIcon();
     }
 
     public String toString(){
@@ -23,24 +29,17 @@ public class Knight extends Piece {
 
     @Override
     public void setDefaultIcon() {
-        if(getColor().equals(Color.WHITE))
-            setStyle("-fx-background-image: url('/images/wknight');" +
-                    "-fx-background-position: center center;" +
-                    "-fx-background-repeat: no-repeat");  // ** thats how to add image
-        if(getColor().equals(Color.BLACK))
-            setStyle("-fx-background-image: url('/images/bknight');" +
-                    "-fx-background-position: center center;" +
-                    "-fx-background-repeat: no-repeat");
-
+        setIcon(whiteKnightStyle, blackKnightStyle);
     }
 
     @Override
     public void setHighlightedIcon() {
-
+        setIcon(whiteKnightHStyle, blackKnightHStyle);
     }
 
     @Override
     public void setPickIcon() {
+        setIcon(whiteKnightPStyle, blackKnightPStyle);
 
     }
 
