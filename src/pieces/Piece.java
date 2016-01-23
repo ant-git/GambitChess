@@ -3,23 +3,21 @@ package pieces;
 import game.ChessBoard;
 import game.ChessSquare;
 import game.Move;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 /**
  * Created by antant on 21/01/16.
  */
 public abstract class Piece extends Pane{
-    private ChessSquare chessSquare;
     private Color color = Color.WHITE;
     private int x;
     private int y;
     private ChessBoard board;
     private boolean highlighted;
+    private ChessSquare square;
 
     public Piece(int x, int y, Color color, ChessBoard board) {
         this.x = x;
@@ -27,6 +25,9 @@ public abstract class Piece extends Pane{
         this.color = color;
         this.board = board;
         highlighted = false;
+        square = board.getSquare(this);
+        square.setPiece(this);
+        setDefaultIcon();
 
     }
 
@@ -54,14 +55,18 @@ public abstract class Piece extends Pane{
         return color;
     }
 
-    public void setDefaultIcon(){
+    public void setIcon(String whiteIcon, String blackIcon){
+        if (getColor().equals(Color.WHITE))
+            setStyle(whiteIcon);  // ** thats how to add image
+        if(getColor().equals(Color.BLACK))
+            setStyle(blackIcon);
     }
 
-    public void setHighlightedIcon(){
-    }
+    public abstract void setDefaultIcon();
 
-    public void setPickIcon(){
-    }
+    public abstract void setHighlightedIcon();
+
+    public abstract void setPickIcon();
 
     public ChessBoard getBoard() {
         return board;
@@ -85,10 +90,6 @@ public abstract class Piece extends Pane{
         return highlighted;
     }
 
-    public void setHighlighted(boolean highlighted) {
-        setHighlightedIcon();
-        this.highlighted = highlighted;
-    }
 
     public void move(int newX, int newY){
         board.getSquare(this).removePiece();
@@ -99,7 +100,6 @@ public abstract class Piece extends Pane{
 
         board.getSquare(newX,newY).setPiece(this);
         highlighted = false;
-        System.out.println("Move successful! Alive pieces left: " + getBoard().getAlivePiecesCount());
     }
 
 
@@ -125,7 +125,7 @@ public abstract class Piece extends Pane{
 
     public void setDeselectListener(){
         setOnMouseClicked(event -> {
-            getBoard().setDefaultListeners();
+            board.setDefaultListeners();
         });
     }
 
@@ -138,11 +138,11 @@ public abstract class Piece extends Pane{
 
     public void pick(){
         setPickIcon();
-        getBoard().highlightPossibleMoves(getAvailableMoves());
+        board.highlightPossibleMoves(getAvailableMoves());
         setOnMouseClicked(event -> {
             getBoard().setDefaultListeners();
         });
-        getBoard().setHighlightOnlyListeners(this);
+        board.setHighlightOnlyListeners(this);
     }
 
 

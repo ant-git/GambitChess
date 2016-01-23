@@ -10,10 +10,6 @@ import java.util.ArrayList;
  * Created by antant on 21/01/16.
  */
 public class Bishop extends Piece {
-    @Override
-    public ArrayList<Move> getAvailableMoves() {
-        return null;
-    }
 
     public Bishop(int x, int y, Color color, ChessBoard chessBoard) {
         super(x, y, color, chessBoard);
@@ -39,4 +35,21 @@ public class Bishop extends Piece {
                     "-fx-background-repeat: no-repeat");
 
     }
+
+    @Override
+    public void setHighlightedIcon() {
+
+    }
+
+    @Override
+    public void setPickIcon() {
+
+    }
+
+    @Override
+    public ArrayList<Move> getAvailableMoves() {
+        return null;
+    }
+
+
 }

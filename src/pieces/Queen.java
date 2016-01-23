@@ -35,6 +35,16 @@ public class Queen extends Piece {
     }
 
     @Override
+    public void setHighlightedIcon() {
+
+    }
+
+    @Override
+    public void setPickIcon() {
+
+    }
+
+    @Override
     public ArrayList<Move> getAvailableMoves() {
         return null;
     }

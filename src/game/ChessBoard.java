@@ -198,8 +198,6 @@ public class ChessBoard  implements Initializable{
         }
     }
 
-
-
     public void setDefaultListeners(){
         for(Node node : chessBoard.getChildren()){
             if(node instanceof ChessSquare){
@@ -239,13 +237,4 @@ public class ChessBoard  implements Initializable{
         }
     }
 
-    public int getAlivePiecesCount(){
-        int counter = 0;
-        for(Node node : chessBoard.getChildren()){
-            if(node instanceof Piece){
-                counter++;
-            }
-        }
-        return counter;
-    }
 }

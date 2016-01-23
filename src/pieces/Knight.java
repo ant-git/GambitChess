@@ -35,8 +35,32 @@ public class Knight extends Piece {
     }
 
     @Override
+    public void setHighlightedIcon() {
+
+    }
+
+    @Override
+    public void setPickIcon() {
+
+    }
+
+    @Override
     public ArrayList<Move> getAvailableMoves() {
-        return null;
+        ArrayList<Move> moves = new ArrayList<>();
+        int x = getX();
+        int y = getY();
+
+        //x-1 y-2
+        //x+1 y-2
+        //x-2 y-1
+        //x+2 y-1
+        //x-2 y+1
+        //x-1 y+2
+        //x+1 y+2
+        //x+2 y+1
+
+
+        return moves;
     }
 
 

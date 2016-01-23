@@ -42,8 +42,6 @@ public class Pawn extends Piece implements Highlightable{
         super(x, y, color, chessBoard);
         square = getBoard().getSquare(this);
         square.setPiece(this);
-        setHighlighted(false);
-        setDefaultIcon();
     }
 
     public String toString(){
@@ -53,80 +51,55 @@ public class Pawn extends Piece implements Highlightable{
 
     @Override
     public void setDefaultIcon() {
-        if (getColor().equals(Color.WHITE))
-            setStyle(whitePawnStyle);  // ** thats how to add image
-        if(getColor().equals(Color.BLACK))
-            setStyle(blackPawnStyle);
-
+        setIcon(whitePawnStyle, blackPawnStyle);
     }
 
     @Override
     public void setHighlightedIcon() {
-        if (getColor().equals(Color.WHITE))
-            setStyle(whitePawnHStyle);  // ** thats how to add image
-        if(getColor().equals(Color.BLACK))
-            setStyle(blackPawnHStyle);
+        setIcon(whitePawnHStyle, blackPawnHStyle);
     }
 
     @Override
     public void setPickIcon() {
-        if (getColor().equals(Color.WHITE))
-            setStyle(whitePawnPStyle);  // ** thats how to add image
-        if(getColor().equals(Color.BLACK))
-            setStyle(blackPawnPStyle);
+        setIcon(whitePawnPStyle, blackPawnPStyle);
     }
 
     @Override
     public ArrayList<Move> getAvailableMoves(){
         ArrayList<Move> moves = new ArrayList<>();
-        System.out.println();
         int x = getX();
         int y = getY();
 
         if(getColor().equals(Color.WHITE)) {
             if(y-1 >=0 && getBoard().getSquare(x, y-1).isEmpty()){
                 moves.add(new Move(x, y, x, y - 1));
-                System.out.println("move #1 added");
             }
             if(y==6 && getBoard().getSquare(x,y-2).isEmpty() && getBoard().getSquare(x,y-1).isEmpty()){
                 moves.add(new Move(x, y, x, y - 2));
-                System.out.println("move #2 added");
             }
             if((y-1 >= 0 && x-1 >= 0) && !getBoard().getSquare(x-1,y-1).isEmpty() && getBoard().getSquare(x-1,y-1).getPiece().getColor().equals(Color.BLACK)){
                 moves.add(new Move(x, y, x - 1, y - 1));
-                System.out.println("move #3 added");
             }
             if((y-1 >= 0 && x+1 <= 7) && !getBoard().getSquare(x+1,y-1).isEmpty() && getBoard().getSquare(x+1,y-1).getPiece().getColor().equals(Color.BLACK)) {
                 moves.add(new Move(x, y, x + 1, y - 1));
-                System.out.println("move #4 added");
             }
         }
         if(getColor().equals(Color.BLACK)) {
             if(y+1 <= 7 && getBoard().getSquare(x, y+1).isEmpty()){
                 moves.add(new Move(x, y, x, y + 1));
-                System.out.println("move #5 added");
             }
             if(y==1 && getBoard().getSquare(x,y+2).isEmpty() && getBoard().getSquare(x,y+1).isEmpty()){
                 moves.add(new Move(x, y, x, y + 2));
-                System.out.println("move #6 added");
             }
 
             if((y+1 <= 7 && x-1 >= 0) && !getBoard().getSquare(x-1,y+1).isEmpty() && getBoard().getSquare(x-1,y+1).getPiece().getColor().equals(Color.WHITE)){
                 moves.add(new Move(x, y, x - 1, y + 1));
-                System.out.println("move #7 added");
             }
             if((y+1 <= 7 && x+1 <= 7) && !getBoard().getSquare(x+1,y+1).isEmpty() && getBoard().getSquare(x+1,y+1).getPiece().getColor().equals(Color.WHITE)) {
                 moves.add(new Move(x, y, x + 1, y + 1));
-                System.out.println("move #8 added");
             }
         }
-        System.out.println();
-        if(moves.size() == 0){
-            System.out.println("Not possible to move");
-        }
-        else{
-            System.out.println(moves.toString());
-        }
+
         return moves;
     }
 
