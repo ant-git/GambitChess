@@ -10,11 +10,15 @@ import java.util.ArrayList;
  * Created by antant on 21/01/16.
  */
 public class King extends Piece {
-
+    private String blackKingStyle =  generateIcon("/images/bking");
+    private String whiteKingStyle =  generateIcon("/images/wking");
+    private String blackKingHStyle = generateIcon("/images/bkingh");
+    private String whiteKingHStyle = generateIcon("/images/wkingh");
+    private String blackKingPStyle = generateIcon("/images/bkingp");
+    private String whiteKingPStyle = generateIcon("/images/wkingp");
 
     public King(int x, int y, Color color, ChessBoard chessBoard) {
         super(x, y, color, chessBoard);
-        setDefaultIcon();
     }
 
     public String toString(){
@@ -24,30 +28,50 @@ public class King extends Piece {
 
     @Override
     public void setDefaultIcon() {
-        if(getColor().equals(Color.WHITE))
-            setStyle("-fx-background-image: url('/images/wking');" +
-                    "-fx-background-position: center center;" +
-                    "-fx-background-repeat: no-repeat");  // ** thats how to add image
-        if(getColor().equals(Color.BLACK))
-            setStyle("-fx-background-image: url('/images/bking');" +
-                    "-fx-background-position: center center;" +
-                    "-fx-background-repeat: no-repeat");
-
+        setIcon(whiteKingStyle, blackKingStyle);
     }
 
     @Override
     public void setHighlightedIcon() {
-
+        setIcon(whiteKingHStyle, blackKingHStyle);
     }
 
     @Override
     public void setPickIcon() {
-
+        setIcon(whiteKingPStyle, blackKingPStyle);
     }
 
     @Override
     public ArrayList<Move> getAvailableMoves() {
-        return null;
+        ArrayList<Move> moves = new ArrayList<>();
+        int x = getX();
+        int y = getY();
+
+        if((y-1 >= 0) && (getBoard().getSquare(x,y-1).isEmpty() || !pieceIsWhiteAtIndex(x,y-1)))
+            moves.add(new Move(x, y, x, y - 1));
+
+        if((x-1 >=0 && y-1 >= 0) && (getBoard().getSquare(x-1,y-1).isEmpty() || !pieceIsWhiteAtIndex(x-1,y-1)))
+            moves.add(new Move(x, y, x - 1, y - 1));
+
+        if((x-1 >= 0) && (getBoard().getSquare(x-1,y).isEmpty() || !pieceIsWhiteAtIndex(x-1,y)))
+            moves.add(new Move(x, y, x - 1, y));
+
+        if((x-1 >= 0 && y+1 <= 7) && (getBoard().getSquare(x-1,y+1).isEmpty() || !pieceIsWhiteAtIndex(x-1,y+1)))
+            moves.add(new Move(x, y, x - 1, y + 1));
+
+        if((y+1 <= 7) && (getBoard().getSquare(x,y+1).isEmpty() || !pieceIsWhiteAtIndex(x,y+1)))
+            moves.add(new Move(x, y, x, y + 1));
+
+        if((y+1 <= 7 && x+1 <= 7) && (getBoard().getSquare(x+1,y+1).isEmpty() || !pieceIsWhiteAtIndex(x+1,y+1)))
+            moves.add(new Move(x, y, x + 1, y + 1));
+
+        if((x+1 <= 7) && (getBoard().getSquare(x+1,y).isEmpty() || !pieceIsWhiteAtIndex(x+1,y)))
+            moves.add(new Move(x, y, x + 1, y));
+
+        if((x+1 <= 7 && y-1 >= 0) && (getBoard().getSquare(x+1,y-1).isEmpty() || !pieceIsWhiteAtIndex(x+1,y-1)))
+            moves.add(new Move(x, y, x + 1, y - 1));
+
+        return moves;
     }
 
 }

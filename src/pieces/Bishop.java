@@ -20,7 +20,6 @@ public class Bishop extends Piece {
 
     public Bishop(int x, int y, Color color, ChessBoard chessBoard) {
         super(x, y, color, chessBoard);
-        setDefaultIcon();
     }
 
     public String toString(){

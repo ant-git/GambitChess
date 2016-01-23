@@ -20,7 +20,6 @@ public class Queen extends Piece {
 
     public Queen(int x, int y, Color color, ChessBoard chessBoard) {
         super(x, y, color, chessBoard);
-        setDefaultIcon();
     }
 
     public String toString(){

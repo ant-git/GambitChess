@@ -11,10 +11,15 @@ import java.util.ArrayList;
  */
 public class Rook extends Piece {
 
+    private String blackRookStyle =  generateIcon("/images/brook");
+    private String whiteRookStyle =  generateIcon("/images/wrook");
+    private String blackRookHStyle = generateIcon("/images/brookh");
+    private String whiteRookHStyle = generateIcon("/images/wrookh");
+    private String blackRookPStyle = generateIcon("/images/brookp");
+    private String whiteRookPStyle = generateIcon("/images/wrookp");
 
     public Rook(int x, int y, Color color, ChessBoard chessBoard) {
         super(x, y, color, chessBoard);
-        setDefaultIcon();
     }
 
     public String toString(){
@@ -24,25 +29,17 @@ public class Rook extends Piece {
 
     @Override
     public void setDefaultIcon() {
-        if(getColor().equals(Color.WHITE))
-            setStyle("-fx-background-image: url('/images/wrook');" +
-                    "-fx-background-position: center center;" +
-                    "-fx-background-repeat: no-repeat");  // ** thats how to add image
-        if(getColor().equals(Color.BLACK))
-            setStyle("-fx-background-image: url('/images/brook');" +
-                    "-fx-background-position: center center;" +
-                    "-fx-background-repeat: no-repeat");
-
+        setIcon(whiteRookStyle,blackRookStyle);
     }
 
     @Override
     public void setHighlightedIcon() {
-
+        setIcon(whiteRookHStyle,blackRookHStyle);
     }
 
     @Override
     public void setPickIcon() {
-
+        setIcon(whiteRookPStyle,blackRookPStyle);
     }
 
 
