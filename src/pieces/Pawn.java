@@ -4,13 +4,9 @@ import game.ChessBoard;
 import game.ChessSquare;
 import game.Highlightable;
 import game.Move;
-import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * Created by antant on 21/01/16.
@@ -18,12 +14,11 @@ import java.util.Collection;
 public class Pawn extends Piece implements Highlightable{
     private ChessBoard board;
     private final int maxMoves = 4;
-    private int x;
-    private int y;
-    private Color color;
     private ChessSquare square;
     private boolean highlighted;
     private boolean picked;
+    private int x;
+    private int y;
 
     private String blackPawnStyle = "-fx-background-image: url('/images/bpawn');" +
                                     "-fx-background-position: center center;" +
@@ -33,17 +28,32 @@ public class Pawn extends Piece implements Highlightable{
                                     "-fx-background-position: center center;" +
                                     "-fx-background-repeat: no-repeat";
 
+    private String blackPawnHStyle = "-fx-background-image: url('/images/bpawnh');" +
+            "-fx-background-position: center center;" +
+            "-fx-background-repeat: no-repeat;";
+
+    private String whitePawnHStyle = "-fx-background-image: url('/images/wpawnh');" +
+            "-fx-background-position: center center;" +
+            "-fx-background-repeat: no-repeat";
+
+    private String blackPawnPStyle = "-fx-background-image: url('/images/bpawnp');" +
+            "-fx-background-position: center center;" +
+            "-fx-background-repeat: no-repeat;";
+
+    private String whitePawnPStyle = "-fx-background-image: url('/images/wpawnp');" +
+            "-fx-background-position: center center;" +
+            "-fx-background-repeat: no-repeat";
+
     public Pawn(int x, int y, Color color, ChessBoard chessBoard) {
-        super(x,y,color);
+        super(color);
         this.board = chessBoard;
-        this.x = this.getX();
-        this.y = this.getY();
-        this.color = this.getColor();
+        this.x = x;
+        this.y = y;
         square = board.getSquare(this);
         square.setPiece(this);
         highlighted = false;
         picked = false;
-        setIcon();
+        setDefaultIcon();
     }
 
     public String toString(){
@@ -51,16 +61,44 @@ public class Pawn extends Piece implements Highlightable{
     }
 
     @Override
-    public void setIcon() {
-        if (color.equals(Color.WHITE))
+    public int getX() {
+        return x;
+    }
+
+    @Override
+    public int getY() {
+        return y;
+    }
+
+
+    @Override
+    public void setDefaultIcon() {
+        if (getColor().equals(Color.WHITE))
             setStyle(whitePawnStyle);  // ** thats how to add image
-        if(color.equals(Color.BLACK))
+        if(getColor().equals(Color.BLACK))
             setStyle(blackPawnStyle);
 
     }
 
+    @Override
+    public void setHighlightedIcon() {
+        if (getColor().equals(Color.WHITE))
+            setStyle(whitePawnHStyle);  // ** thats how to add image
+        if(getColor().equals(Color.BLACK))
+            setStyle(blackPawnHStyle);
+    }
+
+    @Override
+    public void setPickIcon() {
+        if (getColor().equals(Color.WHITE))
+            setStyle(whitePawnPStyle);  // ** thats how to add image
+        if(getColor().equals(Color.BLACK))
+            setStyle(blackPawnPStyle);
+    }
+
     public void pick(){
         picked = true;
+        setPickIcon();
         board.highlightPossibleMoves(getAvailableMoves());
         setOnMouseClicked(event -> {
             board.setDefaultListeners();
@@ -70,51 +108,64 @@ public class Pawn extends Piece implements Highlightable{
 
     private ArrayList<Move> getAvailableMoves(){
         ArrayList<Move> moves = new ArrayList<>();
-
-        if(color.equals(Color.WHITE)) {
-            if(board.getSquare(x, y-1).isEmpty()){
+        System.out.println();
+        if(getColor().equals(Color.WHITE)) {
+            if(y-1 >=0 && board.getSquare(x, y-1).isEmpty()){
                 moves.add(new Move(x, y, x, y - 1));
+                System.out.println("move #1 added");
             }
-            if(y==6 && board.getSquare(x,y-2).isEmpty()){
+            if(y==6 && board.getSquare(x,y-2).isEmpty() && board.getSquare(x,y-1).isEmpty()){
                 moves.add(new Move(x, y, x, y - 2));
+                System.out.println("move #2 added");
             }
             if((y-1 >= 0 && x-1 >= 0) && !board.getSquare(x-1,y-1).isEmpty() && board.getSquare(x-1,y-1).getPiece().getColor().equals(Color.BLACK)){
                 moves.add(new Move(x, y, x - 1, y - 1));
+                System.out.println("move #3 added");
             }
             if((y-1 >= 0 && x+1 <= 7) && !board.getSquare(x+1,y-1).isEmpty() && board.getSquare(x+1,y-1).getPiece().getColor().equals(Color.BLACK)) {
                 moves.add(new Move(x, y, x + 1, y - 1));
+                System.out.println("move #4 added");
             }
         }
-        if(color.equals(Color.BLACK)) {
-            System.out.println("SQUARE IS " + !board.getSquare(x-1,y+1).isEmpty());
+        if(getColor().equals(Color.BLACK)) {
             if(y+1 <= 7 && board.getSquare(x, y+1).isEmpty()){
                 moves.add(new Move(x, y, x, y + 1));
+                System.out.println("move #5 added");
             }
-            if(y==1 && board.getSquare(x,y+2).isEmpty()){
+            if(y==1 && board.getSquare(x,y+2).isEmpty() && board.getSquare(x,y+1).isEmpty()){
                 moves.add(new Move(x, y, x, y + 2));
+                System.out.println("move #6 added");
             }
 
             if((y+1 <= 7 && x-1 >= 0) && !board.getSquare(x-1,y+1).isEmpty() && board.getSquare(x-1,y+1).getPiece().getColor().equals(Color.WHITE)){
                 moves.add(new Move(x, y, x - 1, y + 1));
+                System.out.println("move #7 added");
             }
             if((y+1 <= 7 && x+1 <= 7) && !board.getSquare(x+1,y+1).isEmpty() && board.getSquare(x+1,y+1).getPiece().getColor().equals(Color.WHITE)) {
                 moves.add(new Move(x, y, x + 1, y + 1));
+                System.out.println("move #8 added");
             }
         }
         System.out.println();
-        System.out.println(moves.toString());
+        if(moves.size() == 0){
+            System.out.println("Not possible to move");
+        }
+        else{
+            System.out.println(moves.toString());
+        }
         return moves;
     }
 
     private boolean moveCheck(Move move){
         boolean movePossible = true;
 
-        if(color.equals(Color.WHITE)){
+        if(getColor().equals(Color.WHITE)){
 
         }
 
         return movePossible;
     }
+
 
 
     public void move(int newX, int newY){
@@ -123,6 +174,7 @@ public class Pawn extends Piece implements Highlightable{
         board.getChessBoard().add(this, newX, newY);
         x = newX;
         y = newY;
+        board.getSquare(newX,newY).setPiece(this);
         highlighted = false;
         System.out.println("Move successful! Alive pieces left: " + board.getAlivePiecesCount());
     }
@@ -133,25 +185,28 @@ public class Pawn extends Piece implements Highlightable{
     }
 
     public void setHighlighted(boolean highlighted) {
+        setHighlightedIcon();
         this.highlighted = highlighted;
     }
 
     @Override
     public void highlight(Move move) {
-        if(move.getNewX() == x && move.getNewY() == y){
+        if(move.getNewX() == getX() && move.getNewY() == getY()){
+            setHighlightedIcon();
             highlighted = true;
         }
     }
 
     @Override
     public void dehighlight() {
-        setIcon();
+        setDefaultIcon();
         highlighted = false;
     }
 
     public void setDefaultListener(){
         setOnMouseClicked(event -> {
             pick();
+            System.out.println("Color: " + getColor().toString());
         });
     }
 
@@ -177,7 +232,7 @@ public class Pawn extends Piece implements Highlightable{
         board.getChessBoard().getChildren().remove(this);
         board.getSquare(this).removePiece();
         System.out.println("DEAD");
-        killer.move(x, y);
+        killer.move(getX(), getY());
     }
 
 }

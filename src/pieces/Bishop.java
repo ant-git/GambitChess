@@ -9,8 +9,8 @@ public class Bishop extends Piece {
 
 
     public Bishop(int x, int y, Color color) {
-        super(x, y, color);
-        setIcon();
+        super(color);
+        setDefaultIcon();
     }
 
     public String toString(){
@@ -18,7 +18,17 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public void setIcon() {
+    public int getX() {
+        return 0;
+    }
+
+    @Override
+    public int getY() {
+        return 0;
+    }
+
+    @Override
+    public void setDefaultIcon() {
         if(getColor().equals(Color.WHITE))
             setStyle("-fx-background-image: url('/images/wbishop');" +
                     "-fx-background-position: center center;" +

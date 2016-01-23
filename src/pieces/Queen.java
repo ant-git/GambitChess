@@ -8,15 +8,26 @@ import javafx.scene.paint.Color;
 public class Queen extends Piece {
 
     public Queen(int x, int y, Color color) {
-        super(x, y, color);
-        setIcon();
+        super(color);
+        setDefaultIcon();
     }
 
     public String toString(){
         return "Q";
     }
+
     @Override
-    public void setIcon() {
+    public int getX() {
+        return 0;
+    }
+
+    @Override
+    public int getY() {
+        return 0;
+    }
+
+    @Override
+    public void setDefaultIcon() {
         if(getColor().equals(Color.WHITE))
             setStyle("-fx-background-image: url('/images/wqueen');" +
                     "-fx-background-position: center center;" +

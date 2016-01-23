@@ -12,6 +12,7 @@ public class ChessSquare extends Pane implements Highlightable{
     int y;
     Piece piece;
     boolean empty;
+
     Color color;
     private boolean highlighted;
     String blackSquareStyle = "-fx-background-color: saddlebrown";
@@ -69,7 +70,7 @@ public class ChessSquare extends Pane implements Highlightable{
 
     public void setPiece(Piece piece) {
         this.piece = piece;
-        piece.setChessSquare(this);
+        //piece.setChessSquare(this);
         empty = false;
     }
     public void removePiece(){
@@ -119,6 +120,7 @@ public class ChessSquare extends Pane implements Highlightable{
     public void setDefaultListener(){
         this.setOnMouseClicked(event -> {
             System.out.println("SQUARE CLICKED @ " + x + " " +y);
+            System.out.println(isEmpty());
         });
     }
 
