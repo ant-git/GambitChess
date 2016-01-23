@@ -86,6 +86,10 @@ public abstract class Piece extends Pane{
         });
     }
 
+    public boolean pieceIsWhiteAtIndex(int x, int y){
+        return board.getSquare(x,y).getPiece().getColor().equals(Color.WHITE);
+    }
+
     public boolean isHighlighted() {
         return highlighted;
     }
