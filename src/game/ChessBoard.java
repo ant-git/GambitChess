@@ -35,7 +35,6 @@ public class ChessBoard  implements Initializable{
                 if(white) {
                     square = new ChessSquare(j,i,Color.WHITE, this);
                     chessBoard.add(square,j,i);
-
                     white = false;
                 }else{
                     square = new ChessSquare(j,i,Color.BLACK, this);
@@ -170,6 +169,7 @@ public class ChessBoard  implements Initializable{
 
     @FXML
     public void resetGame(){
+        chessBoard.getChildren().clear();
         paintBoard();
         setupPieces();
         System.out.println("game is reset");
@@ -212,19 +212,37 @@ public class ChessBoard  implements Initializable{
             }
         }
     }
-    public void setHighlightOnlyListeners(){
-        System.out.println("CALLED");
+    public void setHighlightOnlyListeners(Piece pickedPiece){
         for(Node node : chessBoard.getChildren()){
             if(node instanceof ChessSquare){
                 if(!((ChessSquare) node).isHighlighted()){
                     ((ChessSquare) node).removeListeners();
                 }
-            }
-            if(node instanceof Piece){
-                if(!((Piece) node).isHighlighted()){
-                    ((Piece) node).removeListeners();
+                else{
+                    ((ChessSquare) node).receivePiece(pickedPiece);
                 }
             }
+            if(node instanceof Piece){
+
+                if(node.equals(pickedPiece)) {
+                    ((Piece) node).setDeselectListener();
+                   }
+                if(((Piece) node).isHighlighted()){
+                    ((Piece) node).setUnderTreatListener(pickedPiece);
+                }
+
+            }
+
         }
+    }
+
+    public int getAlivePiecesCount(){
+        int counter = 0;
+        for(Node node : chessBoard.getChildren()){
+            if(node instanceof Piece){
+                counter++;
+            }
+        }
+        return counter;
     }
 }

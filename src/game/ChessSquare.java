@@ -123,7 +123,16 @@ public class ChessSquare extends Pane implements Highlightable{
     }
 
     public void removeListeners(){
-        setOnMouseClicked(event -> {});
+        setOnMouseClicked(event -> {
+        });
     }
 
+    public void receivePiece(Piece piece){
+        setOnMouseClicked(event -> {
+            piece.move(x, y);
+            setPiece(piece);
+            board.setDefaultListeners();
+        });
+
+    }
 }

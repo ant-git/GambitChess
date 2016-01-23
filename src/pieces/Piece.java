@@ -75,4 +75,18 @@ public abstract class Piece extends Pane{
     public void removeListeners(){
 
     }
+
+    public void move(int x, int y){
+
+    }
+
+    public void kill(Piece killer){
+
+    }
+    public void setDeselectListener(){
+
+    }
+    public void setUnderTreatListener(Piece killer){
+
+    }
 }

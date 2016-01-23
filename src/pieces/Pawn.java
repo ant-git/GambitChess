@@ -60,13 +60,12 @@ public class Pawn extends Piece implements Highlightable{
     }
 
     public void pick(){
-        highlighted = true;
         picked = true;
         board.highlightPossibleMoves(getAvailableMoves());
         setOnMouseClicked(event -> {
             board.setDefaultListeners();
         });
-        board.setHighlightOnlyListeners();
+        board.setHighlightOnlyListeners(this);
     }
 
     private ArrayList<Move> getAvailableMoves(){
@@ -80,13 +79,16 @@ public class Pawn extends Piece implements Highlightable{
                 moves.add(new Move(x, y, x, y - 2));
             }
             if((y-1 >= 0 && x-1 >= 0) && !board.getSquare(x-1,y-1).isEmpty() && board.getSquare(x-1,y-1).getPiece().getColor().equals(Color.BLACK)){
+                System.out.println("OMFG ITS WORKING");
                 moves.add(new Move(x, y, x - 1, y - 1));
             }
             if((y-1 >= 0 && x+1 <= 7) && !board.getSquare(x+1,y-1).isEmpty() && board.getSquare(x+1,y-1).getPiece().getColor().equals(Color.BLACK)) {
+                System.out.println("OMFG ITS WORKING");
                 moves.add(new Move(x, y, x + 1, y - 1));
             }
         }
         if(color.equals(Color.BLACK)) {
+            System.out.println("SQUARE IS " + !board.getSquare(x-1,y+1).isEmpty());
             if(y+1 <= 7 && board.getSquare(x, y+1).isEmpty()){
                 moves.add(new Move(x, y, x, y + 1));
             }
@@ -95,9 +97,11 @@ public class Pawn extends Piece implements Highlightable{
             }
 
             if((y+1 <= 7 && x-1 >= 0) && !board.getSquare(x-1,y+1).isEmpty() && board.getSquare(x-1,y+1).getPiece().getColor().equals(Color.WHITE)){
+                System.out.println("OMFG ITS WORKING");
                 moves.add(new Move(x, y, x - 1, y + 1));
             }
             if((y+1 <= 7 && x+1 <= 7) && !board.getSquare(x+1,y+1).isEmpty() && board.getSquare(x+1,y+1).getPiece().getColor().equals(Color.WHITE)) {
+                System.out.println("OMFG ITS WORKING");
                 moves.add(new Move(x, y, x + 1, y + 1));
             }
         }
@@ -117,17 +121,14 @@ public class Pawn extends Piece implements Highlightable{
     }
 
 
-    public void move(){
-//        System.out.println("WORKING FROM PAWN");
-//        System.out.println("BLACK PAWN CLICKED @ " + this.getX() + " " + this.getY());
-//        board.getChessBoard().getChildren().remove(this);
-//        board.getChessBoard().add(this, this.getX(), this.getY()+1);
-//        this.setX(this.getX());
-//        this.setY(this.getY()+1);
-        for(Move move : getAvailableMoves()){
-            System.out.println(move.toString());
-        }
-        System.out.println("---------------------------------");
+    public void move(int newX, int newY){
+        board.getSquare(this).removePiece();
+        board.getChessBoard().getChildren().remove(this);
+        board.getChessBoard().add(this, newX, newY);
+        x = newX;
+        y = newY;
+        highlighted = false;
+        System.out.println("Move successful! Alive pieces left: " + board.getAlivePiecesCount());
     }
 
 
@@ -142,7 +143,6 @@ public class Pawn extends Piece implements Highlightable{
     @Override
     public void highlight(Move move) {
         if(move.getNewX() == x && move.getNewY() == y){
-            System.out.println("PAWN HIGHLIGHTED!@ " + x + " " + y);
             highlighted = true;
         }
     }
@@ -159,7 +159,29 @@ public class Pawn extends Piece implements Highlightable{
         });
     }
 
+    public void setDeselectListener(){
+        setOnMouseClicked(event -> {
+            board.setDefaultListeners();
+        });
+    }
+
     public void removeListeners(){
         setOnMouseClicked(event -> {});
     }
+
+    public void setUnderTreatListener(Piece killer){
+        System.out.println("UNDER TREAT");
+        setOnMouseClicked(event -> {
+            getKilled(killer);
+            board.setDefaultListeners();
+        });
+    }
+
+    public void getKilled(Piece killer){
+        board.getChessBoard().getChildren().remove(this);
+        board.getSquare(this).removePiece();
+        System.out.println("DEAD");
+        killer.move(x, y);
+    }
+
 }
