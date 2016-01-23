@@ -11,6 +11,13 @@ import java.util.ArrayList;
  */
 public class Bishop extends Piece {
 
+    private String blackBishopStyle =  generateIcon("/images/bbishop");
+    private String whiteBishopStyle =  generateIcon("/images/wbishop");
+    private String blackBishopHStyle = generateIcon("/images/bbishoph");
+    private String whiteBishopHStyle = generateIcon("/images/wbishoph");
+    private String blackBishopPStyle = generateIcon("/images/bbishopp");
+    private String whiteBishopPStyle = generateIcon("/images/wbishopp");
+
     public Bishop(int x, int y, Color color, ChessBoard chessBoard) {
         super(x, y, color, chessBoard);
         setDefaultIcon();
@@ -21,30 +28,22 @@ public class Bishop extends Piece {
     }
 
 
-
     @Override
     public void setDefaultIcon() {
-        if(getColor().equals(Color.WHITE))
-            setStyle("-fx-background-image: url('/images/wbishop');" +
-                    "-fx-background-position: center center;" +
-                    "-fx-background-repeat: no-repeat");  // ** thats how to add image
-
-        if(getColor().equals(Color.BLACK))
-            setStyle("-fx-background-image: url('/images/bbishop');" +
-                    "-fx-background-position: center center;" +
-                    "-fx-background-repeat: no-repeat");
-
+        setIcon(whiteBishopStyle, blackBishopStyle);
     }
 
     @Override
     public void setHighlightedIcon() {
-
+        setIcon(whiteBishopHStyle, blackBishopHStyle);
     }
 
     @Override
     public void setPickIcon() {
+        setIcon(whiteBishopPStyle, blackBishopPStyle);
 
     }
+
 
     @Override
     public ArrayList<Move> getAvailableMoves() {
