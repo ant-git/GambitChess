@@ -29,4 +29,9 @@ public class Rook extends Piece {
                     "-fx-background-repeat: no-repeat");
 
     }
+
+    @Override
+    public void dehighlight() {
+
+    }
 }

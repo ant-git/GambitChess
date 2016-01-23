@@ -1,6 +1,7 @@
 package pieces;
 
 import game.ChessSquare;
+import game.Move;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -58,5 +59,20 @@ public abstract class Piece extends Pane{
     public void setIcon(){
     }
 
+    public void highlight(Move move){
 
+    }
+
+    public void setDefaultListener(){
+
+    }
+
+    public abstract void dehighlight();
+    public boolean isHighlighted(){
+        return false;
+    }
+
+    public void removeListeners(){
+
+    }
 }

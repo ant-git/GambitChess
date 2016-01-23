@@ -10,6 +10,7 @@ import javafx.scene.paint.Color;
 import pieces.*;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -32,26 +33,18 @@ public class ChessBoard  implements Initializable{
             for (int j = 0; j < 8; j++){
                 ChessSquare square;
                 if(white) {
-                    square = new ChessSquare(j,i,Color.WHITE);
+                    square = new ChessSquare(j,i,Color.WHITE, this);
                     chessBoard.add(square,j,i);
 
                     white = false;
                 }else{
-                    square = new ChessSquare(j,i,Color.BLACK);
+                    square = new ChessSquare(j,i,Color.BLACK, this);
                     chessBoard.add(square,j,i);
                     white = true;
                 }
                 if(j== 7){
                     white = !white;
                 }
-
-                square.setOnMouseClicked(event -> {
-                    System.out.println();
-                    System.out.println(square.getX() + " " + square.getY());
-                    System.out.println(chessBoard.getChildren().indexOf(square));
-                    System.out.println();
-                    System.out.println(chessBoard.getRowIndex(square) + " " + chessBoard.getColumnIndex(square));
-                });
 
             }
         }
@@ -140,6 +133,8 @@ public class ChessBoard  implements Initializable{
 
         // chessBoard.getChildren().remove(pawn); // *that's how you remove element from gridpane
 
+        setDefaultListeners();
+
     }
 
     public void checkEmptySquares(){
@@ -190,5 +185,46 @@ public class ChessBoard  implements Initializable{
 
     public GridPane getChessBoard() {
         return chessBoard;
+    }
+
+    public void highlightPossibleMoves(ArrayList<Move> moves) {
+        for(Node node: chessBoard.getChildren()){
+                for(Move move : moves){
+                    if(node instanceof ChessSquare)
+                        ((ChessSquare) node).highlight(move);
+                    if(node instanceof Piece)
+                        ((Piece) node).highlight(move);
+            }
+        }
+    }
+
+
+
+    public void setDefaultListeners(){
+        for(Node node : chessBoard.getChildren()){
+            if(node instanceof ChessSquare){
+                ((ChessSquare) node).dehighlight();
+                ((ChessSquare) node).setDefaultListener();
+            }
+            if(node instanceof Piece){
+                ((Piece) node).dehighlight();
+                ((Piece) node).setDefaultListener();
+            }
+        }
+    }
+    public void setHighlightOnlyListeners(){
+        System.out.println("CALLED");
+        for(Node node : chessBoard.getChildren()){
+            if(node instanceof ChessSquare){
+                if(!((ChessSquare) node).isHighlighted()){
+                    ((ChessSquare) node).removeListeners();
+                }
+            }
+            if(node instanceof Piece){
+                if(!((Piece) node).isHighlighted()){
+                    ((Piece) node).removeListeners();
+                }
+            }
+        }
     }
 }

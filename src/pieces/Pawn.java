@@ -2,24 +2,36 @@ package pieces;
 
 import game.ChessBoard;
 import game.ChessSquare;
+import game.Highlightable;
 import game.Move;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collection;
 
 /**
  * Created by antant on 21/01/16.
  */
-public class Pawn extends Piece{
+public class Pawn extends Piece implements Highlightable{
     private ChessBoard board;
     private final int maxMoves = 4;
     private int x;
     private int y;
     private Color color;
     private ChessSquare square;
+    private boolean highlighted;
+    private boolean picked;
+
+    private String blackPawnStyle = "-fx-background-image: url('/images/bpawn');" +
+                                    "-fx-background-position: center center;" +
+                                    "-fx-background-repeat: no-repeat;";
+
+    private String whitePawnStyle = "-fx-background-image: url('/images/wpawn');" +
+                                    "-fx-background-position: center center;" +
+                                    "-fx-background-repeat: no-repeat";
 
     public Pawn(int x, int y, Color color, ChessBoard chessBoard) {
         super(x,y,color);
@@ -29,11 +41,9 @@ public class Pawn extends Piece{
         this.color = this.getColor();
         square = board.getSquare(this);
         square.setPiece(this);
+        highlighted = false;
+        picked = false;
         setIcon();
-
-        setOnMouseClicked(event -> {
-            System.out.println("Pawn picked!");
-        });
     }
 
     public String toString(){
@@ -43,18 +53,20 @@ public class Pawn extends Piece{
     @Override
     public void setIcon() {
         if (color.equals(Color.WHITE))
-            setStyle("-fx-background-image: url('/images/wpawn');" +
-                    "-fx-background-position: center center;" +
-                    "-fx-background-repeat: no-repeat");  // ** thats how to add image
+            setStyle(whitePawnStyle);  // ** thats how to add image
         if(color.equals(Color.BLACK))
-            setStyle("-fx-background-image: url('/images/bpawn');" +
-                    "-fx-background-position: center center;" +
-                    "-fx-background-repeat: no-repeat");
+            setStyle(blackPawnStyle);
 
     }
 
     public void pick(){
-        move();
+        highlighted = true;
+        picked = true;
+        board.highlightPossibleMoves(getAvailableMoves());
+        setOnMouseClicked(event -> {
+            board.setDefaultListeners();
+        });
+        board.setHighlightOnlyListeners();
     }
 
     private ArrayList<Move> getAvailableMoves(){
@@ -89,7 +101,8 @@ public class Pawn extends Piece{
                 moves.add(new Move(x, y, x + 1, y + 1));
             }
         }
-
+        System.out.println();
+        System.out.println(moves.toString());
         return moves;
     }
 
@@ -101,10 +114,6 @@ public class Pawn extends Piece{
         }
 
         return movePossible;
-    }
-
-    private void highlightMoves(){
-
     }
 
 
@@ -122,6 +131,35 @@ public class Pawn extends Piece{
     }
 
 
+    public boolean isHighlighted() {
+        return highlighted;
+    }
 
+    public void setHighlighted(boolean highlighted) {
+        this.highlighted = highlighted;
+    }
 
+    @Override
+    public void highlight(Move move) {
+        if(move.getNewX() == x && move.getNewY() == y){
+            System.out.println("PAWN HIGHLIGHTED!@ " + x + " " + y);
+            highlighted = true;
+        }
+    }
+
+    @Override
+    public void dehighlight() {
+        setIcon();
+        highlighted = false;
+    }
+
+    public void setDefaultListener(){
+        setOnMouseClicked(event -> {
+            pick();
+        });
+    }
+
+    public void removeListeners(){
+        setOnMouseClicked(event -> {});
+    }
 }

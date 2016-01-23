@@ -30,6 +30,11 @@ public class King extends Piece {
 
     }
 
+    @Override
+    public void dehighlight() {
+
+    }
+
     public void highlight(){
         if(getColor().equals(Color.WHITE))
             setStyle("-fx-background-image: url('/images/wking');" +

@@ -7,27 +7,44 @@ import pieces.Piece;
 /**
  * Created by antant on 21/01/16.
  */
-public class ChessSquare extends Pane{
+public class ChessSquare extends Pane implements Highlightable{
     int x;
     int y;
     Piece piece;
     boolean empty;
     Color color;
+    private boolean highlighted;
+    String blackSquareStyle = "-fx-background-color: saddlebrown";
+    String whiteSquareStyle = "-fx-background-color: wheat";
 
-    public ChessSquare(int x, int y, Color color) {
+    String blackSquareHStyle = "-fx-background-color: saddlebrown; " +
+                               "-fx-background-image: url('/images/circle');" +
+                               "-fx-background-position: center center;" +
+                               "-fx-background-repeat: no-repeat;";
+
+    String whiteSquareHStyle = "-fx-background-color: wheat; " +
+                               "-fx-background-image: url('/images/circle');" +
+                               "-fx-background-position: center center;" +
+                               "-fx-background-repeat: no-repeat;";
+
+    ChessBoard board;
+
+    public ChessSquare(int x, int y, Color color, ChessBoard board) {
         this.x = x;
         this.y = y;
         this.color = color;
         setColor();
         empty = true;
+        highlighted = false;
+        this.board = board;
 
     }
 
     private void setColor(){
         if(color.equals(Color.WHITE))
-            this.setStyle("-fx-background-color: wheat");
+            this.setStyle(whiteSquareStyle);
         if(color.equals(Color.BLACK))
-            this.setStyle("-fx-background-color: saddlebrown");
+            this.setStyle(blackSquareStyle);
     }
 
     public int getX() {
@@ -70,6 +87,43 @@ public class ChessSquare extends Pane{
 
     public void setColor(Color color){
         this.color = color;
+    }
+
+    public boolean isHighlighted() {
+        return highlighted;
+    }
+
+    public void setHighlighted(boolean highlighted) {
+        this.highlighted = highlighted;
+    }
+
+
+    @Override
+    public void highlight(Move move){
+        if(move.getNewX() == x && move.getNewY() == y && isEmpty()){
+            System.out.println("HIGHLIGHTED! @ " + x + " " + y);
+            if(color.equals(Color.WHITE))
+                this.setStyle(whiteSquareHStyle);
+            if(color.equals(Color.BLACK))
+                this.setStyle(blackSquareHStyle);
+            highlighted = true;
+        }
+    }
+
+    @Override
+    public void dehighlight() {
+        setColor();
+        highlighted = false;
+    }
+
+    public void setDefaultListener(){
+        this.setOnMouseClicked(event -> {
+            System.out.println("SQUARE CLICKED @ " + x + " " +y);
+        });
+    }
+
+    public void removeListeners(){
+        setOnMouseClicked(event -> {});
     }
 
 }
