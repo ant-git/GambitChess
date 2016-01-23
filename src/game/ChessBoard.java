@@ -65,67 +65,67 @@ public class ChessBoard  implements Initializable{
             chessBoard.add(pawn,i,6);
         }
 
-        King bking = new King(4,0, Color.BLACK);
+        King bking = new King(4,0, Color.BLACK, this);
         chessBoard.add(bking, 4,0);
         bking.setOnMouseClicked(event -> System.out.println("BLACK KING CLICKED"));
 
-        King wking = new King(4,7, Color.WHITE);
+        King wking = new King(4,7, Color.WHITE, this);
         chessBoard.add(wking, 4,7);
         wking.setOnMouseClicked(event -> System.out.println("KING CLICKED"));
 
-        Rook brook1 = new Rook(0,0,Color.BLACK);
+        Rook brook1 = new Rook(0,0,Color.BLACK, this);
         chessBoard.add(brook1, 0,0);
         brook1.setOnMouseClicked(event -> System.out.println("BLACK ROOK CLICKED"));
 
-        Rook brook2 = new Rook(7,0,Color.BLACK);
+        Rook brook2 = new Rook(7,0,Color.BLACK, this);
         chessBoard.add(brook2, 7,0);
         brook2.setOnMouseClicked(event -> System.out.println("BLACK ROOK CLICKED"));
 
-        Rook wrook1 = new Rook(0,7,Color.WHITE);
+        Rook wrook1 = new Rook(0,7,Color.WHITE, this);
         chessBoard.add(wrook1, 0,7);
         wrook1.setOnMouseClicked(event -> System.out.println("WHITE ROOK CLICKED"));
 
-        Rook wrook2 = new Rook(7,7,Color.WHITE);
+        Rook wrook2 = new Rook(7,7,Color.WHITE, this);
         chessBoard.add(wrook2, 7,7);
         wrook2.setOnMouseClicked(event -> System.out.println("WHITE ROOK CLICKED"));
 
-        Queen bqueen = new Queen(3,0,Color.BLACK);
+        Queen bqueen = new Queen(3,0,Color.BLACK, this);
         chessBoard.add(bqueen,3,0);
         bqueen.setOnMouseClicked(event -> System.out.println("BLACK QUEEN CLICKED"));
 
-        Queen wqueen = new Queen(3,7,Color.WHITE);
+        Queen wqueen = new Queen(3,7,Color.WHITE, this);
         chessBoard.add(wqueen,3,7);
         wqueen.setOnMouseClicked(event -> System.out.println("WHITE QUEEN CLICKED"));
 
-        Bishop bbishop1 = new Bishop(2,0,Color.BLACK);
+        Bishop bbishop1 = new Bishop(2,0,Color.BLACK, this);
         chessBoard.add(bbishop1,2,0);
         bbishop1.setOnMouseClicked(event -> System.out.println("BLACK BISHOP CLICKED"));
 
-        Bishop bbishop2 = new Bishop(5,0,Color.BLACK);
+        Bishop bbishop2 = new Bishop(5,0,Color.BLACK, this);
         chessBoard.add(bbishop2,5,0);
         bbishop2.setOnMouseClicked(event -> System.out.println("BLACK BISHOP CLICKED"));
 
-        Bishop wbishop1 = new Bishop(2,7,Color.WHITE);
+        Bishop wbishop1 = new Bishop(2,7,Color.WHITE, this);
         chessBoard.add(wbishop1,2,7);
         wbishop1.setOnMouseClicked(event -> System.out.println("WHITE BISHOP CLICKED"));
 
-        Bishop wbishop2 = new Bishop(5,7,Color.WHITE);
+        Bishop wbishop2 = new Bishop(5,7,Color.WHITE, this);
         chessBoard.add(wbishop2,5,7);
         wbishop2.setOnMouseClicked(event -> System.out.println("WHITE BISHOP CLICKED"));
 
-        Knight bknight1 = new Knight(1,0,Color.BLACK);
+        Knight bknight1 = new Knight(1,0,Color.BLACK, this);
         chessBoard.add(bknight1,1,0);
         bknight1.setOnMouseClicked(event -> System.out.println("BLACK KNIGHT CLICKED"));
 
-        Knight bknight2 = new Knight(6,0,Color.BLACK);
+        Knight bknight2 = new Knight(6,0,Color.BLACK, this);
         chessBoard.add(bknight2,6,0);
         bknight2.setOnMouseClicked(event -> System.out.println("BLACK KNIGHT CLICKED"));
 
-        Knight wknight1 = new Knight(1,7,Color.WHITE);
+        Knight wknight1 = new Knight(1,7,Color.WHITE, this);
         chessBoard.add(wknight1,1,7);
         wknight1.setOnMouseClicked(event -> System.out.println("WHITE KNIGHT CLICKED"));
 
-        Knight wknight2 = new Knight(6,7,Color.WHITE);
+        Knight wknight2 = new Knight(6,7,Color.WHITE, this);
         chessBoard.add(wknight2,6,7);
         wknight2.setOnMouseClicked(event -> System.out.println("WHITE KNIGHT CLICKED"));
 

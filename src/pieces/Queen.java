@@ -1,14 +1,18 @@
 package pieces;
 
+import game.ChessBoard;
+import game.Move;
 import javafx.scene.paint.Color;
+
+import java.util.ArrayList;
 
 /**
  * Created by antant on 21/01/16.
  */
 public class Queen extends Piece {
 
-    public Queen(int x, int y, Color color) {
-        super(color);
+    public Queen(int x, int y, Color color, ChessBoard chessBoard) {
+        super(x, y, color, chessBoard);
         setDefaultIcon();
     }
 
@@ -16,15 +20,6 @@ public class Queen extends Piece {
         return "Q";
     }
 
-    @Override
-    public int getX() {
-        return 0;
-    }
-
-    @Override
-    public int getY() {
-        return 0;
-    }
 
     @Override
     public void setDefaultIcon() {
@@ -40,7 +35,9 @@ public class Queen extends Piece {
     }
 
     @Override
-    public void dehighlight() {
-
+    public ArrayList<Move> getAvailableMoves() {
+        return null;
     }
+
+
 }

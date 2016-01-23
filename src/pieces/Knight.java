@@ -1,6 +1,10 @@
 package pieces;
 
+import game.ChessBoard;
+import game.Move;
 import javafx.scene.paint.Color;
+
+import java.util.ArrayList;
 
 /**
  * Created by antant on 21/01/16.
@@ -8,25 +12,14 @@ import javafx.scene.paint.Color;
 public class Knight extends Piece {
 
 
-    public Knight(int x, int y, Color color) {
-        super(color);
+    public Knight(int x, int y, Color color, ChessBoard chessBoard) {
+        super(x, y, color, chessBoard);
         setDefaultIcon();
     }
 
     public String toString(){
         return "k";
     }
-
-    @Override
-    public int getX() {
-        return 0;
-    }
-
-    @Override
-    public int getY() {
-        return 0;
-    }
-
 
     @Override
     public void setDefaultIcon() {
@@ -42,7 +35,9 @@ public class Knight extends Piece {
     }
 
     @Override
-    public void dehighlight() {
-
+    public ArrayList<Move> getAvailableMoves() {
+        return null;
     }
+
+
 }

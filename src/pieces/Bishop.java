@@ -1,15 +1,22 @@
 package pieces;
 
+import game.ChessBoard;
+import game.Move;
 import javafx.scene.paint.Color;
+
+import java.util.ArrayList;
 
 /**
  * Created by antant on 21/01/16.
  */
 public class Bishop extends Piece {
+    @Override
+    public ArrayList<Move> getAvailableMoves() {
+        return null;
+    }
 
-
-    public Bishop(int x, int y, Color color) {
-        super(color);
+    public Bishop(int x, int y, Color color, ChessBoard chessBoard) {
+        super(x, y, color, chessBoard);
         setDefaultIcon();
     }
 
@@ -17,15 +24,7 @@ public class Bishop extends Piece {
         return "b";
     }
 
-    @Override
-    public int getX() {
-        return 0;
-    }
 
-    @Override
-    public int getY() {
-        return 0;
-    }
 
     @Override
     public void setDefaultIcon() {
@@ -38,11 +37,6 @@ public class Bishop extends Piece {
             setStyle("-fx-background-image: url('/images/bbishop');" +
                     "-fx-background-position: center center;" +
                     "-fx-background-repeat: no-repeat");
-
-    }
-
-    @Override
-    public void dehighlight() {
 
     }
 }

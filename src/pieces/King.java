@@ -1,6 +1,10 @@
 package pieces;
 
+import game.ChessBoard;
+import game.Move;
 import javafx.scene.paint.Color;
+
+import java.util.ArrayList;
 
 /**
  * Created by antant on 21/01/16.
@@ -8,8 +12,8 @@ import javafx.scene.paint.Color;
 public class King extends Piece {
 
 
-    public King(int x, int y, Color color) {
-        super(color);
+    public King(int x, int y, Color color, ChessBoard chessBoard) {
+        super(x, y, color, chessBoard);
         setDefaultIcon();
     }
 
@@ -17,15 +21,6 @@ public class King extends Piece {
         return "K";
     }
 
-    @Override
-    public int getX() {
-        return 0;
-    }
-
-    @Override
-    public int getY() {
-        return 0;
-    }
 
     @Override
     public void setDefaultIcon() {
@@ -41,20 +36,8 @@ public class King extends Piece {
     }
 
     @Override
-    public void dehighlight() {
-
-    }
-
-    public void highlight(){
-        if(getColor().equals(Color.WHITE))
-            setStyle("-fx-background-image: url('/images/wking');" +
-                    "-fx-background-position: center center;" +
-                    "-fx-background-repeat: no-repeat;" +
-                    "");  // ** thats how to add image
-        else
-            setStyle("-fx-background-image: url('/images/bking');" +
-                    "-fx-background-position: center center;" +
-                    "-fx-background-repeat: no-repeat");
+    public ArrayList<Move> getAvailableMoves() {
+        return null;
     }
 
 }

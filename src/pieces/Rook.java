@@ -1,6 +1,10 @@
 package pieces;
 
+import game.ChessBoard;
+import game.Move;
 import javafx.scene.paint.Color;
+
+import java.util.ArrayList;
 
 /**
  * Created by antant on 21/01/16.
@@ -8,23 +12,13 @@ import javafx.scene.paint.Color;
 public class Rook extends Piece {
 
 
-    public Rook(int x, int y, Color color) {
-        super(color);
+    public Rook(int x, int y, Color color, ChessBoard chessBoard) {
+        super(x, y, color, chessBoard);
         setDefaultIcon();
     }
 
     public String toString(){
         return "r";
-    }
-
-    @Override
-    public int getX() {
-        return 0;
-    }
-
-    @Override
-    public int getY() {
-        return 0;
     }
 
 
@@ -41,8 +35,9 @@ public class Rook extends Piece {
 
     }
 
-    @Override
-    public void dehighlight() {
 
+    @Override
+    public ArrayList<Move> getAvailableMoves() {
+        return null;
     }
 }
