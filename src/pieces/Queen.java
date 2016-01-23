@@ -11,6 +11,13 @@ import java.util.ArrayList;
  */
 public class Queen extends Piece {
 
+    private String blackQueenStyle =  generateIcon("/images/bqueen");
+    private String whiteQueenStyle =  generateIcon("/images/wqueen");
+    private String blackQueenHStyle = generateIcon("/images/bqueenh");
+    private String whiteQueenHStyle = generateIcon("/images/wqueenh");
+    private String blackQueenPStyle = generateIcon("/images/bqueenp");
+    private String whiteQueenPStyle = generateIcon("/images/wqueenp");
+
     public Queen(int x, int y, Color color, ChessBoard chessBoard) {
         super(x, y, color, chessBoard);
         setDefaultIcon();
@@ -23,25 +30,17 @@ public class Queen extends Piece {
 
     @Override
     public void setDefaultIcon() {
-        if(getColor().equals(Color.WHITE))
-            setStyle("-fx-background-image: url('/images/wqueen');" +
-                    "-fx-background-position: center center;" +
-                    "-fx-background-repeat: no-repeat");  // ** thats how to add image
-        if(getColor().equals(Color.BLACK))
-            setStyle("-fx-background-image: url('/images/bqueen');" +
-                    "-fx-background-position: center center;" +
-                    "-fx-background-repeat: no-repeat");
-
+        setIcon(whiteQueenStyle, blackQueenStyle);
     }
 
     @Override
     public void setHighlightedIcon() {
-
+        setIcon(whiteQueenHStyle, blackQueenHStyle);
     }
 
     @Override
     public void setPickIcon() {
-
+        setIcon(whiteQueenPStyle, blackQueenPStyle);
     }
 
     @Override
