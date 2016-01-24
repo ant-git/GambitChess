@@ -104,12 +104,11 @@ public abstract class Piece extends Pane{
         board.getSquare(newX,newY).setPiece(this);
         highlighted = false;
         board.dehighlightAllMoves();
+
         if(getColor().equals(Color.WHITE))
             board.setListenersFor(Color.BLACK);
         else
             board.setListenersFor(Color.WHITE);
-        board.isCheck(getEnemyColor());
-        board.isCheck(getColor());
 
     }
 
@@ -316,5 +315,22 @@ public abstract class Piece extends Pane{
             return Color.BLACK;
         else
             return Color.WHITE;
+    }
+
+    public boolean isKingUnderTreat(Color color){
+        board.getSquare(this).removePiece();
+        board.getChessBoard().getChildren().remove(this);
+
+        boolean underTreat = false;
+        ArrayList<Move> moves = new ArrayList<>();
+        moves.addAll(board.getPossibleMovesForAll(getEnemyColor()));
+        for(Move move : moves){
+            if(move.getNewX() == x && move.getNewY() == y){
+                underTreat = true;
+            }
+        }
+        board.getChessBoard().add(this, x, y);
+        board.getSquare(x,y).setPiece(this);
+        return underTreat;
     }
 }

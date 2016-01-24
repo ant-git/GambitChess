@@ -20,11 +20,9 @@ public class ChessBoard  implements Initializable{
     @FXML
     GridPane chessBoard;
     boolean clicked = false;
-    int whiteKingX;
-    int whiteKingY;
-    int blackKingX;
-    int blackKingY;
+
     boolean whiteTurn;
+    boolean check;
 
     public ChessBoard() {
 
@@ -68,12 +66,10 @@ public class ChessBoard  implements Initializable{
 
         King bking = new King(4,0, Color.BLACK, this);
         chessBoard.add(bking, 4,0);
-        setBlackKingX(4);
-        setBlackKingY(0);
+
         King wking = new King(4,7, Color.WHITE, this);
         chessBoard.add(wking, 4,7);
-        setWhiteKingX(4);
-        setWhiteKingY(7);
+
         Rook brook1 = new Rook(0,0,Color.BLACK, this);
         chessBoard.add(brook1, 0,0);
         Rook brook2 = new Rook(7,0,Color.BLACK, this);
@@ -152,6 +148,7 @@ public class ChessBoard  implements Initializable{
         whiteTurn = true;
         setListenersFor(Color.WHITE);
         System.out.println("Listeners for WHITE set");
+        check = false;
 
     }
 
@@ -221,6 +218,18 @@ public class ChessBoard  implements Initializable{
         }
     }
 
+    @FXML
+    public void highlightWhiteMoves(){
+        if(!clicked){
+
+            highlightPossibleMoves(getPossibleMovesForAll(Color.WHITE));
+        }else
+        {
+            dehighlightAllMoves();
+            clicked = true;
+        }
+    }
+
 
     public ArrayList<Move> getPossibleMovesForAll(Color color){
         ArrayList<Move> moves = new ArrayList<>();
@@ -234,56 +243,6 @@ public class ChessBoard  implements Initializable{
         return moves;
     }
 
-    public boolean isCheck(Color color){
-        int x;
-        int y;
-        if(color.equals(Color.BLACK)){
-            x = getWhiteKingX();
-            y = getWhiteKingY();
-        }else{
-            x = getBlackKingX();
-            y = getBlackKingY();
-        }
-        for(Move move : getPossibleMovesForAll(color)){
-            if(move.getNewX() == x && move.getNewY() == y){
-                System.out.println("CHECK!");
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public int getBlackKingY() {
-        return blackKingY;
-    }
-
-    public void setBlackKingY(int blackKingY) {
-        this.blackKingY = blackKingY;
-    }
-
-    public int getBlackKingX() {
-        return blackKingX;
-    }
-
-    public void setBlackKingX(int blackKingX) {
-        this.blackKingX = blackKingX;
-    }
-
-    public int getWhiteKingY() {
-        return whiteKingY;
-    }
-
-    public void setWhiteKingY(int whiteKingY) {
-        this.whiteKingY = whiteKingY;
-    }
-
-    public int getWhiteKingX() {
-        return whiteKingX;
-    }
-
-    public void setWhiteKingX(int whiteKingX) {
-        this.whiteKingX = whiteKingX;
-    }
 
     public boolean isWhiteTurn() {
         return whiteTurn;
@@ -302,5 +261,23 @@ public class ChessBoard  implements Initializable{
                 ((Piece) node).removeListeners();
             }
         }
+    }
+
+    public boolean isCheck() {
+        return check;
+    }
+
+    public void setCheck(boolean check) {
+        this.check = check;
+    }
+
+    public Piece getKing(Color color){
+        for(Node node : chessBoard.getChildren()){
+            if(node instanceof King && ((King) node).getColor().equals(color)){
+               return (Piece) node;
+            }
+        }
+
+        return null;
     }
 }

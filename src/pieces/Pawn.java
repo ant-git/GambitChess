@@ -51,7 +51,7 @@ public class Pawn extends Piece implements Highlightable{
         int y = getY();
 
         if(getColor().equals(Color.WHITE)) {
-            if(y-1 >=0 && getBoard().getSquare(x, y-1).isEmpty()){
+            if(y-1 >=0 && getBoard().getSquare(x, y-1).isEmpty() && !isKingUnderTreat(getColor())){
                 moves.add(new Move(x, y, x, y - 1));
             }
             if(y==6 && getBoard().getSquare(x,y-2).isEmpty() && getBoard().getSquare(x,y-1).isEmpty()){

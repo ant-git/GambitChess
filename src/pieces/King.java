@@ -82,13 +82,6 @@ public class King extends Piece {
         getBoard().getChessBoard().add(this, newX, newY);
         setX(newX);
         setY(newY);
-        if(getColor().equals(Color.WHITE)){
-            getBoard().setWhiteKingX(newX);
-            getBoard().setWhiteKingY(newY);
-        }else{
-            getBoard().setBlackKingX(newX);
-            getBoard().setBlackKingY(newY);
-        }
 
         getBoard().getSquare(newX,newY).setPiece(this);
         dehighlight();
