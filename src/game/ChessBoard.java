@@ -235,8 +235,18 @@ public class ChessBoard  implements Initializable{
     }
 
     public boolean isCheck(Color color){
+        int x;
+        int y;
+        if(color.equals(Color.BLACK)){
+            x = getWhiteKingX();
+            y = getWhiteKingY();
+        }else{
+            x = getBlackKingX();
+            y = getBlackKingY();
+        }
         for(Move move : getPossibleMovesForAll(color)){
-            if(move.getNewX() == getWhiteKingX() && move.getNewY() == getBlackKingX()){
+            if(move.getNewX() == x && move.getNewY() == y){
+                System.out.println("CHECK!");
                 return true;
             }
         }

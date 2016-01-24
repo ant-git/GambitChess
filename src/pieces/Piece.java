@@ -108,6 +108,9 @@ public abstract class Piece extends Pane{
             board.setListenersFor(Color.BLACK);
         else
             board.setListenersFor(Color.WHITE);
+        board.isCheck(getEnemyColor());
+        board.isCheck(getColor());
+
     }
 
 
@@ -300,5 +303,18 @@ public abstract class Piece extends Pane{
         return "-fx-background-image: url('" + url + "');" +
                 "-fx-background-position: center center;" +
                 "-fx-background-repeat: no-repeat";
+    }
+
+    public boolean isWhite(){
+        if(color.equals(Color.WHITE))
+            return true;
+        else
+            return false;
+    }
+    public Color getEnemyColor(){
+        if(isWhite())
+            return Color.BLACK;
+        else
+            return Color.WHITE;
     }
 }
