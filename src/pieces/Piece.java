@@ -79,12 +79,12 @@ public abstract class Piece extends Pane{
     }
 
     public void setUnderTreatListener(Piece killer){
-        System.out.println("UNDER TREAT");
         setOnMouseClicked(event -> {
             getKilled(killer);
-            board.setDefaultListeners();
+            board.dehighlightAllMoves();
         });
     }
+
 
     public boolean pieceIsWhiteAtIndex(int x, int y){
         return board.getSquare(x,y).getPiece().getColor().equals(Color.WHITE);
@@ -101,9 +101,13 @@ public abstract class Piece extends Pane{
         board.getChessBoard().add(this, newX, newY);
         setX(newX);
         setY(newY);
-
         board.getSquare(newX,newY).setPiece(this);
         highlighted = false;
+        board.dehighlightAllMoves();
+        if(getColor().equals(Color.WHITE))
+            board.setListenersFor(Color.BLACK);
+        else
+            board.setListenersFor(Color.WHITE);
     }
 
 
@@ -128,7 +132,8 @@ public abstract class Piece extends Pane{
 
     public void setDeselectListener(){
         setOnMouseClicked(event -> {
-            board.setDefaultListeners();
+            board.dehighlightAllMoves();
+            board.setListenersFor(getColor());
         });
     }
 
@@ -143,7 +148,7 @@ public abstract class Piece extends Pane{
         setPickIcon();
         board.highlightPossibleMoves(getAvailableMoves());
         setOnMouseClicked(event -> {
-            getBoard().setDefaultListeners();
+            getBoard().dehighlightAllMoves();
         });
         board.setHighlightOnlyListeners(this);
     }

@@ -4,14 +4,12 @@ package game;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import pieces.*;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 
 /**
@@ -21,6 +19,12 @@ public class ChessBoard  implements Initializable{
 
     @FXML
     GridPane chessBoard;
+    boolean clicked = false;
+    int whiteKingX;
+    int whiteKingY;
+    int blackKingX;
+    int blackKingY;
+    boolean whiteTurn;
 
     public ChessBoard() {
 
@@ -51,10 +55,7 @@ public class ChessBoard  implements Initializable{
     }
 
 
-
     public  void setupPieces(){
-
-
         for(int i=0; i < 8; i++){
             Pawn pawn = new Pawn(i,1,Color.BLACK, this);
             chessBoard.add(pawn,i,1);
@@ -67,79 +68,46 @@ public class ChessBoard  implements Initializable{
 
         King bking = new King(4,0, Color.BLACK, this);
         chessBoard.add(bking, 4,0);
-        bking.setOnMouseClicked(event -> System.out.println("BLACK KING CLICKED"));
-
+        setBlackKingX(4);
+        setBlackKingY(0);
         King wking = new King(4,7, Color.WHITE, this);
         chessBoard.add(wking, 4,7);
-        wking.setOnMouseClicked(event -> System.out.println("KING CLICKED"));
-
+        setWhiteKingX(4);
+        setWhiteKingY(7);
         Rook brook1 = new Rook(0,0,Color.BLACK, this);
         chessBoard.add(brook1, 0,0);
-        brook1.setOnMouseClicked(event -> System.out.println("BLACK ROOK CLICKED"));
-
         Rook brook2 = new Rook(7,0,Color.BLACK, this);
         chessBoard.add(brook2, 7,0);
-        brook2.setOnMouseClicked(event -> System.out.println("BLACK ROOK CLICKED"));
-
         Rook wrook1 = new Rook(0,7,Color.WHITE, this);
         chessBoard.add(wrook1, 0,7);
-        wrook1.setOnMouseClicked(event -> System.out.println("WHITE ROOK CLICKED"));
-
         Rook wrook2 = new Rook(7,7,Color.WHITE, this);
         chessBoard.add(wrook2, 7,7);
-        wrook2.setOnMouseClicked(event -> System.out.println("WHITE ROOK CLICKED"));
 
         Queen bqueen = new Queen(3,0,Color.BLACK, this);
         chessBoard.add(bqueen,3,0);
-        bqueen.setOnMouseClicked(event -> System.out.println("BLACK QUEEN CLICKED"));
-
         Queen wqueen = new Queen(3,7,Color.WHITE, this);
         chessBoard.add(wqueen,3,7);
-        wqueen.setOnMouseClicked(event -> System.out.println("WHITE QUEEN CLICKED"));
 
         Bishop bbishop1 = new Bishop(2,0,Color.BLACK, this);
         chessBoard.add(bbishop1,2,0);
-        bbishop1.setOnMouseClicked(event -> System.out.println("BLACK BISHOP CLICKED"));
-
         Bishop bbishop2 = new Bishop(5,0,Color.BLACK, this);
         chessBoard.add(bbishop2,5,0);
-        bbishop2.setOnMouseClicked(event -> System.out.println("BLACK BISHOP CLICKED"));
-
         Bishop wbishop1 = new Bishop(2,7,Color.WHITE, this);
         chessBoard.add(wbishop1,2,7);
-        wbishop1.setOnMouseClicked(event -> System.out.println("WHITE BISHOP CLICKED"));
-
         Bishop wbishop2 = new Bishop(5,7,Color.WHITE, this);
         chessBoard.add(wbishop2,5,7);
-        wbishop2.setOnMouseClicked(event -> System.out.println("WHITE BISHOP CLICKED"));
 
         Knight bknight1 = new Knight(1,0,Color.BLACK, this);
         chessBoard.add(bknight1,1,0);
-        bknight1.setOnMouseClicked(event -> System.out.println("BLACK KNIGHT CLICKED"));
-
         Knight bknight2 = new Knight(6,0,Color.BLACK, this);
         chessBoard.add(bknight2,6,0);
-        bknight2.setOnMouseClicked(event -> System.out.println("BLACK KNIGHT CLICKED"));
-
         Knight wknight1 = new Knight(1,7,Color.WHITE, this);
         chessBoard.add(wknight1,1,7);
-        wknight1.setOnMouseClicked(event -> System.out.println("WHITE KNIGHT CLICKED"));
-
         Knight wknight2 = new Knight(6,7,Color.WHITE, this);
         chessBoard.add(wknight2,6,7);
-        wknight2.setOnMouseClicked(event -> System.out.println("WHITE KNIGHT CLICKED"));
 
+        dehighlightAllMoves();
 
-        // chessBoard.getChildren().remove(pawn); // *that's how you remove element from gridpane
-
-        setDefaultListeners();
-
-    }
-
-    public void checkEmptySquares(){
-        chessBoard.getChildren().stream().filter(node -> node instanceof ChessSquare).forEach(node -> {
-            System.out.println(((ChessSquare) node).isEmpty());
-        });
     }
 
 
@@ -172,6 +140,7 @@ public class ChessBoard  implements Initializable{
         chessBoard.getChildren().clear();
         paintBoard();
         setupPieces();
+        setListenersFor(Color.WHITE);
         System.out.println("game is reset");
     }
 
@@ -180,6 +149,9 @@ public class ChessBoard  implements Initializable{
         chessBoard.getChildren().remove(chessBoard.getChildren());
         paintBoard();
         setupPieces();
+        whiteTurn = true;
+        setListenersFor(Color.WHITE);
+        System.out.println("Listeners for WHITE set");
 
     }
 
@@ -198,7 +170,7 @@ public class ChessBoard  implements Initializable{
         }
     }
 
-    public void setDefaultListeners(){
+    public void dehighlightAllMoves(){
         for(Node node : chessBoard.getChildren()){
             if(node instanceof ChessSquare){
                 ((ChessSquare) node).dehighlight();
@@ -206,9 +178,9 @@ public class ChessBoard  implements Initializable{
             }
             if(node instanceof Piece){
                 ((Piece) node).dehighlight();
-                ((Piece) node).setDefaultListener();
             }
         }
+
     }
     public void setHighlightOnlyListeners(Piece pickedPiece){
         for(Node node : chessBoard.getChildren()){
@@ -237,4 +209,88 @@ public class ChessBoard  implements Initializable{
         }
     }
 
+    @FXML
+    public void highlightBlackMoves(){
+        if(!clicked){
+
+            highlightPossibleMoves(getPossibleMovesForAll(Color.BLACK));
+        }else
+        {
+            dehighlightAllMoves();
+            clicked = true;
+        }
+    }
+
+
+    public ArrayList<Move> getPossibleMovesForAll(Color color){
+        ArrayList<Move> moves = new ArrayList<>();
+        for(Node node : chessBoard.getChildren()){
+            if(node instanceof Piece && ((Piece) node).getColor().equals(color)){
+                moves.addAll(((Piece) node).getAvailableMoves());
+            }
+        }
+
+
+        return moves;
+    }
+
+    public boolean isCheck(Color color){
+        for(Move move : getPossibleMovesForAll(color)){
+            if(move.getNewX() == getWhiteKingX() && move.getNewY() == getBlackKingX()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int getBlackKingY() {
+        return blackKingY;
+    }
+
+    public void setBlackKingY(int blackKingY) {
+        this.blackKingY = blackKingY;
+    }
+
+    public int getBlackKingX() {
+        return blackKingX;
+    }
+
+    public void setBlackKingX(int blackKingX) {
+        this.blackKingX = blackKingX;
+    }
+
+    public int getWhiteKingY() {
+        return whiteKingY;
+    }
+
+    public void setWhiteKingY(int whiteKingY) {
+        this.whiteKingY = whiteKingY;
+    }
+
+    public int getWhiteKingX() {
+        return whiteKingX;
+    }
+
+    public void setWhiteKingX(int whiteKingX) {
+        this.whiteKingX = whiteKingX;
+    }
+
+    public boolean isWhiteTurn() {
+        return whiteTurn;
+    }
+
+    public void setWhiteTurn(boolean whiteTurn) {
+        this.whiteTurn = whiteTurn;
+    }
+
+    public void setListenersFor(Color color){
+        for(Node node : chessBoard.getChildren()){
+            if(node instanceof Piece && ((Piece) node).getColor().equals(color)){
+                ((Piece) node).setDefaultListener();
+            }
+            if(node instanceof Piece && !((Piece) node).getColor().equals(color)){
+                ((Piece) node).removeListeners();
+            }
+        }
+    }
 }

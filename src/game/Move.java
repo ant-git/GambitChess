@@ -8,6 +8,8 @@ public class Move {
     private int y;
     private int newX;
     private int newY;
+    private boolean ischeck;
+    private boolean isCheckMate;
 
     public Move(int x, int y, int newX, int newY) {
         this.x = x;

@@ -112,6 +112,12 @@
             <Insets left="103.5" right="103.5" />
          </padding>
       </VBox>
-      <Button layoutX="552.0" layoutY="569.0" mnemonicParsing="false" onAction="#resetGame" text="Reset" />
+      <HBox alignment="CENTER" layoutX="5.0" layoutY="519.0" prefHeight="99.0" prefWidth="648.0" spacing="20.0">
+         <children>
+            <Button mnemonicParsing="false"  text="White" />
+            <Button mnemonicParsing="false" onAction="#highlightBlackMoves" text="Black" />
+            <Button mnemonicParsing="false" onAction="#resetGame" text="Reset" />
+         </children>
+      </HBox>
    </children>
 </Pane>

@@ -102,7 +102,6 @@ public class ChessSquare extends Pane implements Highlightable{
     @Override
     public void highlight(Move move){
         if(move.getNewX() == x && move.getNewY() == y && isEmpty()){
-            System.out.println("HIGHLIGHTED! @ " + x + " " + y);
             if(color.equals(Color.WHITE))
                 this.setStyle(whiteSquareHStyle);
             if(color.equals(Color.BLACK))
@@ -119,8 +118,7 @@ public class ChessSquare extends Pane implements Highlightable{
 
     public void setDefaultListener(){
         this.setOnMouseClicked(event -> {
-            System.out.println("SQUARE CLICKED @ " + x + " " +y);
-            System.out.println(isEmpty());
+
         });
     }
 
@@ -133,7 +131,7 @@ public class ChessSquare extends Pane implements Highlightable{
         setOnMouseClicked(event -> {
             piece.move(x, y);
             setPiece(piece);
-            board.setDefaultListeners();
+            board.dehighlightAllMoves();
         });
 
     }
