@@ -108,8 +108,11 @@ public abstract class Piece extends Pane{
 
         if(getColor().equals(Color.WHITE))
             board.setListenersFor(Color.BLACK);
+
         else
             board.setListenersFor(Color.WHITE);
+
+
 
     }
 
@@ -394,6 +397,7 @@ public abstract class Piece extends Pane{
                 underTreat = true;
             }
         }
+
 
         return underTreat;
     }
