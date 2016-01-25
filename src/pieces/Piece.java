@@ -6,6 +6,7 @@ import game.Move;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -147,80 +148,81 @@ public abstract class Piece extends Pane{
         setOnMouseClicked(event -> {});
     }
 
+    public boolean isMoveSafe(Move move){
+        boolean check = false;
+        board.getSquare(this).removePiece();
+        board.getChessBoard().getChildren().remove(this);
+        //piece removed from square and board
+        if(!board.getSquare(move.getNewX(), move.getNewY()).isEmpty()){
+            Piece piece = board.getSquare(move.getNewX(), move.getNewY()).getPiece();
+            board.getSquare(piece).removePiece();
+            board.getChessBoard().getChildren().remove(piece);
+            //possible enemy piece removed from square and board
+
+            board.getChessBoard().add(this, move.getNewX(), move.getNewY());
+            //piece added to square and board
+            setX(move.getNewX());
+            setY(move.getNewY());
+            board.getSquare(move.getNewX(), move.getNewY()).setPiece(this);
+
+
+            if(isKingUnderTreat(color))
+                check = true;
+
+            board.getSquare(this).removePiece();
+            board.getChessBoard().getChildren().remove(this);
+            //piece removed from square and board
+
+            board.getChessBoard().add(this, move.getX(), move.getY());
+            //piece added to square and board
+            setX(move.getX());
+            setY(move.getY());
+            board.getSquare(move.getX(), move.getY()).setPiece(this);
+
+
+            board.getChessBoard().add(piece, move.getNewX(), move.getNewY());
+            board.getSquare(move.getNewX(), move.getNewY()).setPiece(piece);
+            //enemy piece came back to board
+
+        }
+        else{
+            board.getChessBoard().add(this, move.getNewX(), move.getNewY());
+            setX(move.getNewX());
+            setY(move.getNewY());
+            board.getSquare(move.getNewX(), move.getNewY()).setPiece(this);
+            if(isKingUnderTreat(color))
+                check = true;
+            board.getSquare(this).removePiece();
+            board.getChessBoard().getChildren().remove(this);
+
+            board.getChessBoard().add(this, move.getX(), move.getY());
+            setX(move.getX());
+            setY(move.getY());
+            board.getSquare(move.getX(), move.getY()).setPiece(this);
+
+        }
+
+        return !check;
+    }
+
+    public ArrayList<Move> getAllSafeMoves(){
+        ArrayList<Move> movesWithoutCheck = new ArrayList<>();
+        for (Move move : getAvailableMoves())
+        {
+            if(isMoveSafe(move))
+                movesWithoutCheck.add(move);
+        }
+
+        return movesWithoutCheck;
+    }
+
 
     public abstract ArrayList<Move> getAvailableMoves();
 
     public void pick() {
         setPickIcon();
-
-        ArrayList<Move> movesWithoutCheck = new ArrayList<>();
-        System.out.println(getAvailableMoves().toString());
-        for (Move move : getAvailableMoves())
-        {
-            boolean check = false;
-            board.getSquare(this).removePiece();
-            board.getChessBoard().getChildren().remove(this);
-            //piece removed from square and board
-            if(!board.getSquare(move.getNewX(), move.getNewY()).isEmpty()){
-                Piece piece = board.getSquare(move.getNewX(), move.getNewY()).getPiece();
-                board.getSquare(piece).removePiece();
-                board.getChessBoard().getChildren().remove(piece);
-                //possible enemy piece removed from square and board
-
-                board.getChessBoard().add(this, move.getNewX(), move.getNewY());
-                //piece added to square and board
-                setX(move.getNewX());
-                setY(move.getNewY());
-                board.getSquare(move.getNewX(), move.getNewY()).setPiece(this);
-
-
-                if(isKingUnderTreat(color))
-                    check = true;
-
-                board.getSquare(this).removePiece();
-                board.getChessBoard().getChildren().remove(this);
-                //piece removed from square and board
-
-                board.getChessBoard().add(this, move.getX(), move.getY());
-                //piece added to square and board
-                setX(move.getX());
-                setY(move.getY());
-                board.getSquare(move.getX(), move.getY()).setPiece(this);
-
-
-                board.getChessBoard().add(piece, move.getNewX(), move.getNewY());
-                board.getSquare(move.getNewX(), move.getNewY()).setPiece(piece);
-                //enemy piece came back to board
-
-            }
-            else{
-                board.getChessBoard().add(this, move.getNewX(), move.getNewY());
-                setX(move.getNewX());
-                setY(move.getNewY());
-                board.getSquare(move.getNewX(), move.getNewY()).setPiece(this);
-
-                if(isKingUnderTreat(color))
-                    check = true;
-                board.getSquare(this).removePiece();
-                board.getChessBoard().getChildren().remove(this);
-
-                board.getChessBoard().add(this, move.getX(), move.getY());
-                setX(move.getX());
-                setY(move.getY());
-                board.getSquare(move.getX(), move.getY()).setPiece(this);
-
-            }
-
-            if(check == false)
-                movesWithoutCheck.add(move);
-        }
-        System.out.println("MOVES APPROVED: " +movesWithoutCheck.toString());
-
-
-        board.highlightPossibleMoves(movesWithoutCheck);
-        setOnMouseClicked(event -> {
-            getBoard().dehighlightAllMoves();
-        });
+        board.highlightPossibleMoves(getAllSafeMoves());
+        setDeselectListener();
         board.setHighlightOnlyListeners(this);
 
     }
@@ -397,7 +399,6 @@ public abstract class Piece extends Pane{
                 underTreat = true;
             }
         }
-
 
         return underTreat;
     }
