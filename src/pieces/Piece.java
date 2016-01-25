@@ -3,6 +3,7 @@ package pieces;
 import game.ChessBoard;
 import game.ChessSquare;
 import game.Move;
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
@@ -97,7 +98,6 @@ public abstract class Piece extends Pane{
 
 
     public void move(int newX, int newY){
-        System.out.println("JUST MOVE");
         board.getSquare(this).removePiece();
         board.getChessBoard().getChildren().remove(this);
         board.getChessBoard().add(this, newX, newY);
@@ -107,13 +107,24 @@ public abstract class Piece extends Pane{
         highlighted = false;
         board.dehighlightAllMoves();
 
-        if(getColor().equals(Color.WHITE))
+        if(getColor().equals(Color.WHITE)) {
+            System.out.println("BLACK TURN");
             board.setListenersFor(Color.BLACK);
-
-        else
+        }
+        else {
+            System.out.println("WHITE TURN");
             board.setListenersFor(Color.WHITE);
 
+        }
 
+        if(board.isKingUnderTreat(getEnemyColor())){
+            System.out.println("CHECK!");
+            for(Node node : board.getChessBoard().getChildren()){
+                if(node instanceof Piece && ((Piece) node).getColor().equals(getEnemyColor())){
+                    System.out.println(((Piece) node).getAvailableMoves().toString());
+                }
+            }
+        }
 
     }
 
@@ -166,7 +177,7 @@ public abstract class Piece extends Pane{
             board.getSquare(move.getNewX(), move.getNewY()).setPiece(this);
 
 
-            if(isKingUnderTreat(color))
+            if(board.isKingUnderTreat(color))
                 check = true;
 
             board.getSquare(this).removePiece();
@@ -190,7 +201,7 @@ public abstract class Piece extends Pane{
             setX(move.getNewX());
             setY(move.getNewY());
             board.getSquare(move.getNewX(), move.getNewY()).setPiece(this);
-            if(isKingUnderTreat(color))
+            if(board.isKingUnderTreat(color))
                 check = true;
             board.getSquare(this).removePiece();
             board.getChessBoard().getChildren().remove(this);
@@ -201,6 +212,7 @@ public abstract class Piece extends Pane{
             board.getSquare(move.getX(), move.getY()).setPiece(this);
 
         }
+
 
         return !check;
     }
@@ -389,17 +401,5 @@ public abstract class Piece extends Pane{
             return Color.WHITE;
     }
 
-    public boolean isKingUnderTreat(Color color){
 
-        boolean underTreat = false;
-        ArrayList<Move> moves = new ArrayList<>();
-        moves.addAll(board.getPossibleMovesForAll(getEnemyColor()));
-        for(Move move : moves){
-            if(move.getNewX() == board.getKing(color).getX() && move.getNewY() == board.getKing(color).getY()){
-                underTreat = true;
-            }
-        }
-
-        return underTreat;
-    }
 }

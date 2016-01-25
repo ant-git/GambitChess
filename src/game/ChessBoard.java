@@ -236,4 +236,21 @@ public class ChessBoard  implements Initializable{
 
         return null;
     }
+
+    public boolean isKingUnderTreat(Color color){
+        Color enemyColor = Color.WHITE;
+        if(color.equals(Color.WHITE))
+            enemyColor = Color.BLACK;
+        boolean underTreat = false;
+        ArrayList<Move> moves = new ArrayList<>();
+        moves.addAll(getPossibleMovesForAll(enemyColor));
+        for(Move move : moves){
+            if(move.getNewX() == getKing(color).getX() && move.getNewY() == getKing(color).getY()){
+                underTreat = true;
+            }
+        }
+
+        return underTreat;
+    }
+
 }
