@@ -19,10 +19,6 @@ public class ChessBoard  implements Initializable{
 
     @FXML
     GridPane chessBoard;
-    boolean clicked = false;
-
-    boolean whiteTurn;
-    boolean check;
 
     public ChessBoard() {
 
@@ -145,10 +141,7 @@ public class ChessBoard  implements Initializable{
         chessBoard.getChildren().remove(chessBoard.getChildren());
         paintBoard();
         setupPieces();
-        whiteTurn = true;
         setListenersFor(Color.WHITE);
-        System.out.println("Listeners for WHITE set");
-        check = false;
 
     }
 
@@ -206,29 +199,6 @@ public class ChessBoard  implements Initializable{
         }
     }
 
-    @FXML
-    public void highlightBlackMoves(){
-        if(!clicked){
-
-            highlightPossibleMoves(getPossibleMovesForAll(Color.BLACK));
-        }else
-        {
-            dehighlightAllMoves();
-            clicked = true;
-        }
-    }
-
-    @FXML
-    public void highlightWhiteMoves(){
-        if(!clicked){
-
-            highlightPossibleMoves(getPossibleMovesForAll(Color.WHITE));
-        }else
-        {
-            dehighlightAllMoves();
-            clicked = true;
-        }
-    }
 
 
     public ArrayList<Move> getPossibleMovesForAll(Color color){
@@ -244,13 +214,6 @@ public class ChessBoard  implements Initializable{
     }
 
 
-    public boolean isWhiteTurn() {
-        return whiteTurn;
-    }
-
-    public void setWhiteTurn(boolean whiteTurn) {
-        this.whiteTurn = whiteTurn;
-    }
 
     public void setListenersFor(Color color){
         for(Node node : chessBoard.getChildren()){
@@ -263,13 +226,6 @@ public class ChessBoard  implements Initializable{
         }
     }
 
-    public boolean isCheck() {
-        return check;
-    }
-
-    public void setCheck(boolean check) {
-        this.check = check;
-    }
 
     public Piece getKing(Color color){
         for(Node node : chessBoard.getChildren()){

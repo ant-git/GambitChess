@@ -35,7 +35,6 @@ public class Knight extends Piece {
     @Override
     public void setHighlightedIcon() {
         setIcon(whiteKnightHStyle, blackKnightHStyle);
-        System.out.println("KING IS UNDER FIRE");
     }
 
     @Override
@@ -46,6 +45,7 @@ public class Knight extends Piece {
 
     @Override
     public ArrayList<Move> getAvailableMoves() {
+
         ArrayList<Move> moves = new ArrayList<>();
         int x = getX();
         int y = getY();

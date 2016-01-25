@@ -52,16 +52,8 @@ public class ChessSquare extends Pane implements Highlightable{
         return x;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
     public int getY() {
         return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
     }
 
     public Piece getPiece() {
@@ -82,20 +74,9 @@ public class ChessSquare extends Pane implements Highlightable{
         return empty;
     }
 
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(Color color){
-        this.color = color;
-    }
 
     public boolean isHighlighted() {
         return highlighted;
-    }
-
-    public void setHighlighted(boolean highlighted) {
-        this.highlighted = highlighted;
     }
 
 

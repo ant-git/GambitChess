@@ -114,8 +114,6 @@
       </VBox>
       <HBox alignment="CENTER" layoutX="5.0" layoutY="519.0" prefHeight="99.0" prefWidth="648.0" spacing="20.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#highlightWhiteMoves" text="White" />
-            <Button mnemonicParsing="false" onAction="#highlightBlackMoves" text="Black" />
             <Button mnemonicParsing="false" onAction="#resetGame" text="Reset" />
          </children>
       </HBox>

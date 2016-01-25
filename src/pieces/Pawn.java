@@ -4,6 +4,7 @@ import game.ChessBoard;
 import game.ChessSquare;
 import game.Highlightable;
 import game.Move;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -20,10 +21,11 @@ public class Pawn extends Piece implements Highlightable{
     private String blackPawnPStyle = generateIcon("/images/bpawnp");
     private String whitePawnPStyle = generateIcon("/images/wpawnp");
 
+
     public Pawn(int x, int y, Color color, ChessBoard chessBoard) {
         super(x, y, color, chessBoard);
-    }
 
+    }
     public String toString(){
         return "p";
     }
@@ -46,12 +48,13 @@ public class Pawn extends Piece implements Highlightable{
 
     @Override
     public ArrayList<Move> getAvailableMoves(){
+
         ArrayList<Move> moves = new ArrayList<>();
         int x = getX();
         int y = getY();
 
         if(getColor().equals(Color.WHITE)) {
-            if(y-1 >=0 && getBoard().getSquare(x, y-1).isEmpty() && !isKingUnderTreat(getColor())){
+            if(y-1 >=0 && getBoard().getSquare(x, y-1).isEmpty()){
                 moves.add(new Move(x, y, x, y - 1));
             }
             if(y==6 && getBoard().getSquare(x,y-2).isEmpty() && getBoard().getSquare(x,y-1).isEmpty()){
