@@ -52,31 +52,31 @@ public class Pawn extends Piece implements Highlightable{
         int y = getY();
 
         if(getColor().equals(Color.WHITE)) {
-            if(y-1 >=0 && getBoard().getSquare(x, y-1).isEmpty()){
+            if(y-1 >=0 && getGame().getSquare(x, y-1).isEmpty()){
                 moves.add(new Move(x, y, x, y - 1));
             }
-            if(y==6 && getBoard().getSquare(x,y-2).isEmpty() && getBoard().getSquare(x,y-1).isEmpty()){
+            if(y==6 && getGame().getSquare(x,y-2).isEmpty() && getGame().getSquare(x,y-1).isEmpty()){
                 moves.add(new Move(x, y, x, y - 2));
             }
-            if((y-1 >= 0 && x-1 >= 0) && !getBoard().getSquare(x-1,y-1).isEmpty() && !pieceIsWhiteAtIndex(x-1,y-1)){
+            if((y-1 >= 0 && x-1 >= 0) && !getGame().getSquare(x-1,y-1).isEmpty() && !pieceIsWhiteAtIndex(x-1,y-1)){
                 moves.add(new Move(x, y, x - 1, y - 1));
             }
-            if((y-1 >= 0 && x+1 <= 7) && !getBoard().getSquare(x+1,y-1).isEmpty() && !pieceIsWhiteAtIndex(x+1,y-1)) {
+            if((y-1 >= 0 && x+1 <= 7) && !getGame().getSquare(x+1,y-1).isEmpty() && !pieceIsWhiteAtIndex(x+1,y-1)) {
                 moves.add(new Move(x, y, x + 1, y - 1));
             }
         }
         if(getColor().equals(Color.BLACK)) {
-            if(y+1 <= 7 && getBoard().getSquare(x, y+1).isEmpty()){
+            if(y+1 <= 7 && getGame().getSquare(x, y+1).isEmpty()){
                 moves.add(new Move(x, y, x, y + 1));
             }
-            if(y==1 && getBoard().getSquare(x,y+2).isEmpty() && getBoard().getSquare(x,y+1).isEmpty()){
+            if(y==1 && getGame().getSquare(x,y+2).isEmpty() && getGame().getSquare(x,y+1).isEmpty()){
                 moves.add(new Move(x, y, x, y + 2));
             }
 
-            if((y+1 <= 7 && x-1 >= 0) && !getBoard().getSquare(x-1,y+1).isEmpty() && pieceIsWhiteAtIndex(x-1,y+1)){
+            if((y+1 <= 7 && x-1 >= 0) && !getGame().getSquare(x-1,y+1).isEmpty() && pieceIsWhiteAtIndex(x-1,y+1)){
                 moves.add(new Move(x, y, x - 1, y + 1));
             }
-            if((y+1 <= 7 && x+1 <= 7) && !getBoard().getSquare(x+1,y+1).isEmpty() && pieceIsWhiteAtIndex(x+1,y+1)) {
+            if((y+1 <= 7 && x+1 <= 7) && !getGame().getSquare(x+1,y+1).isEmpty() && pieceIsWhiteAtIndex(x+1,y+1)) {
                 moves.add(new Move(x, y, x + 1, y + 1));
             }
         }

@@ -16,7 +16,7 @@ public abstract class Piece extends Pane{
     private Color color;
     private int x;
     private int y;
-    private Game board;
+    private Game game;
     private boolean highlighted;
     private ChessSquare square;
 
@@ -24,7 +24,7 @@ public abstract class Piece extends Pane{
         this.x = x;
         this.y = y;
         this.color = color;
-        this.board = board;
+        this.game = board;
         highlighted = false;
         square = board.getSquare(this);
         square.setPiece(this);
@@ -69,8 +69,8 @@ public abstract class Piece extends Pane{
 
     public abstract void setPickIcon();
 
-    public Game getBoard() {
-        return board;
+    public Game getGame() {
+        return game;
     }
 
 
@@ -82,7 +82,7 @@ public abstract class Piece extends Pane{
 
 
     public boolean pieceIsWhiteAtIndex(int x, int y){
-        return board.getSquare(x,y).getPiece().getColor().equals(Color.WHITE);
+        return game.getSquare(x,y).getPiece().getColor().equals(Color.WHITE);
     }
 
     public boolean isHighlighted() {
@@ -91,28 +91,28 @@ public abstract class Piece extends Pane{
 
 
     public void move(int newX, int newY){
-        board.getSquare(this).removePiece();
-        board.getChessBoard().getChildren().remove(this);
-        board.getChessBoard().add(this, newX, newY);
+        game.getSquare(this).removePiece();
+        game.getChessBoard().getChildren().remove(this);
+        game.getChessBoard().add(this, newX, newY);
         setX(newX);
         setY(newY);
-        board.getSquare(newX,newY).setPiece(this);
+        game.getSquare(newX,newY).setPiece(this);
         highlighted = false;
-        board.dehighlightAllMoves();
+        game.dehighlightAllMoves();
 
         if(getColor().equals(Color.WHITE)) {
             System.out.println("BLACK TURN");
-            board.setListenersFor(Color.BLACK);
+            game.setListenersFor(Color.BLACK);
         }
         else {
             System.out.println("WHITE TURN");
-            board.setListenersFor(Color.WHITE);
+            game.setListenersFor(Color.WHITE);
 
         }
 
-        if(board.isKingUnderTreat(getEnemyColor())){
+        if(game.isKingUnderTreat(getEnemyColor())){
             System.out.println("CHECK!");
-            for(Node node : board.getChessBoard().getChildren()){
+            for(Node node : game.getChessBoard().getChildren()){
                 if(node instanceof Piece && ((Piece) node).getColor().equals(getEnemyColor())){
                     System.out.println(((Piece) node).getAvailableMoves().toString());
                 }
@@ -125,7 +125,7 @@ public abstract class Piece extends Pane{
     public void setUnderTreatListener(Piece killer){
         setOnMouseClicked(event -> {
             killer.kill(this);
-            board.dehighlightAllMoves();
+            game.dehighlightAllMoves();
         });
     }
 
@@ -144,8 +144,8 @@ public abstract class Piece extends Pane{
 
     public void setDeselectListener(){
         setOnMouseClicked(event -> {
-            board.dehighlightAllMoves();
-            board.setListenersFor(getColor());
+            game.dehighlightAllMoves();
+            game.setListenersFor(getColor());
         });
     }
 
@@ -155,55 +155,55 @@ public abstract class Piece extends Pane{
 
     public boolean isMoveSafe(Move move){
         boolean check = false;
-        board.getSquare(this).removePiece();
-        board.getChessBoard().getChildren().remove(this);
+        game.getSquare(this).removePiece();
+        game.getChessBoard().getChildren().remove(this);
         //piece removed from square and board
-        if(!board.getSquare(move.getNewX(), move.getNewY()).isEmpty()){
-            Piece piece = board.getSquare(move.getNewX(), move.getNewY()).getPiece();
-            board.getSquare(piece).removePiece();
-            board.getChessBoard().getChildren().remove(piece);
+        if(!game.getSquare(move.getNewX(), move.getNewY()).isEmpty()){
+            Piece piece = game.getSquare(move.getNewX(), move.getNewY()).getPiece();
+            game.getSquare(piece).removePiece();
+            game.getChessBoard().getChildren().remove(piece);
             //possible enemy piece removed from square and board
 
-            board.getChessBoard().add(this, move.getNewX(), move.getNewY());
+            game.getChessBoard().add(this, move.getNewX(), move.getNewY());
             //piece added to square and board
             setX(move.getNewX());
             setY(move.getNewY());
-            board.getSquare(move.getNewX(), move.getNewY()).setPiece(this);
+            game.getSquare(move.getNewX(), move.getNewY()).setPiece(this);
 
 
-            if(board.isKingUnderTreat(color))
+            if(game.isKingUnderTreat(color))
                 check = true;
 
-            board.getSquare(this).removePiece();
-            board.getChessBoard().getChildren().remove(this);
+            game.getSquare(this).removePiece();
+            game.getChessBoard().getChildren().remove(this);
             //piece removed from square and board
 
-            board.getChessBoard().add(this, move.getX(), move.getY());
+            game.getChessBoard().add(this, move.getX(), move.getY());
             //piece added to square and board
             setX(move.getX());
             setY(move.getY());
-            board.getSquare(move.getX(), move.getY()).setPiece(this);
+            game.getSquare(move.getX(), move.getY()).setPiece(this);
 
 
-            board.getChessBoard().add(piece, move.getNewX(), move.getNewY());
-            board.getSquare(move.getNewX(), move.getNewY()).setPiece(piece);
+            game.getChessBoard().add(piece, move.getNewX(), move.getNewY());
+            game.getSquare(move.getNewX(), move.getNewY()).setPiece(piece);
             //enemy piece came back to board
 
         }
         else{
-            board.getChessBoard().add(this, move.getNewX(), move.getNewY());
+            game.getChessBoard().add(this, move.getNewX(), move.getNewY());
             setX(move.getNewX());
             setY(move.getNewY());
-            board.getSquare(move.getNewX(), move.getNewY()).setPiece(this);
-            if(board.isKingUnderTreat(color))
+            game.getSquare(move.getNewX(), move.getNewY()).setPiece(this);
+            if(game.isKingUnderTreat(color))
                 check = true;
-            board.getSquare(this).removePiece();
-            board.getChessBoard().getChildren().remove(this);
+            game.getSquare(this).removePiece();
+            game.getChessBoard().getChildren().remove(this);
 
-            board.getChessBoard().add(this, move.getX(), move.getY());
+            game.getChessBoard().add(this, move.getX(), move.getY());
             setX(move.getX());
             setY(move.getY());
-            board.getSquare(move.getX(), move.getY()).setPiece(this);
+            game.getSquare(move.getX(), move.getY()).setPiece(this);
 
         }
 
@@ -227,15 +227,15 @@ public abstract class Piece extends Pane{
 
     public void pick() {
         setPickIcon();
-        board.highlightPossibleMoves(getAllSafeMoves());
+        game.highlightPossibleMoves(getAllSafeMoves());
         setDeselectListener();
-        board.setHighlightOnlyListeners(this);
+        game.setHighlightOnlyListeners(this);
 
     }
 
     public void kill(Piece victim){
-        board.getChessBoard().getChildren().remove(victim);
-        board.getSquare(victim).removePiece();
+        game.getChessBoard().getChildren().remove(victim);
+        game.getSquare(victim).removePiece();
         this.move(victim.getX(), victim.getY());
     }
 
@@ -245,7 +245,7 @@ public abstract class Piece extends Pane{
 
         int i = 1;
         while(x-i >=0 && y-i >= 0){
-            if(getBoard().getSquare(x-i,y-i).isEmpty()){
+            if(getGame().getSquare(x-i,y-i).isEmpty()){
                 moves.add(new Move(x, y, x - i, y - i));
             }else{
                 if(pieceIsWhiteAtIndex(x-i, y-i) != white){
@@ -261,7 +261,7 @@ public abstract class Piece extends Pane{
 
         i = 1;
         while(x+i <= 7 && y-i >= 0){
-            if(getBoard().getSquare(x+i,y-i).isEmpty()){
+            if(getGame().getSquare(x+i,y-i).isEmpty()){
                 moves.add(new Move(x, y, x + i, y - i));
             }else{
                 if(pieceIsWhiteAtIndex(x+i, y-i) != white){
@@ -277,7 +277,7 @@ public abstract class Piece extends Pane{
 
         i = 1;
         while(x-i >= 0 && y+i <= 7){
-            if(getBoard().getSquare(x-i,y+i).isEmpty()){
+            if(getGame().getSquare(x-i,y+i).isEmpty()){
                 moves.add(new Move(x, y, x - i, y + i));
             }else{
                 if(pieceIsWhiteAtIndex(x-i, y+i) != white){
@@ -293,7 +293,7 @@ public abstract class Piece extends Pane{
 
         i = 1;
         while(x+i <= 7 && y+i <= 7){
-            if(getBoard().getSquare(x+i,y+i).isEmpty()){
+            if(getGame().getSquare(x+i,y+i).isEmpty()){
                 moves.add(new Move(x, y, x + i, y + i));
             }else{
                 if(pieceIsWhiteAtIndex(x+i, y+i) != white){
@@ -317,7 +317,7 @@ public abstract class Piece extends Pane{
 
         int i = 1;
         while(y-i >= 0){
-            if(getBoard().getSquare(x,y-i).isEmpty()){
+            if(getGame().getSquare(x,y-i).isEmpty()){
                 moves.add(new Move(x, y, x, y - i));
             }else{
                 if(pieceIsWhiteAtIndex(x, y-i) != white){
@@ -333,7 +333,7 @@ public abstract class Piece extends Pane{
 
         i = 1;
         while(x-i >= 0){
-            if(getBoard().getSquare(x-i,y).isEmpty()){
+            if(getGame().getSquare(x-i,y).isEmpty()){
                 moves.add(new Move(x, y, x-i, y));
             }else{
                 if(pieceIsWhiteAtIndex(x-i, y) != white){
@@ -349,7 +349,7 @@ public abstract class Piece extends Pane{
 
         i = 1;
         while(x+i <= 7){
-            if(getBoard().getSquare(x+i,y).isEmpty()){
+            if(getGame().getSquare(x+i,y).isEmpty()){
                 moves.add(new Move(x, y, x+i, y));
             }else{
                 if(pieceIsWhiteAtIndex(x+i, y) != white){
@@ -365,7 +365,7 @@ public abstract class Piece extends Pane{
 
         i = 1;
         while(y+i <= 7){
-            if(getBoard().getSquare(x,y+i).isEmpty()){
+            if(getGame().getSquare(x,y+i).isEmpty()){
                 moves.add(new Move(x, y, x, y + i));
             }else{
                 if(pieceIsWhiteAtIndex(x, y+i) != white){

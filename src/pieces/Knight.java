@@ -52,28 +52,28 @@ public class Knight extends Piece {
         boolean white = pieceIsWhiteAtIndex(x,y);
 
         //x-1 y-2
-        if((x - 1 >=0 && y - 2 >= 0) && (getBoard().getSquare(x-1,y-2).isEmpty() || pieceIsWhiteAtIndex(x-1 , y-2) != white))
+        if((x - 1 >=0 && y - 2 >= 0) && (getGame().getSquare(x-1,y-2).isEmpty() || pieceIsWhiteAtIndex(x-1 , y-2) != white))
             moves.add(new Move(x, y, x - 1, y - 2));
         //x+1 y-2
-        if((x + 1 <= 7 && y - 2 >= 0) && (getBoard().getSquare(x+1,y-2).isEmpty() || pieceIsWhiteAtIndex(x+1 , y-2) != white))
+        if((x + 1 <= 7 && y - 2 >= 0) && (getGame().getSquare(x+1,y-2).isEmpty() || pieceIsWhiteAtIndex(x+1 , y-2) != white))
             moves.add(new Move(x, y, x + 1, y - 2));
         //x-2 y-1
-        if((x - 2 >=0 && y - 1 >= 0) && (getBoard().getSquare(x-2,y-1).isEmpty() || pieceIsWhiteAtIndex(x-2 , y-1) != white))
+        if((x - 2 >=0 && y - 1 >= 0) && (getGame().getSquare(x-2,y-1).isEmpty() || pieceIsWhiteAtIndex(x-2 , y-1) != white))
             moves.add(new Move(x, y, x - 2, y - 1));
         //x+2 y-1
-        if((x + 2 <= 7 && y - 1 >= 0) && (getBoard().getSquare(x+2,y-1).isEmpty() || pieceIsWhiteAtIndex(x+2 , y-1) != white))
+        if((x + 2 <= 7 && y - 1 >= 0) && (getGame().getSquare(x+2,y-1).isEmpty() || pieceIsWhiteAtIndex(x+2 , y-1) != white))
             moves.add(new Move(x, y, x + 2, y - 1));
         //x-2 y+1
-        if((x - 2 >=0 && y + 1 <= 7) && (getBoard().getSquare(x-2,y+1).isEmpty() || pieceIsWhiteAtIndex(x-2 , y+1) != white))
+        if((x - 2 >=0 && y + 1 <= 7) && (getGame().getSquare(x-2,y+1).isEmpty() || pieceIsWhiteAtIndex(x-2 , y+1) != white))
             moves.add(new Move(x, y, x - 2, y + 1));
         //x-1 y+2
-        if((x - 1 >=0 && y + 2 <= 7) && (getBoard().getSquare(x-1,y+2).isEmpty() || pieceIsWhiteAtIndex(x-1 , y+2) != white))
+        if((x - 1 >=0 && y + 2 <= 7) && (getGame().getSquare(x-1,y+2).isEmpty() || pieceIsWhiteAtIndex(x-1 , y+2) != white))
             moves.add(new Move(x, y, x - 1, y + 2));
         //x+1 y+2
-        if((x + 1 <= 7 && y + 2 <= 7) && (getBoard().getSquare(x+1,y+2).isEmpty() || pieceIsWhiteAtIndex(x+1 , y+2) != white))
+        if((x + 1 <= 7 && y + 2 <= 7) && (getGame().getSquare(x+1,y+2).isEmpty() || pieceIsWhiteAtIndex(x+1 , y+2) != white))
             moves.add(new Move(x, y, x + 1, y + 2));
         //x+2 y+1
-        if((x + 2 <= 7 && y + 1 <= 7) && (getBoard().getSquare(x+2,y+1).isEmpty() || pieceIsWhiteAtIndex(x+2 , y+1) != white))
+        if((x + 2 <= 7 && y + 1 <= 7) && (getGame().getSquare(x+2,y+1).isEmpty() || pieceIsWhiteAtIndex(x+2 , y+1) != white))
             moves.add(new Move(x, y, x + 2, y + 1));
 
         return moves;

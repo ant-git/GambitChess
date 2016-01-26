@@ -48,28 +48,28 @@ public class King extends Piece {
         int y = getY();
         boolean white = pieceIsWhiteAtIndex(x,y);
 
-        if((y-1 >= 0) && (getBoard().getSquare(x,y-1).isEmpty() || !pieceIsWhiteAtIndex(x,y-1) == white))
+        if((y-1 >= 0) && (getGame().getSquare(x,y-1).isEmpty() || !pieceIsWhiteAtIndex(x,y-1) == white))
             moves.add(new Move(x, y, x, y - 1));
 
-        if((x-1 >=0 && y-1 >= 0) && (getBoard().getSquare(x-1,y-1).isEmpty() || !pieceIsWhiteAtIndex(x-1,y-1) == white))
+        if((x-1 >=0 && y-1 >= 0) && (getGame().getSquare(x-1,y-1).isEmpty() || !pieceIsWhiteAtIndex(x-1,y-1) == white))
             moves.add(new Move(x, y, x - 1, y - 1));
 
-        if((x-1 >= 0) && (getBoard().getSquare(x-1,y).isEmpty() || !pieceIsWhiteAtIndex(x-1,y) == white))
+        if((x-1 >= 0) && (getGame().getSquare(x-1,y).isEmpty() || !pieceIsWhiteAtIndex(x-1,y) == white))
             moves.add(new Move(x, y, x - 1, y));
 
-        if((x-1 >= 0 && y+1 <= 7) && (getBoard().getSquare(x-1,y+1).isEmpty() || !pieceIsWhiteAtIndex(x-1,y+1) == white))
+        if((x-1 >= 0 && y+1 <= 7) && (getGame().getSquare(x-1,y+1).isEmpty() || !pieceIsWhiteAtIndex(x-1,y+1) == white))
             moves.add(new Move(x, y, x - 1, y + 1));
 
-        if((y+1 <= 7) && (getBoard().getSquare(x,y+1).isEmpty() || !pieceIsWhiteAtIndex(x,y+1) == white))
+        if((y+1 <= 7) && (getGame().getSquare(x,y+1).isEmpty() || !pieceIsWhiteAtIndex(x,y+1) == white))
             moves.add(new Move(x, y, x, y + 1));
 
-        if((y+1 <= 7 && x+1 <= 7) && (getBoard().getSquare(x+1,y+1).isEmpty() || !pieceIsWhiteAtIndex(x+1,y+1) == white))
+        if((y+1 <= 7 && x+1 <= 7) && (getGame().getSquare(x+1,y+1).isEmpty() || !pieceIsWhiteAtIndex(x+1,y+1) == white))
             moves.add(new Move(x, y, x + 1, y + 1));
 
-        if((x+1 <= 7) && (getBoard().getSquare(x+1,y).isEmpty() || !pieceIsWhiteAtIndex(x+1,y) == white))
+        if((x+1 <= 7) && (getGame().getSquare(x+1,y).isEmpty() || !pieceIsWhiteAtIndex(x+1,y) == white))
             moves.add(new Move(x, y, x + 1, y));
 
-        if((x+1 <= 7 && y-1 >= 0) && (getBoard().getSquare(x+1,y-1).isEmpty() || !pieceIsWhiteAtIndex(x+1,y-1) == white))
+        if((x+1 <= 7 && y-1 >= 0) && (getGame().getSquare(x+1,y-1).isEmpty() || !pieceIsWhiteAtIndex(x+1,y-1) == white))
             moves.add(new Move(x, y, x + 1, y - 1));
 
         return moves;
@@ -77,18 +77,18 @@ public class King extends Piece {
 
     @Override
     public void move(int newX, int newY){
-        getBoard().getSquare(this).removePiece();
-        getBoard().getChessBoard().getChildren().remove(this);
-        getBoard().getChessBoard().add(this, newX, newY);
+        getGame().getSquare(this).removePiece();
+        getGame().getChessBoard().getChildren().remove(this);
+        getGame().getChessBoard().add(this, newX, newY);
         setX(newX);
         setY(newY);
 
-        getBoard().getSquare(newX,newY).setPiece(this);
+        getGame().getSquare(newX,newY).setPiece(this);
         dehighlight();
         if(getColor().equals(Color.WHITE))
-            getBoard().setListenersFor(Color.BLACK);
+            getGame().setListenersFor(Color.BLACK);
         else
-            getBoard().setListenersFor(Color.WHITE);
+            getGame().setListenersFor(Color.WHITE);
     }
 
 }
