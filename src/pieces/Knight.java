@@ -1,6 +1,6 @@
 package pieces;
 
-import game.ChessBoard;
+import game.Game;
 import game.Move;
 import javafx.scene.paint.Color;
 
@@ -19,8 +19,8 @@ public class Knight extends Piece {
     private String blackKnightPStyle = generateIcon("/images/bknightp");
     private String whiteKnightPStyle = generateIcon("/images/wknightp");
 
-    public Knight(int x, int y, Color color, ChessBoard chessBoard) {
-        super(x, y, color, chessBoard);
+    public Knight(int x, int y, Color color, Game game) {
+        super(x, y, color, game);
     }
 
     public String toString(){

@@ -1,6 +1,6 @@
 package pieces;
 
-import game.ChessBoard;
+import game.Game;
 import game.Move;
 import javafx.scene.paint.Color;
 
@@ -18,8 +18,8 @@ public class Bishop extends Piece {
     private String blackBishopPStyle = generateIcon("/images/bbishopp");
     private String whiteBishopPStyle = generateIcon("/images/wbishopp");
 
-    public Bishop(int x, int y, Color color, ChessBoard chessBoard) {
-        super(x, y, color, chessBoard);
+    public Bishop(int x, int y, Color color, Game game) {
+        super(x, y, color, game);
     }
 
     public String toString(){

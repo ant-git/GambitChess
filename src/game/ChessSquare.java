@@ -28,9 +28,9 @@ public class ChessSquare extends Pane implements Highlightable{
                                "-fx-background-position: center center;" +
                                "-fx-background-repeat: no-repeat;";
 
-    ChessBoard board;
+    Game board;
 
-    public ChessSquare(int x, int y, Color color, ChessBoard board) {
+    public ChessSquare(int x, int y, Color color, Game board) {
         this.x = x;
         this.y = y;
         this.color = color;

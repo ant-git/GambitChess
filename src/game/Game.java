@@ -15,12 +15,12 @@ import java.util.ResourceBundle;
 /**
  * Created by antant on 21/01/16.
  */
-public class ChessBoard  implements Initializable{
+public class Game implements Initializable{
 
     @FXML
     GridPane chessBoard;
 
-    public ChessBoard() {
+    public Game() {
 
 
     }

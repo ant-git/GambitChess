@@ -1,13 +1,12 @@
 package pieces;
 
-import game.ChessBoard;
+import game.Game;
 import game.ChessSquare;
 import game.Move;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -17,11 +16,11 @@ public abstract class Piece extends Pane{
     private Color color;
     private int x;
     private int y;
-    private ChessBoard board;
+    private Game board;
     private boolean highlighted;
     private ChessSquare square;
 
-    public Piece(int x, int y, Color color, ChessBoard board) {
+    public Piece(int x, int y, Color color, Game board) {
         this.x = x;
         this.y = y;
         this.color = color;
@@ -70,7 +69,7 @@ public abstract class Piece extends Pane{
 
     public abstract void setPickIcon();
 
-    public ChessBoard getBoard() {
+    public Game getBoard() {
         return board;
     }
 
@@ -80,12 +79,6 @@ public abstract class Piece extends Pane{
         highlighted = false;
     }
 
-    public void setUnderTreatListener(Piece killer){
-        setOnMouseClicked(event -> {
-            getKilled(killer);
-            board.dehighlightAllMoves();
-        });
-    }
 
 
     public boolean pieceIsWhiteAtIndex(int x, int y){
@@ -129,10 +122,11 @@ public abstract class Piece extends Pane{
     }
 
 
-    public void getKilled(Piece killer){
-        board.getChessBoard().getChildren().remove(this);
-        board.getSquare(this).removePiece();
-        killer.move(x, y);
+    public void setUnderTreatListener(Piece killer){
+        setOnMouseClicked(event -> {
+            killer.kill(this);
+            board.dehighlightAllMoves();
+        });
     }
 
     public void highlight(Move move) {
@@ -237,6 +231,12 @@ public abstract class Piece extends Pane{
         setDeselectListener();
         board.setHighlightOnlyListeners(this);
 
+    }
+
+    public void kill(Piece victim){
+        board.getChessBoard().getChildren().remove(victim);
+        board.getSquare(victim).removePiece();
+        this.move(victim.getX(), victim.getY());
     }
 
     public ArrayList<Move> getDiagonalMoves(){

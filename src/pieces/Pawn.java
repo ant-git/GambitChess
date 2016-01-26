@@ -1,10 +1,8 @@
 package pieces;
 
-import game.ChessBoard;
-import game.ChessSquare;
+import game.Game;
 import game.Highlightable;
 import game.Move;
-import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -22,8 +20,8 @@ public class Pawn extends Piece implements Highlightable{
     private String whitePawnPStyle = generateIcon("/images/wpawnp");
 
 
-    public Pawn(int x, int y, Color color, ChessBoard chessBoard) {
-        super(x, y, color, chessBoard);
+    public Pawn(int x, int y, Color color, Game game) {
+        super(x, y, color, game);
 
     }
     public String toString(){

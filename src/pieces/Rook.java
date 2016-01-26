@@ -1,6 +1,6 @@
 package pieces;
 
-import game.ChessBoard;
+import game.Game;
 import game.Move;
 import javafx.scene.paint.Color;
 
@@ -18,8 +18,8 @@ public class Rook extends Piece {
     private String blackRookPStyle = generateIcon("/images/brookp");
     private String whiteRookPStyle = generateIcon("/images/wrookp");
 
-    public Rook(int x, int y, Color color, ChessBoard chessBoard) {
-        super(x, y, color, chessBoard);
+    public Rook(int x, int y, Color color, Game game) {
+        super(x, y, color, game);
     }
 
     public String toString(){

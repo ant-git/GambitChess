@@ -5,6 +5,6 @@ package game;
  */
 public class TestMain {
     public static void main(String[] args) {
-        ChessBoard cb = new ChessBoard();
+        Game cb = new Game();
     }
 }
