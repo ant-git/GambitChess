@@ -112,11 +112,11 @@ public class ChessSquare extends Pane implements Highlightable{
         });
     }
 
-    public void receivePiece(Piece piece){
+    public void receivePieceListener(Piece piece){
         setOnMouseClicked(event -> {
+            game.dehighlightAllMoves();
             piece.move(x, y);
             setPiece(piece);
-            game.dehighlightAllMoves();
         });
 
     }

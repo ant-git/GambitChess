@@ -19,6 +19,7 @@ public abstract class Piece extends Pane{
     private Game game;
     private boolean highlighted;
     private ChessSquare square;
+    private int safeMoveCounter = 0;
 
     public Piece(int x, int y, Color color, Game game) {
         this.x = x;
@@ -105,14 +106,16 @@ public abstract class Piece extends Pane{
 
         }
 
-        if(game.isKingUnderTreat(getEnemyColor())){
-            System.out.println("CHECK!");
-            for(Node node : game.getChessBoard().getChildren()){
-                if(node instanceof Piece && ((Piece) node).getColor().equals(getEnemyColor())){
-                    System.out.println(((Piece) node).getAvailableMoves().toString());
-                }
+        if(game.countSafeMovesFor(getEnemyColor()) == 0){
+            System.out.println("CHECKMATE");
+        }
+        else{
+            if(game.isKingUnderTreat(getEnemyColor())){
+                System.out.println("CHECK");
             }
         }
+
+
 
     }
 
@@ -171,7 +174,6 @@ public abstract class Piece extends Pane{
                 check = true;
             game.getSquare(this).removePiece();
             game.getSquare(move.getX(), move.getY()).setPiece(this);
-
         }
 
 
@@ -201,8 +203,8 @@ public abstract class Piece extends Pane{
     }
 
     public void kill(Piece victim){
-        game.getChessBoard().getChildren().remove(victim);
         game.getSquare(victim).removePiece();
+        game.getChessBoard().getChildren().remove(victim);
         this.move(victim.getX(), victim.getY());
     }
 

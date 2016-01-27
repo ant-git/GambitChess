@@ -179,7 +179,7 @@ public class Game implements Initializable{
                     ((ChessSquare) node).removeListeners();
                 }
                 else{
-                    ((ChessSquare) node).receivePiece(pickedPiece);
+                    ((ChessSquare) node).receivePieceListener(pickedPiece);
                 }
             }
             if(node instanceof Piece){
@@ -219,6 +219,7 @@ public class Game implements Initializable{
         for(Node node : chessBoard.getChildren()){
             if(node instanceof Piece && ((Piece) node).getColor().equals(color)){
                 ((Piece) node).setDefaultListener();
+
             }
             if(node instanceof Piece && !((Piece) node).getColor().equals(color)){
                 ((Piece) node).removeListeners();
@@ -254,6 +255,21 @@ public class Game implements Initializable{
     }
 
 
+    public int countSafeMovesFor(Color color){
+
+        ArrayList<Piece> piecesToCheck = new ArrayList<>();
+        for(Node node : chessBoard.getChildren()){
+            if(node instanceof Piece && ((Piece) node).getColor().equals(color)){
+                piecesToCheck.add((Piece) node);
+            }
+        }
+        int counter = 0;
+        for(Piece piece : piecesToCheck){
+            counter += piece.getAllSafeMoves().size();
+        }
+
+        return counter;
+    }
 
 
 }
