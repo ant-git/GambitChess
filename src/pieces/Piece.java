@@ -3,7 +3,6 @@ package pieces;
 import game.Game;
 import game.ChessSquare;
 import game.Move;
-import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
@@ -18,8 +17,6 @@ public abstract class Piece extends Pane{
     private int y;
     private Game game;
     private boolean highlighted;
-    private ChessSquare square;
-    private int safeMoveCounter = 0;
 
     public Piece(int x, int y, Color color, Game game) {
         this.x = x;
@@ -27,7 +24,6 @@ public abstract class Piece extends Pane{
         this.color = color;
         this.game = game;
         highlighted = false;
-        square = game.getSquare(this);
         setDefaultIcon();
 
     }
@@ -180,7 +176,7 @@ public abstract class Piece extends Pane{
         return !check;
     }
 
-    public ArrayList<Move> getAllSafeMoves(){
+    public ArrayList<Move> filterMoves(){
         ArrayList<Move> movesWithoutCheck = new ArrayList<>();
         for (Move move : getAvailableMoves())
         {
@@ -196,7 +192,7 @@ public abstract class Piece extends Pane{
 
     public void pick() {
         setPickIcon();
-        game.highlightPossibleMoves(getAllSafeMoves());
+        game.highlightPossibleMoves(filterMoves());
         setDeselectListener();
         game.setHighlightOnlyListeners(this);
 

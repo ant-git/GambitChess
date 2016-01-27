@@ -265,7 +265,7 @@ public class Game implements Initializable{
         }
         int counter = 0;
         for(Piece piece : piecesToCheck){
-            counter += piece.getAllSafeMoves().size();
+            counter += piece.filterMoves().size();
         }
 
         return counter;
