@@ -52,51 +52,51 @@ public class Game implements Initializable{
     public  void setupPieces(){
         for(int i=0; i < 8; i++){
             Pawn pawn = new Pawn(i,1,Color.BLACK, this);
-            chessBoard.add(pawn,i,1);
+            getSquare(i,1).setPiece(pawn);
         }
 
         for(int i=0; i < 8; i++){
             Pawn pawn = new Pawn(i,6,Color.WHITE, this);
-            chessBoard.add(pawn,i,6);
+            getSquare(i,6).setPiece(pawn);
         }
 
         King bking = new King(4,0, Color.BLACK, this);
-        chessBoard.add(bking, 4,0);
+        getSquare(4,0).setPiece(bking);
 
         King wking = new King(4,7, Color.WHITE, this);
-        chessBoard.add(wking, 4,7);
+        getSquare(4,7).setPiece(wking);
 
         Rook brook1 = new Rook(0,0,Color.BLACK, this);
-        chessBoard.add(brook1, 0,0);
+        getSquare(0,0).setPiece(brook1);
         Rook brook2 = new Rook(7,0,Color.BLACK, this);
-        chessBoard.add(brook2, 7,0);
+        getSquare(7,0).setPiece(brook2);
         Rook wrook1 = new Rook(0,7,Color.WHITE, this);
-        chessBoard.add(wrook1, 0,7);
+        getSquare(0,7).setPiece(wrook1);
         Rook wrook2 = new Rook(7,7,Color.WHITE, this);
-        chessBoard.add(wrook2, 7,7);
+        getSquare(7,7).setPiece(wrook2);
 
         Queen bqueen = new Queen(3,0,Color.BLACK, this);
-        chessBoard.add(bqueen,3,0);
+        getSquare(3,0).setPiece(bqueen);
         Queen wqueen = new Queen(3,7,Color.WHITE, this);
-        chessBoard.add(wqueen,3,7);
+        getSquare(3,7).setPiece(wqueen);
 
         Bishop bbishop1 = new Bishop(2,0,Color.BLACK, this);
-        chessBoard.add(bbishop1,2,0);
+        getSquare(2,0).setPiece(bbishop1);
         Bishop bbishop2 = new Bishop(5,0,Color.BLACK, this);
-        chessBoard.add(bbishop2,5,0);
+        getSquare(5,0).setPiece(bbishop2);
         Bishop wbishop1 = new Bishop(2,7,Color.WHITE, this);
-        chessBoard.add(wbishop1,2,7);
+        getSquare(2,7).setPiece(wbishop1);
         Bishop wbishop2 = new Bishop(5,7,Color.WHITE, this);
-        chessBoard.add(wbishop2,5,7);
+        getSquare(5,7).setPiece(wbishop2);
 
         Knight bknight1 = new Knight(1,0,Color.BLACK, this);
-        chessBoard.add(bknight1,1,0);
+        getSquare(1,0).setPiece(bknight1);
         Knight bknight2 = new Knight(6,0,Color.BLACK, this);
-        chessBoard.add(bknight2,6,0);
+        getSquare(6,0).setPiece(bknight2);
         Knight wknight1 = new Knight(1,7,Color.WHITE, this);
-        chessBoard.add(wknight1,1,7);
+        getSquare(1,7).setPiece(wknight1);
         Knight wknight2 = new Knight(6,7,Color.WHITE, this);
-        chessBoard.add(wknight2,6,7);
+        getSquare(6,7).setPiece(wknight2);
 
         dehighlightAllMoves();
 
@@ -252,5 +252,8 @@ public class Game implements Initializable{
 
         return underTreat;
     }
+
+
+
 
 }

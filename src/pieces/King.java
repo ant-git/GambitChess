@@ -78,11 +78,6 @@ public class King extends Piece {
     @Override
     public void move(int newX, int newY){
         getGame().getSquare(this).removePiece();
-        getGame().getChessBoard().getChildren().remove(this);
-        getGame().getChessBoard().add(this, newX, newY);
-        setX(newX);
-        setY(newY);
-
         getGame().getSquare(newX,newY).setPiece(this);
         dehighlight();
         if(getColor().equals(Color.WHITE))

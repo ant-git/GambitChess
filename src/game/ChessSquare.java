@@ -28,16 +28,16 @@ public class ChessSquare extends Pane implements Highlightable{
                                "-fx-background-position: center center;" +
                                "-fx-background-repeat: no-repeat;";
 
-    Game board;
+    Game game;
 
-    public ChessSquare(int x, int y, Color color, Game board) {
+    public ChessSquare(int x, int y, Color color, Game game) {
         this.x = x;
         this.y = y;
         this.color = color;
         setColor();
         empty = true;
         highlighted = false;
-        this.board = board;
+        this.game = game;
 
     }
 
@@ -61,13 +61,17 @@ public class ChessSquare extends Pane implements Highlightable{
     }
 
     public void setPiece(Piece piece) {
+        game.getChessBoard().getChildren().remove(piece);
         this.piece = piece;
-        //piece.setChessSquare(this);
         empty = false;
+        piece.setX(x);
+        piece.setY(y);
+        game.getChessBoard().add(piece, piece.getX(), piece.getY());
     }
     public void removePiece(){
         piece = null;
         empty = true;
+        game.getChessBoard().getChildren().remove(piece);
     }
 
     public boolean isEmpty(){
@@ -112,7 +116,7 @@ public class ChessSquare extends Pane implements Highlightable{
         setOnMouseClicked(event -> {
             piece.move(x, y);
             setPiece(piece);
-            board.dehighlightAllMoves();
+            game.dehighlightAllMoves();
         });
 
     }

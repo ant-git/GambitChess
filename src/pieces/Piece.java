@@ -20,14 +20,13 @@ public abstract class Piece extends Pane{
     private boolean highlighted;
     private ChessSquare square;
 
-    public Piece(int x, int y, Color color, Game board) {
+    public Piece(int x, int y, Color color, Game game) {
         this.x = x;
         this.y = y;
         this.color = color;
-        this.game = board;
+        this.game = game;
         highlighted = false;
-        square = board.getSquare(this);
-        square.setPiece(this);
+        square = game.getSquare(this);
         setDefaultIcon();
 
     }
@@ -92,10 +91,6 @@ public abstract class Piece extends Pane{
 
     public void move(int newX, int newY){
         game.getSquare(this).removePiece();
-        game.getChessBoard().getChildren().remove(this);
-        game.getChessBoard().add(this, newX, newY);
-        setX(newX);
-        setY(newY);
         game.getSquare(newX,newY).setPiece(this);
         highlighted = false;
         game.dehighlightAllMoves();
@@ -153,56 +148,28 @@ public abstract class Piece extends Pane{
         setOnMouseClicked(event -> {});
     }
 
+
+
     public boolean isMoveSafe(Move move){
         boolean check = false;
         game.getSquare(this).removePiece();
         game.getChessBoard().getChildren().remove(this);
-        //piece removed from square and board
         if(!game.getSquare(move.getNewX(), move.getNewY()).isEmpty()){
             Piece piece = game.getSquare(move.getNewX(), move.getNewY()).getPiece();
             game.getSquare(piece).removePiece();
-            game.getChessBoard().getChildren().remove(piece);
-            //possible enemy piece removed from square and board
-
-            game.getChessBoard().add(this, move.getNewX(), move.getNewY());
-            //piece added to square and board
-            setX(move.getNewX());
-            setY(move.getNewY());
             game.getSquare(move.getNewX(), move.getNewY()).setPiece(this);
-
-
             if(game.isKingUnderTreat(color))
                 check = true;
-
             game.getSquare(this).removePiece();
-            game.getChessBoard().getChildren().remove(this);
-            //piece removed from square and board
-
-            game.getChessBoard().add(this, move.getX(), move.getY());
-            //piece added to square and board
-            setX(move.getX());
-            setY(move.getY());
             game.getSquare(move.getX(), move.getY()).setPiece(this);
-
-
-            game.getChessBoard().add(piece, move.getNewX(), move.getNewY());
             game.getSquare(move.getNewX(), move.getNewY()).setPiece(piece);
-            //enemy piece came back to board
 
         }
         else{
-            game.getChessBoard().add(this, move.getNewX(), move.getNewY());
-            setX(move.getNewX());
-            setY(move.getNewY());
             game.getSquare(move.getNewX(), move.getNewY()).setPiece(this);
             if(game.isKingUnderTreat(color))
                 check = true;
             game.getSquare(this).removePiece();
-            game.getChessBoard().getChildren().remove(this);
-
-            game.getChessBoard().add(this, move.getX(), move.getY());
-            setX(move.getX());
-            setY(move.getY());
             game.getSquare(move.getX(), move.getY()).setPiece(this);
 
         }
