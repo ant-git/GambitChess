@@ -2,6 +2,8 @@ package game;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import pieces.King;
+import pieces.Pawn;
 import pieces.Piece;
 
 /**
@@ -114,10 +116,44 @@ public class ChessSquare extends Pane implements Highlightable{
 
     public void receivePieceListener(Piece piece){
         setOnMouseClicked(event -> {
+            setCastling(piece);
+            setEnPassant(piece);
             game.dehighlightAllMoves();
             piece.move(x, y);
-            setPiece(piece);
         });
 
     }
+
+    public void setCastling(Piece piece){
+        if(x == 2 && y == 0 && piece instanceof King && piece.getMoveCount() == 0)
+            game.getSquare(0,0).getPiece().move(3,0);
+
+        if(x == 6 && y == 0 && piece instanceof King && piece.getMoveCount() == 0)
+            game.getSquare(7,0).getPiece().move(5,0);
+
+        if(x == 2 && y == 7 && piece instanceof King && piece.getMoveCount() == 0)
+            game.getSquare(0,7).getPiece().move(3,7);
+
+        if(x == 6 && y == 7 && piece instanceof King && piece.getMoveCount() == 0)
+            game.getSquare(7,7).getPiece().move(5,7);
+
+
+    }
+
+    public void setEnPassant(Piece piece){
+        if(piece instanceof Pawn && ((Pawn) piece).isEnPassant()) {
+            game.dehighlightAllMoves();
+            if(y == 5){
+                game.getPiece(x, y-1).remove();
+                ((Pawn) piece).setEnPassant(false);
+            }
+            if(y == 2){
+                game.getPiece(x, y+1).remove();
+                ((Pawn) piece).setEnPassant(false);
+            }
+
+        }
+    }
+
+
 }

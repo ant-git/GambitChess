@@ -3,8 +3,17 @@ package pieces;
 import game.Game;
 import game.ChessSquare;
 import game.Move;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBoxBuilder;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
@@ -17,12 +26,14 @@ public abstract class Piece extends Pane{
     private int y;
     private Game game;
     private boolean highlighted;
+    private int moveCount;
 
     public Piece(int x, int y, Color color, Game game) {
         this.x = x;
         this.y = y;
         this.color = color;
         this.game = game;
+        moveCount = 0;
         highlighted = false;
         setDefaultIcon();
 
@@ -87,30 +98,45 @@ public abstract class Piece extends Pane{
 
 
     public void move(int newX, int newY){
+        getGame().addMoveToList(new Move(getX(),getY(), newX, newY));
         game.getSquare(this).removePiece();
         game.getSquare(newX,newY).setPiece(this);
+
+
+        if(newY == 0 && this instanceof Pawn && getColor().equals(Color.WHITE)
+                ||(newY == 7 && this instanceof Pawn && getColor().equals(Color.BLACK)) ){
+            game.promotePawn(this);
+        }
+
         highlighted = false;
         game.dehighlightAllMoves();
 
         if(getColor().equals(Color.WHITE)) {
-            System.out.println("BLACK TURN");
             game.setListenersFor(Color.BLACK);
         }
         else {
-            System.out.println("WHITE TURN");
             game.setListenersFor(Color.WHITE);
 
         }
 
+        increaseMoveCount();
+        game.setLastMovedPiece(this);
+
         if(game.countSafeMovesFor(getEnemyColor()) == 0){
             System.out.println("CHECKMATE");
+            game.removeListeners();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("CHECKMATE");
+            alert.setHeaderText(null);
+            alert.setContentText("CHECKMATE");
+            alert.showAndWait();
         }
         else{
             if(game.isKingUnderTreat(getEnemyColor())){
                 System.out.println("CHECK");
+                game.getKing(getEnemyColor());// set to check
             }
         }
-
 
 
     }
@@ -143,7 +169,7 @@ public abstract class Piece extends Pane{
         });
     }
 
-    public void removeListeners(){
+    public void removeListener(){
         setOnMouseClicked(event -> {});
     }
 
@@ -151,17 +177,22 @@ public abstract class Piece extends Pane{
 
     public boolean isMoveSafe(Move move){
         boolean check = false;
-        game.getSquare(this).removePiece();
-        game.getChessBoard().getChildren().remove(this);
+        remove();
         if(!game.getSquare(move.getNewX(), move.getNewY()).isEmpty()){
             Piece piece = game.getSquare(move.getNewX(), move.getNewY()).getPiece();
+
             game.getSquare(piece).removePiece();
             game.getSquare(move.getNewX(), move.getNewY()).setPiece(this);
+
             if(game.isKingUnderTreat(color))
                 check = true;
+
+
             game.getSquare(this).removePiece();
             game.getSquare(move.getX(), move.getY()).setPiece(this);
             game.getSquare(move.getNewX(), move.getNewY()).setPiece(piece);
+
+
 
         }
         else{
@@ -183,7 +214,6 @@ public abstract class Piece extends Pane{
             if(isMoveSafe(move))
                 movesWithoutCheck.add(move);
         }
-
         return movesWithoutCheck;
     }
 
@@ -195,7 +225,6 @@ public abstract class Piece extends Pane{
         game.highlightPossibleMoves(filterMoves());
         setDeselectListener();
         game.setHighlightOnlyListeners(this);
-
     }
 
     public void kill(Piece victim){
@@ -366,5 +395,17 @@ public abstract class Piece extends Pane{
             return Color.WHITE;
     }
 
+    public int getMoveCount() {
+        return moveCount;
+    }
+
+    public void increaseMoveCount(){
+        moveCount++;
+    }
+
+    public void remove(){
+        game.getSquare(this).removePiece();
+        game.getChessBoard().getChildren().remove(this);
+    }
 
 }

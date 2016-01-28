@@ -4,12 +4,17 @@ package game;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import pieces.*;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
+import java.util.Queue;
 import java.util.ResourceBundle;
 
 /**
@@ -19,6 +24,8 @@ public class Game implements Initializable{
 
     @FXML
     GridPane chessBoard;
+    private ArrayList<Move> moves;
+    public Piece lastMovedPiece;
 
     public Game() {
 
@@ -130,6 +137,7 @@ public class Game implements Initializable{
     @FXML
     public void resetGame(){
         chessBoard.getChildren().clear();
+        moves = new ArrayList<>();
         paintBoard();
         setupPieces();
         setListenersFor(Color.WHITE);
@@ -138,7 +146,8 @@ public class Game implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        chessBoard.getChildren().remove(chessBoard.getChildren());
+        chessBoard.getChildren().clear();
+        moves = new ArrayList<>();
         paintBoard();
         setupPieces();
         setListenersFor(Color.WHITE);
@@ -187,7 +196,7 @@ public class Game implements Initializable{
                     ((Piece) node).setDeselectListener();
                    }
                 if(!node.equals(pickedPiece) && !((Piece) node).isHighlighted()){
-                    ((Piece) node).removeListeners();
+                    ((Piece) node).removeListener();
                 }
 
                 if(((Piece) node).isHighlighted()){
@@ -213,7 +222,13 @@ public class Game implements Initializable{
         return moves;
     }
 
-
+    public void removeListeners(){
+        for(Node node : chessBoard.getChildren()){
+            if(node instanceof Piece){
+                ((Piece) node).removeListener();
+            }
+        }
+    }
 
     public void setListenersFor(Color color){
         for(Node node : chessBoard.getChildren()){
@@ -222,7 +237,7 @@ public class Game implements Initializable{
 
             }
             if(node instanceof Piece && !((Piece) node).getColor().equals(color)){
-                ((Piece) node).removeListeners();
+                ((Piece) node).removeListener();
             }
         }
     }
@@ -246,7 +261,9 @@ public class Game implements Initializable{
         ArrayList<Move> moves = new ArrayList<>();
         moves.addAll(getPossibleMovesForAll(enemyColor));
         for(Move move : moves){
-            if(move.getNewX() == getKing(color).getX() && move.getNewY() == getKing(color).getY()){
+            if(move.getNewX() == getKing(color).getX()
+                    && move.getNewY() == getKing(color).getY()
+                    && !getSquare(move.getX(), move.getY()).getPiece().getColor().equals(color)){
                 underTreat = true;
             }
         }
@@ -271,5 +288,64 @@ public class Game implements Initializable{
         return counter;
     }
 
+    public void addMoveToList(Move newMove){
+        moves.add(newMove);
 
+    }
+
+    public Piece getPiece(int x, int y){
+        return getSquare(x,y).getPiece();
+    }
+
+    public void promotePawn(Piece pawn){
+        int pawnX = pawn.getX();
+        int pawnY = pawn.getY();
+        Color pawnColor = pawn.getColor();
+        System.out.println("PAWN @ " + pawnX + "  " +  pawnY);
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Pawn is ready to be promoted");
+        alert.setHeaderText("Choose a new piece:");
+
+        String paint = "";
+        if(pawnColor.equals(Color.BLACK)){
+            paint = "b";
+        }else{
+            paint = "w";
+        }
+
+        ButtonType buttonKnight = new ButtonType("Knight");
+        ButtonType buttonQueen = new ButtonType("Queen");
+        ButtonType buttonBishop = new ButtonType("Bishop");
+        ButtonType buttonRook = new ButtonType("Rook");
+
+        alert.getButtonTypes().setAll(buttonKnight, buttonQueen, buttonBishop, buttonRook);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == buttonKnight){
+            pawn.remove();
+            Knight knight = new Knight(pawnX, pawnY, pawnColor, this);
+            getSquare(pawnX,pawnY).setPiece(knight);
+        } else if (result.get() == buttonQueen) {
+            pawn.remove();
+            Queen queen = new Queen(pawnX, pawnY, pawnColor, this);
+            getSquare(pawnX,pawnY).setPiece(queen);
+        } else if (result.get() == buttonBishop) {
+            pawn.remove();
+            Bishop bishop = new Bishop(pawnX, pawnY, pawnColor, this);
+            getSquare(pawnX,pawnY).setPiece(bishop);
+        } else if (result.get() == buttonRook){
+            pawn.remove();
+            Rook rook = new Rook(pawnX, pawnY, pawnColor, this);
+            getSquare(pawnX,pawnY).setPiece(rook);
+        }
+    }
+
+    public Piece getLastMovedPiece() {
+        return lastMovedPiece;
+    }
+
+    public void setLastMovedPiece(Piece lastMovedPiece) {
+        this.lastMovedPiece = lastMovedPiece;
+    }
 }
