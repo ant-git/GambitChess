@@ -56,10 +56,8 @@ public class King extends Piece {
                     && getGame().getSquare(6,0).isEmpty()) {
 
                 if(isCastlingAvailable(5,0,getEnemyColor())
-                        && (getGame().getSquare(6,1).isEmpty()
-                        || !(getGame().getPiece(6,1).getColor().equals(Color.BLACK)&& getGame().getPiece(6,1) instanceof Pawn))
-                        && (getGame().getSquare(4,1).isEmpty()
-                        || !(getGame().getPiece(4,1).getColor().equals(Color.BLACK)&& getGame().getPiece(4,1) instanceof Pawn)))
+                        && (getGame().getSquare(6,1).isEmpty() || !(getGame().getPiece(6,1).getColor().equals(Color.WHITE) && getGame().getPiece(6,1) instanceof Pawn))
+                        && (getGame().getSquare(4,1).isEmpty() || !(getGame().getPiece(4,1).getColor().equals(Color.WHITE)&& getGame().getPiece(4,1) instanceof Pawn)))
                     moves.add(new Move(x, y, 6, 0));
 
             }
@@ -70,10 +68,8 @@ public class King extends Piece {
                     && getGame().getSquare(3,0).isEmpty()) {
 
                 if(isCastlingAvailable(3,0,getEnemyColor())
-                        && (getGame().getSquare(2,1).isEmpty()
-                        || !(getGame().getPiece(2,1).getColor().equals(Color.WHITE) && getGame().getPiece(2,1) instanceof Pawn))
-                        && (getGame().getSquare(4,1).isEmpty()
-                        || !(getGame().getPiece(4,1).getColor().equals(Color.WHITE)&& getGame().getPiece(4,1) instanceof Pawn)))
+                        && (getGame().getSquare(2,1).isEmpty() || !(getGame().getPiece(2,1).getColor().equals(Color.WHITE) && getGame().getPiece(2,1) instanceof Pawn))
+                        && (getGame().getSquare(4,1).isEmpty() || !(getGame().getPiece(4,1).getColor().equals(Color.WHITE)&& getGame().getPiece(4,1) instanceof Pawn)))
                     moves.add(new Move(x, y, 2, 0));
 
             }
@@ -81,15 +77,13 @@ public class King extends Piece {
 
         if(getColor().equals(Color.WHITE)){
            if(!getGame().getSquare(7,7).isEmpty()
-                   &&  getGame().getSquare(7,7).getPiece().getMoveCount() == 0
+                   && getGame().getSquare(7,7).getPiece().getMoveCount() == 0
                    && getGame().getSquare(6,7).isEmpty()
                    && getGame().getSquare(5,7).isEmpty()) {
 
                if(isCastlingAvailable(5,7,getEnemyColor())
-                       && (getGame().getSquare(4,6).isEmpty()
-                       || !(getGame().getPiece(4,6).getColor().equals(Color.BLACK)&& getGame().getPiece(4,6) instanceof Pawn))
-                       && (getGame().getSquare(6,6).isEmpty()
-                       || !(getGame().getPiece(6,6).getColor().equals(Color.BLACK)&& getGame().getPiece(6,6) instanceof Pawn)))
+                       && (getGame().getSquare(4,6).isEmpty() || !(getGame().getPiece(4,6).getColor().equals(Color.BLACK)&& getGame().getPiece(4,6) instanceof Pawn))
+                       && (getGame().getSquare(6,6).isEmpty() || !(getGame().getPiece(6,6).getColor().equals(Color.BLACK)&& getGame().getPiece(6,6) instanceof Pawn)))
                     moves.add(new Move(x, y, 6, 7));
            }
            if(!getGame().getSquare(0,7).isEmpty()
@@ -99,10 +93,8 @@ public class King extends Piece {
                    && getGame().getSquare(3,7).isEmpty()) {
 
                if(isCastlingAvailable(3,7,getEnemyColor())
-                       && (getGame().getSquare(4,6).isEmpty()
-                       || !(getGame().getPiece(4,6).getColor().equals(Color.WHITE) && getGame().getPiece(4,6) instanceof Pawn))
-                       && (getGame().getSquare(2,6).isEmpty()
-                       || !(getGame().getPiece(2,6).getColor().equals(Color.WHITE) && getGame().getPiece(2,6) instanceof Pawn)))
+                       && (getGame().getSquare(4,6).isEmpty() || !(getGame().getPiece(4,6).getColor().equals(Color.BLACK) && getGame().getPiece(4,6) instanceof Pawn))
+                       && (getGame().getSquare(2,6).isEmpty() || !(getGame().getPiece(2,6).getColor().equals(Color.BLACK) && getGame().getPiece(2,6) instanceof Pawn)))
                     moves.add(new Move(x, y, 2, 7));
            }
         }

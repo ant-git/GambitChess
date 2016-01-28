@@ -213,7 +213,7 @@ public class Game implements Initializable{
     public ArrayList<Move> getPossibleMovesForAll(Color color){
         ArrayList<Move> moves = new ArrayList<>();
         for(Node node : chessBoard.getChildren()){
-            if(node instanceof Piece && ((Piece) node).getColor().equals(color)){
+            if(node instanceof Piece && ((Piece) node).getColor().equals(color) && !(node instanceof King)){
                 moves.addAll(((Piece) node).getAvailableMoves());
             }
         }
@@ -347,5 +347,6 @@ public class Game implements Initializable{
 
     public void setLastMovedPiece(Piece lastMovedPiece) {
         this.lastMovedPiece = lastMovedPiece;
+        System.out.println("LAST PIECE: " + lastMovedPiece.toString() +  " @ " + lastMovedPiece.getX() + " " + getLastMovedPiece().getY() + " Color is White: " + getLastMovedPiece().isWhite());
     }
 }
