@@ -307,12 +307,6 @@ public class Game implements Initializable{
         alert.setTitle("Pawn is ready to be promoted");
         alert.setHeaderText("Choose a new piece:");
 
-        String paint = "";
-        if(pawnColor.equals(Color.BLACK)){
-            paint = "b";
-        }else{
-            paint = "w";
-        }
 
         ButtonType buttonKnight = new ButtonType("Knight");
         ButtonType buttonQueen = new ButtonType("Queen");
