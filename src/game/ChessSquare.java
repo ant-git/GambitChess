@@ -148,10 +148,12 @@ public class ChessSquare extends Pane implements Highlightable{
         if(piece instanceof Pawn && ((Pawn) piece).isEnPassant()) {
             game.dehighlightAllMoves();
             if(y == 5){
+                game.addToCapturedList(game.getPiece(x, y-1));
                 game.getPiece(x, y-1).remove();
                 ((Pawn) piece).setEnPassant(false);
             }
             if(y == 2){
+                game.addToCapturedList(game.getPiece(x, y+1));
                 game.getPiece(x, y+1).remove();
                 ((Pawn) piece).setEnPassant(false);
             }

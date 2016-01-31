@@ -132,7 +132,7 @@ public abstract class Piece extends Pane{
 
     public void setUnderTreatListener(Piece killer){
         setOnMouseClicked(event -> {
-            killer.kill(this);
+            killer.capture(this);
             game.dehighlightAllMoves();
         });
     }
@@ -217,11 +217,14 @@ public abstract class Piece extends Pane{
         game.setHighlightOnlyListeners(this);
     }
 
-    //to kill another piece
-    public void kill(Piece victim){
+    //to capture another piece
+    public void capture(Piece victim){
         game.getSquare(victim).removePiece();
         game.getChessBoard().getChildren().remove(victim);
         this.move(victim.getX(), victim.getY());
+
+        game.addToCapturedList(victim);
+
     }
 
     //method returns list of Diagonal moves (required for Queen and Bishop)

@@ -25,6 +25,8 @@ public class Game implements Initializable{
     GridPane chessBoard;
     private ArrayList<Move> moves; // to keep history of all moves
     public Piece lastMovedPiece;
+    private ArrayList<Piece> capturedWhites;
+    private ArrayList<Piece> capturedBlacks;
 
     public Game() {
 
@@ -150,6 +152,8 @@ public class Game implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         chessBoard.getChildren().clear();
         moves = new ArrayList<>();
+        capturedBlacks = new ArrayList<>();
+        capturedWhites = new ArrayList<>();
         paintBoard();
         setupPieces();
         setListenersFor(Color.WHITE);
@@ -355,4 +359,13 @@ public class Game implements Initializable{
         return getSquare(x,y).getPiece().getColor().equals(Color.WHITE);
     }
 
+    public void addToCapturedList(Piece piece){
+        if(piece.isWhite()){
+            capturedWhites.add(piece);
+        }
+        else{
+            capturedBlacks.add(piece);
+        }
+        
+    }
 }
