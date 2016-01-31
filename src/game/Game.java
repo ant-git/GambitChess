@@ -381,4 +381,6 @@ public class Game implements Initializable{
             capturedBlacks.getChildren().add(image);
         }
     }
+
+
 }

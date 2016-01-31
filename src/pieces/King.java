@@ -110,6 +110,28 @@ public class King extends Piece {
            }
         }
 
+        moves.addAll(getStandardMoves());
+
+        King enemyKing = (King) game.getKing(getEnemyColor());
+        ArrayList<Move> movesToRemove =  new ArrayList<>();
+        for(Move enemyMove : enemyKing.getStandardMoves()){
+            for(Move move : moves){
+                if(move.getNewX() == enemyMove.getNewX() && move.getNewY() == enemyMove.getNewY())
+                   movesToRemove.add(move);
+            }
+        }
+
+        moves.removeAll(movesToRemove); // removing moves that cause both Kings to attack each other
+
+        return moves;
+    }
+
+    //list of moves without Pawn/Castling check
+    public ArrayList<Move> getStandardMoves(){
+        ArrayList<Move> moves = new ArrayList<>();
+        int x = getX();
+        int y = getY();
+        boolean white = game.pieceIsWhiteAtIndex(x,y);;
         if((y-1 >= 0) && (game.getSquare(x,y-1).isEmpty() || !game.pieceIsWhiteAtIndex(x,y-1) == white))
             moves.add(new Move(x, y, x, y - 1));
 
@@ -133,8 +155,6 @@ public class King extends Piece {
 
         if((x+1 <= 7 && y-1 >= 0) && (game.getSquare(x+1,y-1).isEmpty() || !game.pieceIsWhiteAtIndex(x+1,y-1) == white))
             moves.add(new Move(x, y, x + 1, y - 1));
-
-
         return moves;
     }
 
