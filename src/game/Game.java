@@ -31,6 +31,8 @@ public class Game implements Initializable{
     private HBox capturedWhites;
     @FXML
     private HBox capturedBlacks;
+    @FXML
+    private ChessSquare chessSquare;
 
     private ArrayList<Move> moves; // to keep history of all moves
     public Piece lastMovedPiece;
@@ -46,14 +48,13 @@ public class Game implements Initializable{
         boolean white = true;
         for(int i = 0; i < 8; i++){
             for (int j = 0; j < 8; j++){
-                ChessSquare square;
                 if(white) {
-                    square = new ChessSquare(j,i,Color.WHITE, this);
-                    chessBoard.add(square,j,i);
+                    chessSquare = new ChessSquare(j,i,Color.WHITE, this);
+                    chessBoard.add(chessSquare,j,i);
                     white = false;
                 }else{
-                    square = new ChessSquare(j,i,Color.BLACK, this);
-                    chessBoard.add(square,j,i);
+                    chessSquare = new ChessSquare(j,i,Color.BLACK, this);
+                    chessBoard.add(chessSquare,j,i);
                     white = true;
                 }
                 if(j== 7){

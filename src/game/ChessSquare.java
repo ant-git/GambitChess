@@ -18,18 +18,27 @@ public class ChessSquare extends Pane implements Highlightable{
 
     Color color;
     private boolean highlighted;
-    String blackSquareStyle = "-fx-background-color: saddlebrown";
-    String whiteSquareStyle = "-fx-background-color: wheat";
+    String blackSquareStyle = "-fx-background-color: saddlebrown;" +
+                              "-fx-border-width: 0.5px;" +
+                              "-fx-border-color: black;";
+
+    String whiteSquareStyle = "-fx-background-color: wheat;" +
+                              "-fx-border-width: 0.5px;" +
+                              "-fx-border-color: black;";
 
     String blackSquareHStyle = "-fx-background-color: saddlebrown; " +
                                "-fx-background-image: url('/images/circle');" +
                                "-fx-background-position: center center;" +
-                               "-fx-background-repeat: no-repeat;";
+                               "-fx-background-repeat: no-repeat;"+
+                               "-fx-border-width: 0.5px;" +
+                               "-fx-border-color: black;";
 
     String whiteSquareHStyle = "-fx-background-color: wheat; " +
                                "-fx-background-image: url('/images/circle');" +
                                "-fx-background-position: center center;" +
-                               "-fx-background-repeat: no-repeat;";
+                               "-fx-background-repeat: no-repeat;"+
+                               "-fx-border-width: 0.5px;" +
+                               "-fx-border-color: black;";
 
     Game game;
 
