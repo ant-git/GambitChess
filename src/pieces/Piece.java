@@ -113,8 +113,9 @@ public abstract class Piece extends Pane{
 
         increaseMoveCount();
         game.setLastMovedPiece(this);
-
-        if(game.countSafeMovesFor(getEnemyColor()) == 0){
+        int movesLeftCount = game.countSafeMovesFor(getEnemyColor());
+        boolean check = game.isKingUnderThreat(getEnemyColor());
+        if(movesLeftCount == 0 && check){
             game.removeListeners();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("CHECKMATE");
@@ -123,8 +124,17 @@ public abstract class Piece extends Pane{
             alert.showAndWait();
         }
         else{
-            if(game.isKingUnderThreat(getEnemyColor())){
-                game.getKing(getEnemyColor());
+            if(check){
+                System.out.println("CHECK");
+            }
+
+            if(!check && movesLeftCount == 0){
+                game.removeListeners();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("STALEMATE");
+                alert.setHeaderText(null);
+                alert.setContentText("STALEMATE");
+                alert.showAndWait();
             }
         }
 

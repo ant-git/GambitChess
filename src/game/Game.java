@@ -370,11 +370,8 @@ public class Game implements Initializable{
 
     public void addToCapturedList(Piece piece){
         ImageView image = new ImageView(piece.getDefaultIconPath());
-        image.setFitHeight(23);
-        image.setFitWidth(23);
-
-        image.setPreserveRatio(true);
-
+        image.setFitHeight(28);
+        image.setFitWidth(28);
 
         if(piece.isWhite()) {
 

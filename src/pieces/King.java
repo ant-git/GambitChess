@@ -134,6 +134,7 @@ public class King extends Piece {
         if((x+1 <= 7 && y-1 >= 0) && (game.getSquare(x+1,y-1).isEmpty() || !game.pieceIsWhiteAtIndex(x+1,y-1) == white))
             moves.add(new Move(x, y, x + 1, y - 1));
 
+
         return moves;
     }
 
