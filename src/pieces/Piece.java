@@ -68,6 +68,8 @@ public abstract class Piece extends Pane{
 
     public abstract void setPickIcon();
 
+    public abstract String getDefaultIconPath();
+
     public Game getGame() {
         return game;
     }
@@ -224,6 +226,7 @@ public abstract class Piece extends Pane{
         this.move(victim.getX(), victim.getY());
 
         game.addToCapturedList(victim);
+        System.out.println("ADDED TO CAPTURED LIST");
 
     }
 

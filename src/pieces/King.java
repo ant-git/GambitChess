@@ -46,6 +46,14 @@ public class King extends Piece {
     }
 
     @Override
+    public String getDefaultIconPath() {
+        if(isWhite())
+            return "/images/wking";
+        else
+            return "/images/bking";
+    }
+
+    @Override
     public ArrayList<Move> getAvailableMoves() {
         ArrayList<Move> moves = new ArrayList<>();
         int x = getX();

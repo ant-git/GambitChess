@@ -49,6 +49,15 @@ public class Pawn extends Piece implements Highlightable{
         setIcon(whitePawnPStyle, blackPawnPStyle);
     }
 
+    @Override
+    public String getDefaultIconPath() {
+        if(isWhite())
+            return "/images/wpawn";
+        else
+            return "/images/bpawn";
+
+    }
+
     //
     @Override
     public ArrayList<Move> getAvailableMoves(){

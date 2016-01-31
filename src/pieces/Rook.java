@@ -43,6 +43,14 @@ public class Rook extends Piece {
         setIcon(whiteRookPStyle,blackRookPStyle);
     }
 
+    @Override
+    public String getDefaultIconPath() {
+        if(isWhite())
+            return "/images/wrook";
+        else
+            return "/images/brook";
+    }
+
 
     @Override
     public ArrayList<Move> getAvailableMoves() {

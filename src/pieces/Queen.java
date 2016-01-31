@@ -44,6 +44,14 @@ public class Queen extends Piece {
     }
 
     @Override
+    public String getDefaultIconPath() {
+        if(isWhite())
+            return "/images/wqueen";
+        else
+            return "/images/bqueen";
+    }
+
+    @Override
     public ArrayList<Move> getAvailableMoves() {
         ArrayList<Move> moves = new ArrayList<>();
         moves.addAll(getDiagonalMoves());

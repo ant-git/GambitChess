@@ -47,6 +47,14 @@ public class Knight extends Piece {
     }
 
     @Override
+    public String getDefaultIconPath() {
+        if(isWhite())
+            return "/images/wknight";
+        else
+            return "/images/bknight";
+    }
+
+    @Override
     public ArrayList<Move> getAvailableMoves() {
 
         ArrayList<Move> moves = new ArrayList<>();

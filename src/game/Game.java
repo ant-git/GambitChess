@@ -6,7 +6,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import pieces.*;
 
@@ -22,11 +25,16 @@ import java.util.ResourceBundle;
 public class Game implements Initializable{
 
     @FXML
-    GridPane chessBoard;
+    private GridPane chessBoard;
+
+    @FXML
+    private HBox capturedWhites;
+    @FXML
+    private HBox capturedBlacks;
+
     private ArrayList<Move> moves; // to keep history of all moves
     public Piece lastMovedPiece;
-    private ArrayList<Piece> capturedWhites;
-    private ArrayList<Piece> capturedBlacks;
+
 
     public Game() {
 
@@ -144,6 +152,8 @@ public class Game implements Initializable{
         moves = new ArrayList<>();
         paintBoard();
         setupPieces();
+        capturedWhites.getChildren().clear();
+        capturedBlacks.getChildren().clear();
         setListenersFor(Color.WHITE);
         System.out.println("game is reset");
     }
@@ -152,8 +162,7 @@ public class Game implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         chessBoard.getChildren().clear();
         moves = new ArrayList<>();
-        capturedBlacks = new ArrayList<>();
-        capturedWhites = new ArrayList<>();
+
         paintBoard();
         setupPieces();
         setListenersFor(Color.WHITE);
@@ -274,7 +283,7 @@ public class Game implements Initializable{
         for(Move move : moves){
             if(move.getNewX() == getKing(color).getX()
                     && move.getNewY() == getKing(color).getY()
-                    && !getSquare(move.getX(), move.getY()).getPiece().getColor().equals(color)){
+                    && !getPiece(move.getX(), move.getY()).getColor().equals(color)){
                 underTreat = true;
             }
         }
@@ -360,12 +369,19 @@ public class Game implements Initializable{
     }
 
     public void addToCapturedList(Piece piece){
-        if(piece.isWhite()){
-            capturedWhites.add(piece);
+        ImageView image = new ImageView(piece.getDefaultIconPath());
+        image.setFitHeight(23);
+        image.setFitWidth(23);
+
+        image.setPreserveRatio(true);
+
+
+        if(piece.isWhite()) {
+
+            capturedWhites.getChildren().add(image);
         }
-        else{
-            capturedBlacks.add(piece);
+        else {
+            capturedBlacks.getChildren().add(image);
         }
-        
     }
 }

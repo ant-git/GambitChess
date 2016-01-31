@@ -44,6 +44,14 @@ public class Bishop extends Piece {
 
     }
 
+    @Override
+    public String getDefaultIconPath() {
+        if(isWhite())
+            return "/images/wbishop";
+        else
+            return "/images/bbishop";
+    }
+
 
     @Override
     public ArrayList<Move> getAvailableMoves() {
