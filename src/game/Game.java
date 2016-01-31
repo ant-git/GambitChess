@@ -162,7 +162,8 @@ public class Game implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         chessBoard.getChildren().clear();
         moves = new ArrayList<>();
-
+        chessBoard.setMaxHeight(450);
+        chessBoard.setMaxWidth(450);
         paintBoard();
         setupPieces();
         setListenersFor(Color.WHITE);
