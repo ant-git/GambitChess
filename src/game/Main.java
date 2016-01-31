@@ -14,6 +14,7 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         primaryStage.setTitle("Gambit Chess");
         Scene scene = new Scene(root);
+        scene.getStylesheets().add("css/main.css");
         primaryStage.setScene(scene);
 
         primaryStage.show();
