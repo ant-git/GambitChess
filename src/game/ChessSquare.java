@@ -7,7 +7,8 @@ import pieces.Pawn;
 import pieces.Piece;
 
 /**
- * Created by antant on 21/01/16.
+ * Created by Anton
+ * Class that represents Chess Square
  */
 public class ChessSquare extends Pane implements Highlightable{
     int x;
@@ -86,6 +87,7 @@ public class ChessSquare extends Pane implements Highlightable{
     }
 
 
+    //method to highlight Chess Square
     @Override
     public void highlight(Move move){
         if(move.getNewX() == x && move.getNewY() == y && isEmpty()){
@@ -114,6 +116,7 @@ public class ChessSquare extends Pane implements Highlightable{
         });
     }
 
+    //to set on mouse click listener, after piece is selected
     public void receivePieceListener(Piece piece){
         setOnMouseClicked(event -> {
             setCastling(piece);
@@ -124,6 +127,7 @@ public class ChessSquare extends Pane implements Highlightable{
 
     }
 
+    //to check if king is suitable for castling
     public void setCastling(Piece piece){
         if(x == 2 && y == 0 && piece instanceof King && piece.getMoveCount() == 0)
             game.getSquare(0,0).getPiece().move(3,0);
@@ -139,7 +143,7 @@ public class ChessSquare extends Pane implements Highlightable{
 
 
     }
-
+    //to check if piece is suitable for en passant move
     public void setEnPassant(Piece piece){
         if(piece instanceof Pawn && ((Pawn) piece).isEnPassant()) {
             game.dehighlightAllMoves();

@@ -1,24 +1,16 @@
 package pieces;
 
 import game.Game;
-import game.ChessSquare;
 import game.Move;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBoxBuilder;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
 /**
- * Created by antant on 21/01/16.
+ * Created by Anton
+ * Abstract class for all Pieces
  */
 public abstract class Piece extends Pane{
     private Color color;
@@ -88,9 +80,7 @@ public abstract class Piece extends Pane{
 
 
 
-    public boolean pieceIsWhiteAtIndex(int x, int y){
-        return game.getSquare(x,y).getPiece().getColor().equals(Color.WHITE);
-    }
+
 
     public boolean isHighlighted() {
         return highlighted;
@@ -98,7 +88,7 @@ public abstract class Piece extends Pane{
 
 
     public void move(int newX, int newY){
-        getGame().addMoveToList(new Move(getX(),getY(), newX, newY));
+        game.addMoveToList(new Move(getX(),getY(), newX, newY));
         game.getSquare(this).removePiece();
         game.getSquare(newX,newY).setPiece(this);
 
@@ -123,7 +113,6 @@ public abstract class Piece extends Pane{
         game.setLastMovedPiece(this);
 
         if(game.countSafeMovesFor(getEnemyColor()) == 0){
-            System.out.println("CHECKMATE");
             game.removeListeners();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("CHECKMATE");
@@ -132,9 +121,8 @@ public abstract class Piece extends Pane{
             alert.showAndWait();
         }
         else{
-            if(game.isKingUnderTreat(getEnemyColor())){
-                System.out.println("CHECK");
-                game.getKing(getEnemyColor());// set to check
+            if(game.isKingUnderThreat(getEnemyColor())){
+                game.getKing(getEnemyColor());
             }
         }
 
@@ -158,7 +146,7 @@ public abstract class Piece extends Pane{
 
     public void setDefaultListener(){
         setOnMouseClicked(event -> {
-            pick();
+            getSelected();
         });
     }
 
@@ -174,7 +162,7 @@ public abstract class Piece extends Pane{
     }
 
 
-
+    //method to check if the move is safe and friendly King is not under attack
     public boolean isMoveSafe(Move move){
         boolean check = false;
         remove();
@@ -184,7 +172,7 @@ public abstract class Piece extends Pane{
             game.getSquare(piece).removePiece();
             game.getSquare(move.getNewX(), move.getNewY()).setPiece(this);
 
-            if(game.isKingUnderTreat(color))
+            if(game.isKingUnderThreat(color))
                 check = true;
 
 
@@ -197,7 +185,7 @@ public abstract class Piece extends Pane{
         }
         else{
             game.getSquare(move.getNewX(), move.getNewY()).setPiece(this);
-            if(game.isKingUnderTreat(color))
+            if(game.isKingUnderThreat(color))
                 check = true;
             game.getSquare(this).removePiece();
             game.getSquare(move.getX(), move.getY()).setPiece(this);
@@ -207,6 +195,7 @@ public abstract class Piece extends Pane{
         return !check;
     }
 
+    //to filter all the dangerous moves for friendly King
     public ArrayList<Move> filterMoves(){
         ArrayList<Move> movesWithoutCheck = new ArrayList<>();
         for (Move move : getAvailableMoves())
@@ -220,29 +209,32 @@ public abstract class Piece extends Pane{
 
     public abstract ArrayList<Move> getAvailableMoves();
 
-    public void pick() {
+
+    public void getSelected() {
         setPickIcon();
         game.highlightPossibleMoves(filterMoves());
         setDeselectListener();
         game.setHighlightOnlyListeners(this);
     }
 
+    //to kill another piece
     public void kill(Piece victim){
         game.getSquare(victim).removePiece();
         game.getChessBoard().getChildren().remove(victim);
         this.move(victim.getX(), victim.getY());
     }
 
+    //method returns list of Diagonal moves (required for Queen and Bishop)
     public ArrayList<Move> getDiagonalMoves(){
         ArrayList<Move> moves = new ArrayList<>();
-        boolean white = pieceIsWhiteAtIndex(x,y);
+        boolean white = game.pieceIsWhiteAtIndex(x,y);
 
         int i = 1;
         while(x-i >=0 && y-i >= 0){
             if(getGame().getSquare(x-i,y-i).isEmpty()){
                 moves.add(new Move(x, y, x - i, y - i));
             }else{
-                if(pieceIsWhiteAtIndex(x-i, y-i) != white){
+                if(game.pieceIsWhiteAtIndex(x-i, y-i) != white){
                     moves.add(new Move(x, y, x - i, y - i));
                     break;
                 }
@@ -258,7 +250,7 @@ public abstract class Piece extends Pane{
             if(getGame().getSquare(x+i,y-i).isEmpty()){
                 moves.add(new Move(x, y, x + i, y - i));
             }else{
-                if(pieceIsWhiteAtIndex(x+i, y-i) != white){
+                if(game.pieceIsWhiteAtIndex(x+i, y-i) != white){
                     moves.add(new Move(x, y, x + i, y - i));
                     break;
                 }
@@ -274,7 +266,7 @@ public abstract class Piece extends Pane{
             if(getGame().getSquare(x-i,y+i).isEmpty()){
                 moves.add(new Move(x, y, x - i, y + i));
             }else{
-                if(pieceIsWhiteAtIndex(x-i, y+i) != white){
+                if(game.pieceIsWhiteAtIndex(x-i, y+i) != white){
                     moves.add(new Move(x, y, x - i, y + i));
                     break;
                 }
@@ -290,7 +282,7 @@ public abstract class Piece extends Pane{
             if(getGame().getSquare(x+i,y+i).isEmpty()){
                 moves.add(new Move(x, y, x + i, y + i));
             }else{
-                if(pieceIsWhiteAtIndex(x+i, y+i) != white){
+                if(game.pieceIsWhiteAtIndex(x+i, y+i) != white){
                     moves.add(new Move(x, y, x + i, y + i));
                     break;
                 }
@@ -305,16 +297,17 @@ public abstract class Piece extends Pane{
         return moves;
     }
 
+    //method returns list of Horizontal-Vertical moves (required for Queen and Rook)
     public ArrayList<Move> getAxisMoves(){
         ArrayList<Move> moves = new ArrayList<>();
-        boolean white = pieceIsWhiteAtIndex(x,y);
+        boolean white = game.pieceIsWhiteAtIndex(x,y);
 
         int i = 1;
         while(y-i >= 0){
             if(getGame().getSquare(x,y-i).isEmpty()){
                 moves.add(new Move(x, y, x, y - i));
             }else{
-                if(pieceIsWhiteAtIndex(x, y-i) != white){
+                if(game.pieceIsWhiteAtIndex(x, y-i) != white){
                     moves.add(new Move(x, y, x, y - i));
                     break;
                 }
@@ -330,7 +323,7 @@ public abstract class Piece extends Pane{
             if(getGame().getSquare(x-i,y).isEmpty()){
                 moves.add(new Move(x, y, x-i, y));
             }else{
-                if(pieceIsWhiteAtIndex(x-i, y) != white){
+                if(game.pieceIsWhiteAtIndex(x-i, y) != white){
                     moves.add(new Move(x, y, x - i, y));
                     break;
                 }
@@ -346,7 +339,7 @@ public abstract class Piece extends Pane{
             if(getGame().getSquare(x+i,y).isEmpty()){
                 moves.add(new Move(x, y, x+i, y));
             }else{
-                if(pieceIsWhiteAtIndex(x+i, y) != white){
+                if(game.pieceIsWhiteAtIndex(x+i, y) != white){
                     moves.add(new Move(x, y, x+i, y));
                     break;
                 }
@@ -362,7 +355,7 @@ public abstract class Piece extends Pane{
             if(getGame().getSquare(x,y+i).isEmpty()){
                 moves.add(new Move(x, y, x, y + i));
             }else{
-                if(pieceIsWhiteAtIndex(x, y+i) != white){
+                if(game.pieceIsWhiteAtIndex(x, y+i) != white){
                     moves.add(new Move(x, y, x, y + i));
                     break;
                 }

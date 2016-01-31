@@ -7,7 +7,8 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 
 /**
- * Created by antant on 21/01/16.
+ * Created by Anton
+ * Rook piece class
  */
 public class Rook extends Piece {
 
@@ -45,7 +46,6 @@ public class Rook extends Piece {
 
     @Override
     public ArrayList<Move> getAvailableMoves() {
-
         return getAxisMoves();
     }
 }

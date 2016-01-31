@@ -7,7 +7,8 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 
 /**
- * Created by antant on 21/01/16.
+ * Created by Anton
+ * Bishop piece class
  */
 public class Bishop extends Piece {
 

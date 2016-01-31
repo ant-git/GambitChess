@@ -6,7 +6,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import pieces.*;
@@ -14,17 +13,17 @@ import pieces.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.Queue;
 import java.util.ResourceBundle;
 
 /**
- * Created by antant on 21/01/16.
+ * Created by Anton
+ * Class to control the game and Controller for the main stage
  */
 public class Game implements Initializable{
 
     @FXML
     GridPane chessBoard;
-    private ArrayList<Move> moves;
+    private ArrayList<Move> moves; // to keep history of all moves
     public Piece lastMovedPiece;
 
     public Game() {
@@ -32,6 +31,7 @@ public class Game implements Initializable{
 
     }
 
+    //method to construct Chess Board
     public void paintBoard(){
         boolean white = true;
         for(int i = 0; i < 8; i++){
@@ -55,7 +55,7 @@ public class Game implements Initializable{
 
     }
 
-
+    //Adding all the pieces to the chess board
     public  void setupPieces(){
         for(int i=0; i < 8; i++){
             Pawn pawn = new Pawn(i,1,Color.BLACK, this);
@@ -109,7 +109,7 @@ public class Game implements Initializable{
 
     }
 
-
+    //getting Square by index
     public ChessSquare getSquare(int x, int y){
         for(Node node : chessBoard.getChildren()){
             if(node instanceof ChessSquare){
@@ -120,6 +120,8 @@ public class Game implements Initializable{
 
         return null;
     }
+
+    //getting square by piece
     public ChessSquare getSquare(Piece piece){
         int pieceX = piece.getX();
         int pieceY = piece.getY();
@@ -158,6 +160,7 @@ public class Game implements Initializable{
         return chessBoard;
     }
 
+    //to highlight possible moves
     public void highlightPossibleMoves(ArrayList<Move> moves) {
         for(Node node: chessBoard.getChildren()){
                 for(Move move : moves){
@@ -168,6 +171,7 @@ public class Game implements Initializable{
             }
         }
     }
+
 
     public void dehighlightAllMoves(){
         for(Node node : chessBoard.getChildren()){
@@ -181,6 +185,8 @@ public class Game implements Initializable{
         }
 
     }
+
+    //to set listeners for highlighted pieces/squares only
     public void setHighlightOnlyListeners(Piece pickedPiece){
         for(Node node : chessBoard.getChildren()){
             if(node instanceof ChessSquare){
@@ -209,7 +215,7 @@ public class Game implements Initializable{
     }
 
 
-
+    //to get list of all possible moves for a particular color
     public ArrayList<Move> getPossibleMovesForAll(Color color){
         ArrayList<Move> moves = new ArrayList<>();
         for(Node node : chessBoard.getChildren()){
@@ -242,7 +248,7 @@ public class Game implements Initializable{
         }
     }
 
-
+    //to get Kin of a particular color
     public Piece getKing(Color color){
         for(Node node : chessBoard.getChildren()){
             if(node instanceof King && ((King) node).getColor().equals(color)){
@@ -253,7 +259,8 @@ public class Game implements Initializable{
         return null;
     }
 
-    public boolean isKingUnderTreat(Color color){
+    //to check if King of a particular color is under attack
+    public boolean isKingUnderThreat(Color color){
         Color enemyColor = Color.WHITE;
         if(color.equals(Color.WHITE))
             enemyColor = Color.BLACK;
@@ -271,7 +278,7 @@ public class Game implements Initializable{
         return underTreat;
     }
 
-
+    //to get a count of all safe(check-checkmate free) moves for a particular color
     public int countSafeMovesFor(Color color){
 
         ArrayList<Piece> piecesToCheck = new ArrayList<>();
@@ -288,20 +295,22 @@ public class Game implements Initializable{
         return counter;
     }
 
+    //adding move to the history of moves
     public void addMoveToList(Move newMove){
         moves.add(newMove);
 
     }
 
+    //to get piece from index
     public Piece getPiece(int x, int y){
         return getSquare(x,y).getPiece();
     }
 
+    //to promote pawn to knight/queen/bishop or rook
     public void promotePawn(Piece pawn){
         int pawnX = pawn.getX();
         int pawnY = pawn.getY();
         Color pawnColor = pawn.getColor();
-        System.out.println("PAWN @ " + pawnX + "  " +  pawnY);
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Pawn is ready to be promoted");
@@ -341,6 +350,9 @@ public class Game implements Initializable{
 
     public void setLastMovedPiece(Piece lastMovedPiece) {
         this.lastMovedPiece = lastMovedPiece;
-        System.out.println("LAST PIECE: " + lastMovedPiece.toString() +  " @ " + lastMovedPiece.getX() + " " + getLastMovedPiece().getY() + " Color is White: " + getLastMovedPiece().isWhite());
     }
+    public boolean pieceIsWhiteAtIndex(int x, int y){
+        return getSquare(x,y).getPiece().getColor().equals(Color.WHITE);
+    }
+
 }

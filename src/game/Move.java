@@ -1,15 +1,14 @@
 package game;
 
 /**
- * Created by antant on 23/01/16.
+ * Created by Anton
+ * Class that represents Move
  */
 public class Move {
     private int x;
     private int y;
     private int newX;
     private int newY;
-    private boolean ischeck;
-    private boolean isCheckMate;
 
     public Move(int x, int y, int newX, int newY) {
         this.x = x;

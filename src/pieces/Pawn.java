@@ -8,7 +8,8 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 
 /**
- * Created by antant on 21/01/16.
+ * Created by Anton
+ * Pawn piece class
  */
 public class Pawn extends Piece implements Highlightable{
 
@@ -19,10 +20,13 @@ public class Pawn extends Piece implements Highlightable{
     private String blackPawnPStyle = generateIcon("/images/bpawnp");
     private String whitePawnPStyle = generateIcon("/images/wpawnp");
     private boolean enPassant;
+    private Game game;
 
     public Pawn(int x, int y, Color color, Game game) {
         super(x, y, color, game);
         enPassant = false;
+        this.game = game;
+
 
     }
     public String toString(){
@@ -45,6 +49,7 @@ public class Pawn extends Piece implements Highlightable{
         setIcon(whitePawnPStyle, blackPawnPStyle);
     }
 
+    //
     @Override
     public ArrayList<Move> getAvailableMoves(){
 
@@ -59,24 +64,26 @@ public class Pawn extends Piece implements Highlightable{
             if(y==6 && getGame().getSquare(x,y-2).isEmpty() && getGame().getSquare(x,y-1).isEmpty()){
                 moves.add(new Move(x, y, x, y - 2));
             }
-            if((y-1 >= 0 && x-1 >= 0) && !getGame().getSquare(x-1,y-1).isEmpty() && !pieceIsWhiteAtIndex(x-1,y-1)){
+            if((y-1 >= 0 && x-1 >= 0) && !getGame().getSquare(x-1,y-1).isEmpty() && !game.pieceIsWhiteAtIndex(x-1,y-1)){
                 moves.add(new Move(x, y, x - 1, y - 1));
             }
-            if((y-1 >= 0 && x+1 <= 7) && !getGame().getSquare(x+1,y-1).isEmpty() && !pieceIsWhiteAtIndex(x+1,y-1)) {
+            if((y-1 >= 0 && x+1 <= 7) && !getGame().getSquare(x+1,y-1).isEmpty() && !game.pieceIsWhiteAtIndex(x+1,y-1)) {
                 moves.add(new Move(x, y, x + 1, y - 1));
             }
 
             //En passant rules for White pawns
             if((y == 3 && x+1 <= 7) && !getGame().getSquare(x+1,y).isEmpty()
-                    && !pieceIsWhiteAtIndex(x+1,y) && getGame().getPiece(x+1,y).getMoveCount() == 1
+                    && !game.pieceIsWhiteAtIndex(x+1,y) && getGame().getPiece(x+1,y).getMoveCount() == 1
                     && getGame().getPiece(x+1,y).equals(getGame().getLastMovedPiece())) {
+
                 moves.add(new Move(x, y, x + 1, y - 1));
                 setEnPassant(true);
             }
 
             if((y == 3 && x-1 >= 0) && !getGame().getSquare(x-1,y).isEmpty()
-                    && !pieceIsWhiteAtIndex(x-1,y) && getGame().getPiece(x-1,y).getMoveCount() == 1
+                    && !game.pieceIsWhiteAtIndex(x-1,y) && getGame().getPiece(x-1,y).getMoveCount() == 1
                     && getGame().getPiece(x-1,y).equals(getGame().getLastMovedPiece())) {
+
                 moves.add(new Move(x, y, x - 1, y - 1));
                 setEnPassant(true);
             }
@@ -91,23 +98,23 @@ public class Pawn extends Piece implements Highlightable{
                 moves.add(new Move(x, y, x, y + 2));
             }
 
-            if((y+1 <= 7 && x-1 >= 0) && !getGame().getSquare(x-1,y+1).isEmpty() && pieceIsWhiteAtIndex(x-1,y+1)){
+            if((y+1 <= 7 && x-1 >= 0) && !getGame().getSquare(x-1,y+1).isEmpty() && game.pieceIsWhiteAtIndex(x-1,y+1)){
                 moves.add(new Move(x, y, x - 1, y + 1));
             }
-            if((y+1 <= 7 && x+1 <= 7) && !getGame().getSquare(x+1,y+1).isEmpty() && pieceIsWhiteAtIndex(x+1,y+1)) {
+            if((y+1 <= 7 && x+1 <= 7) && !getGame().getSquare(x+1,y+1).isEmpty() && game.pieceIsWhiteAtIndex(x+1,y+1)) {
                 moves.add(new Move(x, y, x + 1, y + 1));
             }
 
             //En passant rules for Black pawns
             if((y == 4 && x+1 <= 7) && !getGame().getSquare(x+1,y).isEmpty()
-                    && pieceIsWhiteAtIndex(x+1,y) && getGame().getPiece(x+1,y).getMoveCount() == 1
+                    && game.pieceIsWhiteAtIndex(x+1,y) && getGame().getPiece(x+1,y).getMoveCount() == 1
                     && getGame().getPiece(x+1,y).equals(getGame().getLastMovedPiece())) {
                 moves.add(new Move(x, y, x + 1, y + 1));
                 setEnPassant(true);
             }
 
             if((y == 4 && x-1 >= 0) && !getGame().getSquare(x-1,y).isEmpty()
-                    && pieceIsWhiteAtIndex(x-1,y) && getGame().getPiece(x-1,y).getMoveCount() == 1
+                    && game.pieceIsWhiteAtIndex(x-1,y) && getGame().getPiece(x-1,y).getMoveCount() == 1
                     && getGame().getPiece(x-1,y).equals(getGame().getLastMovedPiece())) {
                 moves.add(new Move(x, y, x - 1, y + 1));
                 setEnPassant(true);
