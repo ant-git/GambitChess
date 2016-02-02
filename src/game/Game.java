@@ -156,7 +156,6 @@ public class Game implements Initializable{
         capturedWhites.getChildren().clear();
         capturedBlacks.getChildren().clear();
         setListenersFor(Color.WHITE);
-        System.out.println("game is reset");
     }
 
     @Override
